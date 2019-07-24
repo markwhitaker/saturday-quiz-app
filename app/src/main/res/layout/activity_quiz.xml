@@ -28,4 +28,11 @@
         tools:text="Lady Chatterley's Lover"
         />
 
+    <ProgressBar
+        android:id="@+id/progressView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        />
+
 </RelativeLayout>

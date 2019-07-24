@@ -3,6 +3,7 @@ package uk.co.mainwave.saturdayquizapp
 import android.app.Activity
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
 
 class QuizActivity : Activity(), QuizPresenter.View {
@@ -28,6 +29,14 @@ class QuizActivity : Activity(), QuizPresenter.View {
             else -> return super.onKeyDown(keyCode, event)
         }
         return true
+    }
+
+    override fun showLoading() {
+        progressView.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progressView.visibility = View.GONE
     }
 
     override fun showNumber(number: Int) {
