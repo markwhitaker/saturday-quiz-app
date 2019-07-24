@@ -32,21 +32,23 @@ class QuizPresenter {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        retrofit.create(SaturdayQuizApi::class.java).getLatestQuiz().enqueue(object : Callback<Quiz> {
-            override fun onResponse(call: Call<Quiz>, response: Response<Quiz>) {
-                questions = response.body()?.questions ?: throw Exception("Erk!")
-                view.hideLoading()
-                showQuestion()
-            }
+        retrofit
+            .create(SaturdayQuizApi::class.java)
+            .getLatestQuiz()
+            .enqueue(object : Callback<Quiz> {
+                override fun onResponse(call: Call<Quiz>, response: Response<Quiz>) {
+                    questions = response.body()?.questions ?: throw Exception("Erk!")
+                    view.hideLoading()
+                    showQuestion()
+                }
 
-            override fun onFailure(call: Call<Quiz>, t: Throwable) {
-                throw Exception("Double erk!", t)
-            }
-        })
+                override fun onFailure(call: Call<Quiz>, t: Throwable) {
+                    throw Exception("Double erk!", t)
+                }
+            })
     }
 
     fun onViewDestroyed() {
-
     }
 
     fun onNext() {
@@ -79,9 +81,11 @@ class QuizPresenter {
         val question = questions[currentQuestionIndex]
         view.showNumber(question.number)
         view.showQuestion(question.question, question.type == QuestionType.WHAT_LINKS)
-        view.showAnswer(when (currentPass) {
-            Pass.QUESTION_AND_ANSWER -> question.answer
-            else -> ""}
+        view.showAnswer(
+            when (currentPass) {
+                Pass.QUESTION_AND_ANSWER -> question.answer
+                else -> ""
+            }
         )
     }
 
