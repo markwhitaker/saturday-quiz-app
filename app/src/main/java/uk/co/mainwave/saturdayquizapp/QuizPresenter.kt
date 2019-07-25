@@ -9,16 +9,13 @@ class QuizPresenter @Inject constructor(
 ) : QuizRepository.Listener {
 
     private lateinit var view: View
-
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
+
     fun onViewCreated(view: View) {
         this.view = view
         view.showLoading()
         repository.loadQuiz(this)
-    }
-
-    fun onViewDestroyed() {
     }
 
     override fun onQuizLoaded(quiz: Quiz) {
@@ -48,12 +45,12 @@ class QuizPresenter @Inject constructor(
     }
 
     private fun buildScenes(quiz: Quiz) {
-        // First view of questions
+        // First just show the questions
         scenes.add(Scene.QuestionsTitleScene)
         quiz.questions.forEach { question ->
             scenes.add(Scene.QuestionScene(question))
         }
-        // Recap and answers
+        // Then show each question again, then its answer
         scenes.add(Scene.AnswersTitleScene)
         quiz.questions.forEach { question ->
             scenes.add(Scene.QuestionScene(question))
@@ -90,7 +87,7 @@ class QuizPresenter @Inject constructor(
 
     private sealed class Scene {
         object QuestionsTitleScene : Scene()
-        object AnswersTitleScene: Scene()
+        object AnswersTitleScene : Scene()
         class QuestionScene(val question: Question) : Scene()
         class QuestionAnswerScene(val question: Question) : Scene()
         object EndTitleScene : Scene()

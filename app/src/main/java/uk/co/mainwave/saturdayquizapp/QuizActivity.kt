@@ -24,11 +24,6 @@ class QuizActivity : Activity(), QuizPresenter.View {
         presenter.onViewCreated(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onViewDestroyed()
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_RIGHT,
