@@ -2,6 +2,7 @@ package uk.co.mainwave.saturdayquizapp
 
 import android.app.Activity
 import android.os.Bundle
+import android.text.Html
 import android.view.KeyEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
@@ -53,11 +54,13 @@ class QuizActivity : Activity(), QuizPresenter.View {
         question: String,
         showWhatLinksPrefix: Boolean
     ) {
-        questionView.text = if (showWhatLinksPrefix) {
+        val questionText = if (showWhatLinksPrefix) {
             "$whatLinksPrefix $question"
         } else {
             question
         }
+
+        questionView.text = Html.fromHtml(questionText, Html.FROM_HTML_MODE_COMPACT)
     }
 
     override fun showAnswer(answer: String) {
