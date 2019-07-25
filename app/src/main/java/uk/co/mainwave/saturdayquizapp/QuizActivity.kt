@@ -63,4 +63,8 @@ class QuizActivity : Activity(), QuizPresenter.View {
     override fun showAnswer(answer: String) {
         answerView.text = answer
     }
+
+    override fun quit() {
+        finish()
+    }
 }

@@ -1,18 +1,13 @@
 package uk.co.mainwave.saturdayquizapp
 
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import uk.co.mainwave.saturdayquizapp.api.SaturdayQuizApi
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import javax.inject.Inject
 
 class QuizPresenter @Inject constructor(
-    private val retrofit: Retrofit
-) {
+    private val repository: QuizRepository
+) : QuizRepository.Listener {
     private lateinit var view: View
 
     private enum class Pass {
@@ -28,24 +23,20 @@ class QuizPresenter @Inject constructor(
     fun onViewCreated(view: View) {
         this.view = view
         view.showLoading()
-
-        retrofit
-            .create(SaturdayQuizApi::class.java)
-            .getLatestQuiz()
-            .enqueue(object : Callback<Quiz> {
-                override fun onResponse(call: Call<Quiz>, response: Response<Quiz>) {
-                    questions = response.body()?.questions ?: throw Exception("Erk!")
-                    view.hideLoading()
-                    showQuestion()
-                }
-
-                override fun onFailure(call: Call<Quiz>, t: Throwable) {
-                    throw Exception("Double erk!", t)
-                }
-            })
+        repository.loadQuiz(this)
     }
 
     fun onViewDestroyed() {
+    }
+
+    override fun onQuizLoaded(quiz: Quiz) {
+        questions = quiz.questions
+        view.hideLoading()
+        showQuestion()
+    }
+
+    override fun onQuizLoadFailed() {
+        view.quit()
     }
 
     fun onNext() {
@@ -92,5 +83,6 @@ class QuizPresenter @Inject constructor(
         fun showNumber(number: Int)
         fun showQuestion(question: String, showWhatLinksPrefix: Boolean)
         fun showAnswer(answer: String)
+        fun quit()
     }
 }
