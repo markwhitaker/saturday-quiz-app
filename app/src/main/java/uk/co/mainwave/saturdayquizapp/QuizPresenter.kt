@@ -8,18 +8,11 @@ import javax.inject.Inject
 class QuizPresenter @Inject constructor(
     private val repository: QuizRepository
 ) : QuizRepository.Listener {
+
     private lateinit var view: View
 
-    private enum class Pass {
-        QUESTION,
-        QUESTION_AND_ANSWER
-    }
-
-    private var currentPass = Pass.QUESTION
-    private var currentQuestionIndex = 0
-
-    private lateinit var questions: List<Question>
-
+    private val scenes = mutableListOf<Scene>()
+    private var sceneIndex = 0
     fun onViewCreated(view: View) {
         this.view = view
         view.showLoading()
@@ -30,9 +23,9 @@ class QuizPresenter @Inject constructor(
     }
 
     override fun onQuizLoaded(quiz: Quiz) {
-        questions = quiz.questions
+        buildScenes(quiz)
         view.hideLoading()
-        showQuestion()
+        showScene()
     }
 
     override fun onQuizLoadFailed() {
@@ -40,41 +33,49 @@ class QuizPresenter @Inject constructor(
     }
 
     fun onNext() {
-        if (currentQuestionIndex == questions.lastIndex) {
-            currentPass = when (currentPass) {
-                Pass.QUESTION -> Pass.QUESTION_AND_ANSWER
-                else -> return
-            }
-            currentQuestionIndex = 0
-        } else {
-            currentQuestionIndex++
+        if (sceneIndex != scenes.lastIndex) {
+            sceneIndex++
+            showScene()
         }
-        showQuestion()
     }
 
     fun onPrevious() {
-        if (currentQuestionIndex == 0) {
-            currentPass = when (currentPass) {
-                Pass.QUESTION_AND_ANSWER -> Pass.QUESTION
-                else -> return
-            }
-            currentQuestionIndex = questions.lastIndex
-        } else {
-            currentQuestionIndex--
+        if (sceneIndex != 0) {
+            sceneIndex--
+            showScene()
         }
-        showQuestion()
     }
 
-    private fun showQuestion() {
-        val question = questions[currentQuestionIndex]
-        view.showNumber(question.number)
-        view.showQuestion(question.question, question.type == QuestionType.WHAT_LINKS)
-        view.showAnswer(
-            when (currentPass) {
-                Pass.QUESTION_AND_ANSWER -> question.answer
-                else -> ""
+    private fun buildScenes(quiz: Quiz) {
+        // First view of questions
+        quiz.questions.forEach { question ->
+            scenes.add(Scene.QuestionScene(question))
+        }
+        // Recap and answers
+        quiz.questions.forEach { question ->
+            scenes.add(Scene.QuestionScene(question))
+            scenes.add(Scene.QuestionAnswerScene(question))
+        }
+    }
+
+    private fun showScene() {
+        when (val scene = scenes[sceneIndex]) {
+            is Scene.QuestionScene -> {
+                view.showNumber(scene.question.number)
+                view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
+                view.showAnswer("")
             }
-        )
+            is Scene.QuestionAnswerScene -> {
+                view.showNumber(scene.question.number)
+                view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
+                view.showAnswer(scene.question.answer)
+            }
+        }
+    }
+
+    private sealed class Scene {
+        class QuestionScene(val question: Question) : Scene()
+        class QuestionAnswerScene(val question: Question) : Scene()
     }
 
     interface View {
