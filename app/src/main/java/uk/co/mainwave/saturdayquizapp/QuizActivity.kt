@@ -31,9 +31,13 @@ class QuizActivity : Activity(), QuizPresenter.View {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
-            KeyEvent.KEYCODE_DPAD_RIGHT -> presenter.onNext()
-            KeyEvent.KEYCODE_DPAD_LEFT -> presenter.onPrevious()
-            else -> return super.onKeyDown(keyCode, event)
+            KeyEvent.KEYCODE_DPAD_RIGHT,
+            KeyEvent.KEYCODE_DPAD_CENTER ->
+                presenter.onNext()
+            KeyEvent.KEYCODE_DPAD_LEFT ->
+                presenter.onPrevious()
+            else ->
+                return super.onKeyDown(keyCode, event)
         }
         return true
     }
