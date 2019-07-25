@@ -33,6 +33,14 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
+        android:indeterminateTint="@color/text"
+        />
+
+    <TextView
+        android:id="@+id/titleView"
+        style="@style/TitleText"
+        tools:text="@string/title_questions"
+        tools:visibility="gone"
         />
 
 </RelativeLayout>

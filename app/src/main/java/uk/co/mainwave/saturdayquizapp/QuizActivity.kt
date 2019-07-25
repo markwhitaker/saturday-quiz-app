@@ -46,6 +46,20 @@ class QuizActivity : Activity(), QuizPresenter.View {
         progressView.visibility = View.GONE
     }
 
+    override fun showQuestionsTitle() {
+        titleView.text = getString(R.string.title_questions)
+        titleView.visibility = View.VISIBLE
+    }
+
+    override fun showAnswersTitle() {
+        titleView.text = getString(R.string.title_answers)
+        titleView.visibility = View.VISIBLE
+    }
+
+    override fun hideTitle() {
+        titleView.visibility = View.GONE
+    }
+
     override fun showNumber(number: Int) {
         numberView.text = number.toString()
     }

@@ -48,10 +48,12 @@ class QuizPresenter @Inject constructor(
 
     private fun buildScenes(quiz: Quiz) {
         // First view of questions
+        scenes.add(Scene.QuestionsTitleScene)
         quiz.questions.forEach { question ->
             scenes.add(Scene.QuestionScene(question))
         }
         // Recap and answers
+        scenes.add(Scene.AnswersTitleScene)
         quiz.questions.forEach { question ->
             scenes.add(Scene.QuestionScene(question))
             scenes.add(Scene.QuestionAnswerScene(question))
@@ -60,12 +62,20 @@ class QuizPresenter @Inject constructor(
 
     private fun showScene() {
         when (val scene = scenes[sceneIndex]) {
+            is Scene.QuestionsTitleScene -> {
+                view.showQuestionsTitle()
+            }
+            is Scene.AnswersTitleScene -> {
+                view.showAnswersTitle()
+            }
             is Scene.QuestionScene -> {
+                view.hideTitle()
                 view.showNumber(scene.question.number)
                 view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
                 view.showAnswer("")
             }
             is Scene.QuestionAnswerScene -> {
+                view.hideTitle()
                 view.showNumber(scene.question.number)
                 view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
                 view.showAnswer(scene.question.answer)
@@ -74,6 +84,8 @@ class QuizPresenter @Inject constructor(
     }
 
     private sealed class Scene {
+        object QuestionsTitleScene : Scene()
+        object AnswersTitleScene: Scene()
         class QuestionScene(val question: Question) : Scene()
         class QuestionAnswerScene(val question: Question) : Scene()
     }
@@ -81,6 +93,9 @@ class QuizPresenter @Inject constructor(
     interface View {
         fun showLoading()
         fun hideLoading()
+        fun showQuestionsTitle()
+        fun showAnswersTitle()
+        fun hideTitle()
         fun showNumber(number: Int)
         fun showQuestion(question: String, showWhatLinksPrefix: Boolean)
         fun showAnswer(answer: String)
