@@ -5,4 +5,6 @@ data class Question(
     val type: QuestionType,
     val question: String,
     val answer: String
-)
+) {
+    fun isWhatLinks() = type == QuestionType.WHAT_LINKS
+}

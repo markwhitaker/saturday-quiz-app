@@ -1,7 +1,6 @@
 package uk.co.mainwave.saturdayquizapp
 
 import uk.co.mainwave.saturdayquizapp.model.Question
-import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import javax.inject.Inject
 
@@ -74,13 +73,13 @@ class QuizPresenter @Inject constructor(
             is Scene.QuestionScene -> {
                 view.hideTitle()
                 view.showNumber(scene.question.number)
-                view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
+                view.showQuestion(scene.question.question, scene.question.isWhatLinks())
                 view.showAnswer("")
             }
             is Scene.QuestionAnswerScene -> {
                 view.hideTitle()
                 view.showNumber(scene.question.number)
-                view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
+                view.showQuestion(scene.question.question, scene.question.isWhatLinks())
                 view.showAnswer(scene.question.answer)
             }
             is Scene.EndTitleScene -> {
