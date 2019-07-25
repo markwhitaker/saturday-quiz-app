@@ -64,7 +64,7 @@ class QuizActivity : Activity(), QuizPresenter.View {
     }
 
     override fun showAnswer(answer: String) {
-        answerView.text = answer
+        answerView.text = Html.fromHtml(answer, Html.FROM_HTML_MODE_COMPACT)
     }
 
     override fun quit() {
