@@ -36,6 +36,8 @@ class QuizPresenter @Inject constructor(
         if (sceneIndex != scenes.lastIndex) {
             sceneIndex++
             showScene()
+        } else {
+            view.quit()
         }
     }
 
@@ -58,6 +60,7 @@ class QuizPresenter @Inject constructor(
             scenes.add(Scene.QuestionScene(question))
             scenes.add(Scene.QuestionAnswerScene(question))
         }
+        scenes.add(Scene.EndTitleScene)
     }
 
     private fun showScene() {
@@ -80,6 +83,9 @@ class QuizPresenter @Inject constructor(
                 view.showQuestion(scene.question.question, scene.question.type == QuestionType.WHAT_LINKS)
                 view.showAnswer(scene.question.answer)
             }
+            is Scene.EndTitleScene -> {
+                view.showEndTitle()
+            }
         }
     }
 
@@ -88,6 +94,7 @@ class QuizPresenter @Inject constructor(
         object AnswersTitleScene: Scene()
         class QuestionScene(val question: Question) : Scene()
         class QuestionAnswerScene(val question: Question) : Scene()
+        object EndTitleScene : Scene()
     }
 
     interface View {
@@ -95,6 +102,7 @@ class QuizPresenter @Inject constructor(
         fun hideLoading()
         fun showQuestionsTitle()
         fun showAnswersTitle()
+        fun showEndTitle()
         fun hideTitle()
         fun showNumber(number: Int)
         fun showQuestion(question: String, showWhatLinksPrefix: Boolean)

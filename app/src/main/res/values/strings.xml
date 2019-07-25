@@ -3,4 +3,5 @@
     <string name="what_links_prefix">What links: </string>
     <string name="title_questions">Ready?</string>
     <string name="title_answers">Answers</string>
+    <string name="title_end">End</string>
 </resources>

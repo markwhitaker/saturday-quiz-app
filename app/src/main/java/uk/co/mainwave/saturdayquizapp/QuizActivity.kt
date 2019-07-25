@@ -43,25 +43,30 @@ class QuizActivity : Activity(), QuizPresenter.View {
     }
 
     override fun showLoading() {
-        progressView.visibility = View.VISIBLE
+        progressView.show()
     }
 
     override fun hideLoading() {
-        progressView.visibility = View.GONE
+        progressView.hide()
     }
 
     override fun showQuestionsTitle() {
-        titleView.text = getString(R.string.title_questions)
-        titleView.visibility = View.VISIBLE
+        titleView.setText(R.string.title_questions)
+        titleView.show()
     }
 
     override fun showAnswersTitle() {
-        titleView.text = getString(R.string.title_answers)
-        titleView.visibility = View.VISIBLE
+        titleView.setText(R.string.title_answers)
+        titleView.show()
+    }
+
+    override fun showEndTitle() {
+        titleView.setText(R.string.title_end)
+        titleView.show()
     }
 
     override fun hideTitle() {
-        titleView.visibility = View.GONE
+        titleView.hide()
     }
 
     override fun showNumber(number: Int) {
@@ -87,5 +92,13 @@ class QuizActivity : Activity(), QuizPresenter.View {
 
     override fun quit() {
         finish()
+    }
+
+    private fun View.show() {
+        visibility = View.VISIBLE
+    }
+
+    private fun View.hide() {
+        visibility = View.GONE
     }
 }

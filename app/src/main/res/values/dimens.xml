@@ -4,5 +4,5 @@
     <dimen name="inner_margin">20dp</dimen>
     <dimen name="number_width">60dp</dimen>
     <dimen name="text_size">36sp</dimen>
-    <dimen name="title_size">48sp</dimen>
+    <dimen name="title_size">60sp</dimen>
 </resources>
