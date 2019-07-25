@@ -1,19 +1,18 @@
 package uk.co.mainwave.saturdayquizapp
 
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.mainwave.saturdayquizapp.api.SaturdayQuizApi
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
-import java.time.Duration
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class QuizPresenter {
+class QuizPresenter @Inject constructor(
+    private val retrofit: Retrofit
+) {
     private lateinit var view: View
 
     private enum class Pass {
@@ -29,17 +28,6 @@ class QuizPresenter {
     fun onViewCreated(view: View) {
         this.view = view
         view.showLoading()
-
-        val okHttpClient = OkHttpClient.Builder()
-            .callTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .build()
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://saturday-quiz-api.herokuapp.com/")
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
         retrofit
             .create(SaturdayQuizApi::class.java)

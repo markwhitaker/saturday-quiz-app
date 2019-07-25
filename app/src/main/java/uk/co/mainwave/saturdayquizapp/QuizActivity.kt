@@ -5,13 +5,19 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
+import javax.inject.Inject
 
 class QuizActivity : Activity(), QuizPresenter.View {
-    private val presenter = QuizPresenter()
+
+    @Inject
+    internal lateinit var presenter : QuizPresenter
     private lateinit var whatLinksPrefix: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (application as App).component.inject(this)
+
         setContentView(R.layout.activity_quiz)
         whatLinksPrefix = getString(R.string.what_links_prefix)
         presenter.onViewCreated(this)
