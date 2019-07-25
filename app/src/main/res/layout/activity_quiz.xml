@@ -40,7 +40,7 @@
         android:id="@+id/titleView"
         style="@style/TitleText"
         tools:text="@string/title_questions"
-        tools:visibility="gone"
+        android:visibility="gone"
         />
 
 </RelativeLayout>
