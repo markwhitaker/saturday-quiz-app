@@ -36,11 +36,26 @@
         android:indeterminateTint="@color/text"
         />
 
-    <TextView
-        android:id="@+id/titleView"
-        style="@style/TitleText"
-        tools:text="@string/title_questions"
+    <RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
         android:visibility="gone"
-        />
+        tools:visibility="visible"
+        >
 
+        <TextView
+            android:id="@+id/quizDateView"
+            style="@style/QuizDateText"
+            tools:text="10 August 1972"
+            />
+
+        <TextView
+            android:id="@+id/titleView"
+            style="@style/TitleText"
+            tools:text="@string/title_questions"
+            />
+
+    </RelativeLayout>
 </RelativeLayout>

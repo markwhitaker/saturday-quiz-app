@@ -2,6 +2,7 @@ package uk.co.mainwave.saturdayquizapp
 
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
+import java.util.Date
 import javax.inject.Inject
 
 class QuizPresenter @Inject constructor(
@@ -46,7 +47,7 @@ class QuizPresenter @Inject constructor(
 
     private fun buildScenes(quiz: Quiz) {
         // First just show the questions
-        scenes.add(Scene.QuestionsTitleScene)
+        scenes.add(Scene.QuestionsTitleScene(quiz.date))
         quiz.questions.forEach { question ->
             scenes.add(Scene.QuestionScene(question))
         }
@@ -62,7 +63,7 @@ class QuizPresenter @Inject constructor(
     private fun showScene() {
         when (val scene = scenes[sceneIndex]) {
             is Scene.QuestionsTitleScene -> {
-                view.showQuestionsTitle()
+                view.showQuestionsTitle(scene.date)
             }
             is Scene.AnswersTitleScene -> {
                 view.showAnswersTitle()
@@ -86,7 +87,7 @@ class QuizPresenter @Inject constructor(
     }
 
     private sealed class Scene {
-        object QuestionsTitleScene : Scene()
+        class QuestionsTitleScene(val date: Date?) : Scene()
         object AnswersTitleScene : Scene()
         class QuestionScene(val question: Question) : Scene()
         class QuestionAnswerScene(val question: Question) : Scene()
@@ -96,7 +97,7 @@ class QuizPresenter @Inject constructor(
     interface View {
         fun showLoading()
         fun hideLoading()
-        fun showQuestionsTitle()
+        fun showQuestionsTitle(date: Date?)
         fun showAnswersTitle()
         fun showEndTitle()
         fun hideTitle()

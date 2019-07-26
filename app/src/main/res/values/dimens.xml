@@ -5,4 +5,5 @@
     <dimen name="number_width">60dp</dimen>
     <dimen name="text_size">36sp</dimen>
     <dimen name="title_size">60sp</dimen>
+    <dimen name="small_text_size">18sp</dimen>
 </resources>

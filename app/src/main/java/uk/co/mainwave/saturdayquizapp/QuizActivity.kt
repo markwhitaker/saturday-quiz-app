@@ -6,6 +6,9 @@ import android.text.Html
 import android.view.KeyEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
+import java.text.DateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class QuizActivity : Activity(), QuizPresenter.View {
@@ -45,23 +48,31 @@ class QuizActivity : Activity(), QuizPresenter.View {
         progressView.hide()
     }
 
-    override fun showQuestionsTitle() {
+    override fun showQuestionsTitle(date: Date?) {
+        if (date != null) {
+            quizDateView.text = DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
+            quizDateView.show()
+        } else {
+            quizDateView.hide()
+        }
         titleView.setText(R.string.title_questions)
-        titleView.show()
+        titleLayout.show()
     }
 
     override fun showAnswersTitle() {
+        quizDateView.hide()
         titleView.setText(R.string.title_answers)
-        titleView.show()
+        titleLayout.show()
     }
 
     override fun showEndTitle() {
+        quizDateView.hide()
         titleView.setText(R.string.title_end)
-        titleView.show()
+        titleLayout.show()
     }
 
     override fun hideTitle() {
-        titleView.hide()
+        titleLayout.hide()
     }
 
     override fun showNumber(number: Int) {
