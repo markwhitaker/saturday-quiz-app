@@ -1,4 +1,10 @@
 <resources>
     <color name="background">#111111</color>
-    <color name="text">#eeeeee</color>
+    <color name="foreground">#eeeeee</color>
+    <color name="foreground_highlight">#ffee66</color>
+    <color name="question_text">@color/foreground</color>
+    <color name="title_text">@color/foreground</color>
+    <color name="date_text">@color/foreground_highlight</color>
+    <color name="answer_text">@color/foreground_highlight</color>
+    <color name="progress_spinner">@color/foreground_highlight</color>
 </resources>
