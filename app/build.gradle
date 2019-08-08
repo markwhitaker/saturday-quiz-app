@@ -14,6 +14,7 @@ android {
 buildscript {
     ext.dagger_version = '2.24'
     ext.junit_version = '4.12'
+    ext.ktlint_version = '0.32.0'
     ext.mockito_version = '3.0.0'
     ext.mockito_kotlin_version = '2.1.0'
     ext.okhttp_version = '4.0.1'
@@ -36,6 +37,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+configurations {
+    ktlint
 }
 
 dependencies {
@@ -61,4 +66,25 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
+
+    // ktlint
+    ktlint "com.pinterest:ktlint:$ktlint_version"
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "src/**/*.kt"
+    // to generate report in checkstyle format prepend following args:
+    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/pinterest/ktlint#usage for more
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args "-F", "src/**/*.kt"
 }
