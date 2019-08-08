@@ -76,7 +76,7 @@ class QuizActivity : Activity(), QuizPresenter.View {
     }
 
     override fun showNumber(number: Int) {
-        numberView.text = number.toString()
+        numberView.text = getString(R.string.question_number_format, number)
     }
 
     override fun showQuestion(
