@@ -6,5 +6,5 @@
     <color name="title_text">@color/foreground</color>
     <color name="date_text">@color/foreground_highlight</color>
     <color name="answer_text">@color/foreground_highlight</color>
-    <color name="progress_spinner">@color/foreground_highlight</color>
+    <color name="progress_spinner">@color/foreground</color>
 </resources>

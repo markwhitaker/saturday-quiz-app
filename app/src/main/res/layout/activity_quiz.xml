@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/outer_margin"
-    android:background="@color/background">
+    android:padding="@dimen/outer_margin">
 
     <TextView
         android:id="@+id/numberView"
@@ -33,7 +32,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
-        android:indeterminateTint="@color/question_text"
+        android:indeterminateTint="@color/progress_spinner"
         />
 
     <RelativeLayout
@@ -48,7 +47,7 @@
         <TextView
             android:id="@+id/quizDateView"
             style="@style/QuizDateText"
-            tools:text="10 August 1972"
+            tools:text="1 January 1970"
             />
 
         <TextView
