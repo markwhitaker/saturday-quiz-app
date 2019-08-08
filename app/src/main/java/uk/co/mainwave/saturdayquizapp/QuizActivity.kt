@@ -14,7 +14,7 @@ import javax.inject.Inject
 class QuizActivity : Activity(), QuizPresenter.View {
 
     @Inject
-    internal lateinit var presenter : QuizPresenter
+    internal lateinit var presenter: QuizPresenter
     private lateinit var whatLinksPrefix: String
 
     override fun onCreate(savedInstanceState: Bundle?) {

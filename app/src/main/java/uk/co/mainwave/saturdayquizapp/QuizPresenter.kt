@@ -13,7 +13,6 @@ class QuizPresenter @Inject constructor(
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
 
-
     fun onViewCreated(view: View) {
         this.view = view
         view.showLoading()
