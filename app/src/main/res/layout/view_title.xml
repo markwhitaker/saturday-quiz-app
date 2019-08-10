@@ -7,15 +7,22 @@
     android:background="@color/background"
     >
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/quizDateView"
         style="@style/QuizDateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/outer_margin"
         tools:text="1 January 1970"
         />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/titleView"
         style="@style/TitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         tools:text="@string/title_questions"
         />
 

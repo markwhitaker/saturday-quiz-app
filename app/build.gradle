@@ -23,7 +23,7 @@ buildscript {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "uk.co.mainwave.saturdayquizapp"
         minSdkVersion 24

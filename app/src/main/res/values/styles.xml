@@ -6,44 +6,40 @@
     </style>
 
     <style name="TextDefaults">
-        <item name="android:fontFamily">serif</item>
+        <item name="android:fontFamily">@font/open_sans_light</item>
+    </style>
+
+    <style name="WhatLinksText" parent="TextDefaults">
+        <item name="android:textColor">@color/what_links_text</item>
+        <item name="android:textSize">@dimen/what_links_text</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="QuestionText" parent="TextDefaults">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/question_text</item>
         <item name="android:textSize">@dimen/question_text</item>
     </style>
 
     <style name="QuestionNumberText" parent="TextDefaults">
-        <item name="android:layout_width">@dimen/number_width</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/question_text</item>
         <item name="android:textSize">@dimen/question_text</item>
     </style>
 
     <style name="AnswerText" parent="TextDefaults">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/answer_text</item>
         <item name="android:textSize">@dimen/answer_text</item>
     </style>
 
     <style name="TitleText" parent="TextDefaults">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerInParent">true</item>
         <item name="android:textColor">@color/title_text</item>
         <item name="android:textSize">@dimen/title_text</item>
     </style>
 
     <style name="QuizDateText" parent="TextDefaults">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_marginTop">@dimen/outer_margin</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
         <item name="android:textColor">@color/date_text</item>
         <item name="android:textSize">@dimen/date_text</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

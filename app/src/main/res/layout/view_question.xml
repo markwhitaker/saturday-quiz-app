@@ -8,36 +8,43 @@
     android:background="@color/background"
     >
 
-    <TextView
+    <!-- WHAT LINKS... -->
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/whatLinksView"
+        style="@style/WhatLinksText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/foreground"
-        android:text="@string/what_links_prefix"
-        android:textSize="@dimen/what_links_text"
         android:layout_toEndOf="@id/numberView"
-        android:textAllCaps="true"
-        android:textStyle="bold"
+        android:text="@string/what_links_prefix"
         />
 
-    <TextView
+    <!-- Question number -->
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/numberView"
         style="@style/QuestionNumberText"
-        tools:text="15."
+        android:layout_width="@dimen/number_width"
+        android:layout_height="wrap_content"
         android:layout_below="@id/whatLinksView"
+        tools:text="1."
         />
 
-    <TextView
+    <!-- Question -->
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/questionView"
         style="@style/QuestionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_toEndOf="@id/numberView"
         android:layout_below="@id/whatLinksView"
         tools:text="In what novel is Constance unhappily married to Sir Clifford?"
         />
 
-    <TextView
+    <!-- Answer -->
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/answerView"
         style="@style/AnswerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_toEndOf="@id/numberView"
         android:layout_below="@id/questionView"
         android:layout_marginTop="@dimen/inner_margin"

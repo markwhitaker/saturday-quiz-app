@@ -2,10 +2,10 @@
 <resources>
     <dimen name="outer_margin">60dp</dimen>
     <dimen name="inner_margin">20dp</dimen>
-    <dimen name="number_width">60dp</dimen>
+    <dimen name="number_width">70dp</dimen>
     <dimen name="question_text">36sp</dimen>
     <dimen name="what_links_text">18sp</dimen>
-    <dimen name="answer_text">34sp</dimen>
+    <dimen name="answer_text">36sp</dimen>
     <dimen name="title_text">60sp</dimen>
     <dimen name="date_text">24sp</dimen>
 </resources>
