@@ -10,13 +10,13 @@
         />
 
     <include
-        android:id="@+id/loadingView"
-        layout="@layout/view_loading"
+        android:id="@+id/titleLayout"
+        layout="@layout/view_title"
         />
 
     <include
-        android:id="@+id/titleLayout"
-        layout="@layout/view_title"
+        android:id="@+id/loadingView"
+        layout="@layout/view_loading"
         />
 
 </RelativeLayout>
