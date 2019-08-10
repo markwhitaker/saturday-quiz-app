@@ -102,7 +102,7 @@ class QuizPresenter @Inject constructor(
         fun showEndTitle()
         fun hideTitle()
         fun showNumber(number: Int)
-        fun showQuestion(question: String, showWhatLinksPrefix: Boolean)
+        fun showQuestion(question: String, isWhatLinks: Boolean)
         fun showAnswer(answer: String)
         fun quit()
     }

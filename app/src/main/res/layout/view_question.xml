@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/outer_margin"
+    android:background="@color/background"
+    >
+
+    <TextView
+        android:id="@+id/whatLinksView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/foreground"
+        android:text="@string/what_links_prefix"
+        android:textSize="@dimen/what_links_text"
+        android:layout_toEndOf="@id/numberView"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/numberView"
+        style="@style/QuestionNumberText"
+        tools:text="15."
+        android:layout_below="@id/whatLinksView"
+        />
+
+    <TextView
+        android:id="@+id/questionView"
+        style="@style/QuestionText"
+        android:layout_toEndOf="@id/numberView"
+        android:layout_below="@id/whatLinksView"
+        tools:text="In what novel is Constance unhappily married to Sir Clifford?"
+        />
+
+    <TextView
+        android:id="@+id/answerView"
+        style="@style/AnswerText"
+        android:layout_toEndOf="@id/numberView"
+        android:layout_below="@id/questionView"
+        android:layout_marginTop="@dimen/inner_margin"
+        tools:text="Lady Chatterley's Lover"
+        />
+
+</RelativeLayout>

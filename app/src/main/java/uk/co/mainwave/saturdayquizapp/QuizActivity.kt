@@ -6,6 +6,8 @@ import android.text.Html
 import android.view.KeyEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
+import kotlinx.android.synthetic.main.view_question.*
+import kotlinx.android.synthetic.main.view_title.*
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,11 +43,11 @@ class QuizActivity : Activity(), QuizPresenter.View {
     }
 
     override fun showLoading() {
-        progressView.show()
+        loadingView.show()
     }
 
     override fun hideLoading() {
-        progressView.hide()
+        loadingView.hide()
     }
 
     override fun showQuestionsTitle(date: Date?) {
@@ -81,15 +83,15 @@ class QuizActivity : Activity(), QuizPresenter.View {
 
     override fun showQuestion(
         question: String,
-        showWhatLinksPrefix: Boolean
+        isWhatLinks: Boolean
     ) {
-        val questionText = if (showWhatLinksPrefix) {
-            "$whatLinksPrefix $question"
+        whatLinksView.visibility = if (isWhatLinks) {
+            View.VISIBLE
         } else {
-            question
+            View.INVISIBLE
         }
 
-        questionView.text = Html.fromHtml(questionText, Html.FROM_HTML_MODE_COMPACT)
+        questionView.text = Html.fromHtml(question, Html.FROM_HTML_MODE_COMPACT)
     }
 
     override fun showAnswer(answer: String) {
