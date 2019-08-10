@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="AppTheme" parent="@style/Theme.Leanback">
         <item name="android:background">@color/background</item>
     </style>
 
-    <style name="TextDefaults">
-        <item name="android:fontFamily">@font/open_sans_light</item>
-    </style>
-
-    <style name="WhatLinksText" parent="TextDefaults">
+    <style name="WhatLinksText">
+        <item name="android:fontFamily">@font/font_bold</item>
         <item name="android:textColor">@color/what_links_text</item>
         <item name="android:textSize">@dimen/what_links_text</item>
-        <item name="android:fontFamily">@font/open_sans_bold</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="QuestionText" parent="TextDefaults">
+    <style name="QuestionText">
+        <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textColor">@color/question_text</item>
         <item name="android:textSize">@dimen/question_text</item>
     </style>
 
-    <style name="QuestionNumberText" parent="TextDefaults">
+    <style name="QuestionNumberText">
+        <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textColor">@color/question_text</item>
         <item name="android:textSize">@dimen/question_text</item>
     </style>
 
-    <style name="AnswerText" parent="TextDefaults">
+    <style name="AnswerText">
+        <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textColor">@color/answer_text</item>
         <item name="android:textSize">@dimen/answer_text</item>
     </style>
 
-    <style name="TitleText" parent="TextDefaults">
+    <style name="TitleText">
+        <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textColor">@color/title_text</item>
         <item name="android:textSize">@dimen/title_text</item>
     </style>
 
-    <style name="QuizDateText" parent="TextDefaults">
+    <style name="QuizDateText">
+        <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textColor">@color/date_text</item>
         <item name="android:textSize">@dimen/date_text</item>
         <item name="android:textAllCaps">true</item>
