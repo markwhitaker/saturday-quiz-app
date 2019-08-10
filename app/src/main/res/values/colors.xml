@@ -1,8 +1,8 @@
 <resources>
     <color name="background">#000000</color>
     <color name="foreground">#dddddd</color>
-    <color name="foreground_highlight">#ffdd66</color>
-    <color name="foreground_dimmed">#bbbbbb</color>
+    <color name="foreground_highlight">#ffdd00</color>
+    <color name="foreground_dimmed">#666666</color>
 
     <color name="what_links_text">@color/foreground_dimmed</color>
     <color name="question_text">@color/foreground</color>
