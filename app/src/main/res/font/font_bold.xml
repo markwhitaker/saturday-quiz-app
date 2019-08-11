@@ -7,16 +7,16 @@
     >
 
     <font
-        android:font="@font/open_sans_bold"
+        android:font="@font/open_sans_semi_bold"
         android:fontStyle="normal"
-        app:font="@font/open_sans_bold"
+        app:font="@font/open_sans_semi_bold"
         app:fontStyle="normal"
         />
 
     <font
-        android:font="@font/open_sans_bold_italic"
+        android:font="@font/open_sans_semi_bold_italic"
         android:fontStyle="italic"
-        app:font="@font/open_sans_bold_italic"
+        app:font="@font/open_sans_semi_bold_italic"
         app:fontStyle="italic"
         />
 

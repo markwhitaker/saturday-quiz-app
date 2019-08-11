@@ -48,7 +48,7 @@
         android:layout_toEndOf="@id/numberView"
         android:layout_below="@id/questionView"
         android:layout_marginTop="@dimen/inner_margin"
-        tools:text="Lady Chatterley's Lover"
+        tools:text="Lady Chatterley’s Lover"
         />
 
 </RelativeLayout>
