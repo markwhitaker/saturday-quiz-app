@@ -3,14 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-// Workaround for .idea/misc.xml problem: see https://stackoverflow.com/q/32878888/440921
-android {
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-
 buildscript {
     ext.dagger_version = '2.24'
     ext.junit_version = '4.12'
@@ -31,6 +23,13 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    // Workaround for .idea/misc.xml problem: see https://stackoverflow.com/q/32878888/440921
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
