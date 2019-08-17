@@ -29,7 +29,7 @@ class QuizActivity : Activity(), QuizPresenter.View {
         presenter.onViewCreated(this)
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_RIGHT,
             KeyEvent.KEYCODE_DPAD_CENTER ->
@@ -37,7 +37,7 @@ class QuizActivity : Activity(), QuizPresenter.View {
             KeyEvent.KEYCODE_DPAD_LEFT ->
                 presenter.onPrevious()
             else ->
-                return super.onKeyDown(keyCode, event)
+                return super.onKeyUp(keyCode, event)
         }
         return true
     }
