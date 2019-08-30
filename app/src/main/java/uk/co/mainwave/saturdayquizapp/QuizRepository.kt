@@ -6,9 +6,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import uk.co.mainwave.saturdayquizapp.api.SaturdayQuizApi
 import uk.co.mainwave.saturdayquizapp.model.Quiz
-import javax.inject.Inject
 
-class QuizRepository @Inject constructor(
+class QuizRepository(
     private val retrofit: Retrofit
 ) : Callback<Quiz> {
     private lateinit var listener: Listener

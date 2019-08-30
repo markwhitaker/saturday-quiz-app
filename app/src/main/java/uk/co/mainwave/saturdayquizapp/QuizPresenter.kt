@@ -3,9 +3,8 @@ package uk.co.mainwave.saturdayquizapp
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import java.util.Date
-import javax.inject.Inject
 
-class QuizPresenter @Inject constructor(
+class QuizPresenter(
     private val repository: QuizRepository
 ) : QuizRepository.Listener {
 
