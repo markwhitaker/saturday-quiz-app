@@ -8,21 +8,18 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.view_question.*
 import kotlinx.android.synthetic.main.view_title.*
+import org.koin.android.ext.android.inject
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
 
 class QuizActivity : Activity(), QuizPresenter.View {
 
-    @Inject
-    internal lateinit var presenter: QuizPresenter
+    private val presenter: QuizPresenter by inject()
     private lateinit var whatLinksPrefix: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        (application as App).component.inject(this)
 
         setContentView(R.layout.activity_quiz)
         whatLinksPrefix = getString(R.string.what_links_prefix)
