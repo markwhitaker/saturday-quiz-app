@@ -5,6 +5,6 @@ import uk.co.mainwave.saturdayquizapp.QuizPresenter
 import uk.co.mainwave.saturdayquizapp.QuizRepository
 
 val quizModule = module {
-    single { QuizPresenter(get()) }
-    single { QuizRepository(get()) }
+    factory { QuizPresenter(get()) }
+    factory { QuizRepository(get()) }
 }
