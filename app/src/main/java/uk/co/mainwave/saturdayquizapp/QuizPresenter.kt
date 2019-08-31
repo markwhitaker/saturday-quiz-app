@@ -15,6 +15,9 @@ class QuizPresenter(
     fun onViewCreated(view: View) {
         this.view = view
         view.showLoading()
+
+        scenes.clear()
+        sceneIndex = 0
         repository.loadQuiz(this)
     }
 
