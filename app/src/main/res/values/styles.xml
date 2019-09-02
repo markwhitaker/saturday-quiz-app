@@ -10,7 +10,6 @@
         <item name="android:textSize">@dimen/what_links_text</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:drawableStart">@drawable/ic_link</item>
-        <item name="android:drawableTint">@color/what_links_text</item>
         <item name="android:drawablePadding">@dimen/what_links_icon_padding</item>
     </style>
 

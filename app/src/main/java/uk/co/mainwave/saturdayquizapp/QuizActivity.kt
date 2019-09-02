@@ -1,8 +1,10 @@
 package uk.co.mainwave.saturdayquizapp
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.Spanned
 import android.view.KeyEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz.*
@@ -88,15 +90,24 @@ class QuizActivity : Activity(), QuizPresenter.View {
             View.INVISIBLE
         }
 
-        questionView.text = Html.fromHtml(question, Html.FROM_HTML_MODE_COMPACT)
+        questionView.text = fromHtml(question)
     }
 
     override fun showAnswer(answer: String) {
-        answerView.text = Html.fromHtml(answer, Html.FROM_HTML_MODE_COMPACT)
+        answerView.text = fromHtml(answer)
     }
 
     override fun quit() {
         finish()
+    }
+
+    private fun fromHtml(text: String): Spanned {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
     }
 
     private fun View.show() {
