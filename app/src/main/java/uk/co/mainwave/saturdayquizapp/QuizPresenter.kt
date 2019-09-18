@@ -14,6 +14,9 @@ class QuizPresenter(
 
     fun onViewCreated(view: View) {
         this.view = view
+    }
+
+    fun onViewDisplayed() {
         view.showLoading()
 
         scenes.clear()

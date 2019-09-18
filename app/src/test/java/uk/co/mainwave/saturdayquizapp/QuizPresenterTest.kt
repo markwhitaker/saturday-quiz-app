@@ -4,6 +4,7 @@ import io.mockk.excludeRecords
 import io.mockk.mockk
 import io.mockk.verifyAll
 import io.mockk.verifyOrder
+import org.junit.Before
 import org.junit.Test
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
@@ -19,11 +20,16 @@ class QuizPresenterTest {
         mockRepository
     )
 
+    @Before
+    fun setUp() {
+        presenter.onViewCreated(mockView)
+    }
+
     @Test
-    fun `GIVEN presenter initialised WHEN onViewCreated() THEN loading view shown and quiz loaded`() {
+    fun `GIVEN presenter initialised WHEN onViewDisplayed() THEN loading view shown and quiz loaded`() {
         // Given
         // When
-        presenter.onViewCreated(mockView)
+        presenter.onViewDisplayed()
         // Then
         verifyAll {
             mockView.showLoading()
@@ -32,9 +38,8 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN view created WHEN onQuizLoaded() THEN loading view is hidden and questions title is shown`() {
+    fun `GIVEN quiz was requested from repository WHEN onQuizLoaded() THEN loading view is hidden and questions title is shown`() {
         // Given
-        excludeRecords { mockView.showLoading() }
         val date = Date()
         val quiz = Quiz(
             "id",
@@ -42,7 +47,6 @@ class QuizPresenterTest {
             "title",
             emptyList()
         )
-        presenter.onViewCreated(mockView)
         // When
         presenter.onQuizLoaded(quiz)
         // Then
@@ -55,8 +59,6 @@ class QuizPresenterTest {
     @Test
     fun `GIVEN view created WHEN onQuizLoadFailed() THEN view quits`() {
         // Given
-        excludeRecords { mockView.showLoading() }
-        presenter.onViewCreated(mockView)
         // When
         presenter.onQuizLoadFailed()
         // Then
@@ -69,10 +71,8 @@ class QuizPresenterTest {
     fun `GIVEN view created and quiz loaded WHEN onNext() THEN next scene is shown`() {
         // Given
         excludeRecords {
-            mockView.showLoading()
             mockView.hideLoading()
         }
-        presenter.onViewCreated(mockView)
         presenter.onQuizLoaded(TEST_QUIZ)
         // When
         repeat(9) {
@@ -120,9 +120,8 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN view created and last question and answer shown WHEN onPrevious() THEN previous scene is shown`() {
+    fun `GIVEN quiz loaded and last question and answer shown WHEN onPrevious() THEN previous scene is shown`() {
         // Given
-        presenter.onViewCreated(mockView)
         presenter.onQuizLoaded(TEST_QUIZ)
         repeat(8) {
             presenter.onNext()
