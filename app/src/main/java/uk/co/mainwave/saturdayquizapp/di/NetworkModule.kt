@@ -19,7 +19,7 @@ private fun provideOkHttp(): OkHttpClient = OkHttpClient.Builder()
     .build()
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-    .baseUrl("https://saturday-quiz-api.herokuapp.com/")
+    .baseUrl("https://saturday-quiz.herokuapp.com/api/")
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create())
     .build()
