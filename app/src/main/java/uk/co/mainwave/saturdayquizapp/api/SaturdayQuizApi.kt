@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 
 interface SaturdayQuizApi {
-    @GET("/quiz")
+    @GET("quiz")
     fun getLatestQuiz(): Call<Quiz>
 }
