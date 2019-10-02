@@ -7,7 +7,7 @@
     android:background="@color/background"
     >
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/quizDateView"
         style="@style/QuizDateText"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         tools:text="1 January 1970"
         />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/titleView"
         style="@style/TitleText"
         android:layout_width="wrap_content"
