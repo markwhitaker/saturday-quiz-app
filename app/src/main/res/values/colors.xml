@@ -3,11 +3,12 @@
     <color name="foreground">#dddddd</color>
     <color name="foreground_highlight">#ffdd00</color>
     <color name="foreground_dimmed">#666666</color>
+    <color name="foreground_very_dimmed">#222222</color>
 
     <color name="what_links_text">@color/foreground_dimmed</color>
     <color name="question_text">@color/foreground</color>
     <color name="title_text">@color/foreground</color>
     <color name="date_text">@color/foreground_highlight</color>
     <color name="answer_text">@color/foreground_highlight</color>
-    <color name="loading_spinner">@color/foreground</color>
+    <color name="loading_spinner">@color/foreground_very_dimmed</color>
 </resources>

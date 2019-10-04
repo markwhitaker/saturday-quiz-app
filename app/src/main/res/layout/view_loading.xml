@@ -6,8 +6,8 @@
     android:layout_width="@dimen/loading_animation_size"
     android:layout_height="@dimen/loading_animation_size"
     android:layout_centerInParent="true"
-    app:lottie_rawRes="@raw/circular_loader"
+    app:lottie_rawRes="@raw/loader"
     app:lottie_loop="true"
     app:lottie_autoPlay="true"
-    android:alpha="0.9"
+    app:lottie_colorFilter="@color/loading_spinner"
     />

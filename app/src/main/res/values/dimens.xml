@@ -4,7 +4,7 @@
     <dimen name="inner_margin">20dp</dimen>
     <dimen name="number_width">70dp</dimen>
     <dimen name="what_links_icon_padding">5dp</dimen>
-    <dimen name="loading_animation_size">100dp</dimen>
+    <dimen name="loading_animation_size">200dp</dimen>
 
     <!-- Text sizes -->
     <dimen name="date_text">24sp</dimen>
