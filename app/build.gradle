@@ -9,8 +9,8 @@ buildscript {
     ext.ktlint_version = '0.32.0'
     ext.lottie_version = '3.0.7'
     ext.mockk_version = '1.9.3'
-    ext.okhttp_version = '4.0.1'
-    ext.retrofit_version = '2.6.0'
+    ext.okhttp_version = '4.2.1'
+    ext.retrofit_version = '2.6.2'
 }
 
 android {
@@ -53,6 +53,7 @@ dependencies {
 
     // OkHttp
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
