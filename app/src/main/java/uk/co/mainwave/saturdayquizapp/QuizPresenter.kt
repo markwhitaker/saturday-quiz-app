@@ -1,5 +1,6 @@
 package uk.co.mainwave.saturdayquizapp
 
+import uk.co.mainwave.saturdayquizapp.model.ColourSet
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.mvp.MvpPresenter
@@ -7,13 +8,15 @@ import uk.co.mainwave.saturdayquizapp.mvp.MvpView
 import java.util.Date
 
 class QuizPresenter(
-    private val repository: QuizRepository
+    private val repository: QuizRepository,
+    private val prefsRepository: PreferencesRepository
 ) : MvpPresenter<QuizPresenter.View>(), QuizRepository.Listener {
 
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
 
     override fun onViewDisplayed() {
+        view.setColours(prefsRepository.colourSet)
         view.showLoading()
 
         scenes.clear()
@@ -45,6 +48,27 @@ class QuizPresenter(
             sceneIndex--
             showScene()
         }
+    }
+
+    fun onUp() {
+        when (prefsRepository.colourSet) {
+            ColourSet.LIGHT -> return
+            ColourSet.MEDIUM -> setColourSet(ColourSet.LIGHT)
+            ColourSet.DARK -> setColourSet(ColourSet.MEDIUM)
+        }
+    }
+
+    fun onDown() {
+        when (prefsRepository.colourSet) {
+            ColourSet.LIGHT -> setColourSet(ColourSet.MEDIUM)
+            ColourSet.MEDIUM -> setColourSet(ColourSet.DARK)
+            ColourSet.DARK -> return
+        }
+    }
+
+    private fun setColourSet(colourSet: ColourSet) {
+        prefsRepository.colourSet = colourSet
+        view.setColours(colourSet)
     }
 
     private fun buildScenes(quiz: Quiz) {
@@ -106,6 +130,7 @@ class QuizPresenter(
         fun showNumber(number: Int)
         fun showQuestion(question: String, isWhatLinks: Boolean)
         fun showAnswer(answer: String)
+        fun setColours(colours: ColourSet)
         fun quit()
     }
 }

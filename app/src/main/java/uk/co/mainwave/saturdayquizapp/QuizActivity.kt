@@ -1,16 +1,20 @@
 package uk.co.mainwave.saturdayquizapp
 
 import android.app.Activity
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.view_question.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.ext.android.inject
+import uk.co.mainwave.saturdayquizapp.model.ColourSet
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,6 +44,10 @@ class QuizActivity : Activity(), QuizPresenter.View {
                 presenter.onNext()
             KeyEvent.KEYCODE_DPAD_LEFT ->
                 presenter.onPrevious()
+            KeyEvent.KEYCODE_DPAD_UP ->
+                presenter.onUp()
+            KeyEvent.KEYCODE_DPAD_DOWN ->
+                presenter.onDown()
             else ->
                 return super.onKeyUp(keyCode, event)
         }
@@ -102,8 +110,23 @@ class QuizActivity : Activity(), QuizPresenter.View {
         answerView.text = fromHtml(answer)
     }
 
+    override fun setColours(colours: ColourSet) {
+        titleView.setColour(colours.foreground)
+        questionView.setColour(colours.foreground)
+        numberView.setColour(colours.foreground)
+        answerView.setColour(colours.foregroundHighlight)
+        quizDateView.setColour(colours.foregroundHighlight)
+        whatLinksView.setColour(colours.foregroundDimmed)
+    }
+
     override fun quit() {
         finish()
+    }
+
+    private fun TextView.setColour(@ColorRes colorResId: Int) {
+        val colour = resources.getColor(colorResId, null)
+        setTextColor(colour)
+        compoundDrawableTintList = ColorStateList.valueOf(colour)
     }
 
     private fun fromHtml(text: String): Spanned {

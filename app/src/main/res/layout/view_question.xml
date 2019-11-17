@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/numberView"
         android:text="@string/what_links_prefix"
+        tools:textColor="@color/light_foreground_dimmed"
+        tools:drawableTint="@color/light_foreground_dimmed"
         />
 
     <!-- Question number -->
@@ -26,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/whatLinksView"
         tools:text="1."
+        tools:textColor="@color/light_foreground"
         />
 
     <!-- Question -->
@@ -37,6 +40,7 @@
         android:layout_toEndOf="@id/numberView"
         android:layout_below="@id/whatLinksView"
         tools:text="In what novel is Constance unhappily married to Sir Clifford?"
+        tools:textColor="@color/light_foreground"
         />
 
     <!-- Answer -->
@@ -49,6 +53,7 @@
         android:layout_below="@id/questionView"
         android:layout_marginTop="@dimen/inner_margin"
         tools:text="Lady Chatterley’s Lover"
+        tools:textColor="@color/light_foreground_highlight"
         />
 
 </RelativeLayout>
