@@ -6,7 +6,7 @@
     <color name="dark_foreground_dimmed">#222222</color>
 
     <color name="medium_foreground">#888888</color>
-    <color name="medium_foreground_highlight">#bbaa00</color>
+    <color name="medium_foreground_highlight">#aa9900</color>
     <color name="medium_foreground_dimmed">#444444</color>
 
     <color name="light_foreground">#dddddd</color>
