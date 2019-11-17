@@ -1,11 +1,15 @@
 package uk.co.mainwave.saturdayquizapp
 
+import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.excludeRecords
 import io.mockk.mockk
+import io.mockk.verify
 import io.mockk.verifyAll
 import io.mockk.verifyOrder
 import org.junit.Before
 import org.junit.Test
+import uk.co.mainwave.saturdayquizapp.model.ColourSet
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
@@ -13,11 +17,13 @@ import java.util.Date
 
 class QuizPresenterTest {
     // Mocks
-    private val mockRepository = mockk<QuizRepository>(relaxUnitFun = true)
     private val mockView = mockk<QuizPresenter.View>(relaxUnitFun = true)
+    private val mockRepository = mockk<QuizRepository>(relaxUnitFun = true)
+    private val mockPreferencesRepository = mockk<PreferencesRepository>(relaxUnitFun = true)
 
     private val presenter = QuizPresenter(
-        mockRepository
+        mockRepository,
+        mockPreferencesRepository
     )
 
     @Before
@@ -28,10 +34,15 @@ class QuizPresenterTest {
     @Test
     fun `GIVEN presenter initialised WHEN onViewDisplayed() THEN loading view shown and quiz loaded`() {
         // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.LIGHT
         // When
         presenter.onViewDisplayed()
         // Then
         verifyAll {
+            mockPreferencesRepository.colourSet
+            mockView.setColours(ColourSet.LIGHT)
             mockView.showLoading()
             mockRepository.loadQuiz(presenter)
         }
@@ -168,6 +179,132 @@ class QuizPresenterTest {
             // onPrevious() 8 (and 9 is ignored)
             mockView.showQuestionsTitle(TEST_DATE)
         }
+    }
+
+    @Test
+    fun `GIVEN colour set is light WHEN down is pressed THEN colour set is set to medium`() {
+        // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.LIGHT
+        // When
+        presenter.onDown()
+        // Then
+        verifyAll {
+            mockPreferencesRepository.colourSet
+            mockPreferencesRepository.colourSet = ColourSet.MEDIUM
+            mockView.setColours(ColourSet.MEDIUM)
+        }
+        confirmVerified(
+            mockPreferencesRepository,
+            mockView
+        )
+    }
+
+    @Test
+    fun `GIVEN colour set is medium WHEN down is pressed THEN colour set is set to dark`() {
+        // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.MEDIUM
+        // When
+        presenter.onDown()
+        // Then
+        verifyAll {
+            mockPreferencesRepository.colourSet
+            mockPreferencesRepository.colourSet = ColourSet.DARK
+            mockView.setColours(ColourSet.DARK)
+        }
+        confirmVerified(
+            mockPreferencesRepository,
+            mockView
+        )
+    }
+
+    @Test
+    fun `GIVEN colour set is dark WHEN down is pressed THEN nothing happens`() {
+        // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.DARK
+        // When
+        presenter.onDown()
+        // Then
+        verify {
+            mockPreferencesRepository.colourSet
+        }
+        verify(exactly = 0) {
+            mockPreferencesRepository.colourSet = any() as ColourSet
+            mockView.setColours(any())
+        }
+
+        confirmVerified(
+            mockPreferencesRepository,
+            mockView
+        )
+    }
+
+    @Test
+    fun `GIVEN colour set is dark WHEN up is pressed THEN colour set is set to medium`() {
+        // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.DARK
+        // When
+        presenter.onUp()
+        // Then
+        verifyAll {
+            mockPreferencesRepository.colourSet
+            mockPreferencesRepository.colourSet = ColourSet.MEDIUM
+            mockView.setColours(ColourSet.MEDIUM)
+        }
+        confirmVerified(
+            mockPreferencesRepository,
+            mockView
+        )
+    }
+
+    @Test
+    fun `GIVEN colour set is medium WHEN up is pressed THEN colour set is set to light`() {
+        // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.MEDIUM
+        // When
+        presenter.onUp()
+        // Then
+        verifyAll {
+            mockPreferencesRepository.colourSet
+            mockPreferencesRepository.colourSet = ColourSet.LIGHT
+            mockView.setColours(ColourSet.LIGHT)
+        }
+        confirmVerified(
+            mockPreferencesRepository,
+            mockView
+        )
+    }
+
+    @Test
+    fun `GIVEN colour set is light WHEN up is pressed THEN nothing happens`() {
+        // Given
+        every {
+            mockPreferencesRepository.colourSet
+        } returns ColourSet.LIGHT
+        // When
+        presenter.onUp()
+        // Then
+        verify {
+            mockPreferencesRepository.colourSet
+        }
+        verify(exactly = 0) {
+            mockPreferencesRepository.colourSet = any() as ColourSet
+            mockView.setColours(any())
+        }
+
+        confirmVerified(
+            mockPreferencesRepository,
+            mockView
+        )
     }
 
     companion object {
