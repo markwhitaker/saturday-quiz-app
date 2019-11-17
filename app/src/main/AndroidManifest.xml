@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".QuizActivity"
+            android:name=".view.QuizActivity"
             android:banner="@drawable/tv_launcher"
             android:icon="@drawable/tv_launcher"
             android:label="@string/app_name"

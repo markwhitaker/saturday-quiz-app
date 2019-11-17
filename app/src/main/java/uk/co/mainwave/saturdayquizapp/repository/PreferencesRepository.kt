@@ -1,4 +1,4 @@
-package uk.co.mainwave.saturdayquizapp
+package uk.co.mainwave.saturdayquizapp.repository
 
 import android.content.SharedPreferences
 import uk.co.mainwave.saturdayquizapp.model.ColourSet

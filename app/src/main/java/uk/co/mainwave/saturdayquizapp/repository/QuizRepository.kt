@@ -1,4 +1,4 @@
-package uk.co.mainwave.saturdayquizapp
+package uk.co.mainwave.saturdayquizapp.repository
 
 import retrofit2.Call
 import retrofit2.Callback

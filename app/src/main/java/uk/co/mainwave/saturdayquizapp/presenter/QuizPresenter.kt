@@ -1,16 +1,19 @@
-package uk.co.mainwave.saturdayquizapp
+package uk.co.mainwave.saturdayquizapp.presenter
 
 import uk.co.mainwave.saturdayquizapp.model.ColourSet
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.mvp.MvpPresenter
 import uk.co.mainwave.saturdayquizapp.mvp.MvpView
+import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
+import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
 
 class QuizPresenter(
     private val repository: QuizRepository,
     private val prefsRepository: PreferencesRepository
-) : MvpPresenter<QuizPresenter.View>(), QuizRepository.Listener {
+) : MvpPresenter<QuizPresenter.View>(),
+    QuizRepository.Listener {
 
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
@@ -73,15 +76,31 @@ class QuizPresenter(
 
     private fun buildScenes(quiz: Quiz) {
         // First just show the questions
-        scenes.add(Scene.QuestionsTitleScene(quiz.date))
+        scenes.add(
+            Scene.QuestionsTitleScene(
+                quiz.date
+            )
+        )
         quiz.questions.forEach { question ->
-            scenes.add(Scene.QuestionScene(question))
+            scenes.add(
+                Scene.QuestionScene(
+                    question
+                )
+            )
         }
         // Then show each question again, then its answer
         scenes.add(Scene.AnswersTitleScene)
         quiz.questions.forEach { question ->
-            scenes.add(Scene.QuestionScene(question))
-            scenes.add(Scene.QuestionAnswerScene(question))
+            scenes.add(
+                Scene.QuestionScene(
+                    question
+                )
+            )
+            scenes.add(
+                Scene.QuestionAnswerScene(
+                    question
+                )
+            )
         }
         scenes.add(Scene.EndTitleScene)
     }

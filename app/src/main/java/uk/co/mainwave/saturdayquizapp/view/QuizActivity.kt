@@ -1,4 +1,4 @@
-package uk.co.mainwave.saturdayquizapp
+package uk.co.mainwave.saturdayquizapp.view
 
 import android.app.Activity
 import android.content.res.ColorStateList
@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.view_question.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.ext.android.inject
+import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.ColourSet
+import uk.co.mainwave.saturdayquizapp.presenter.QuizPresenter
 import java.text.DateFormat
 import java.util.Date
 import java.util.Locale

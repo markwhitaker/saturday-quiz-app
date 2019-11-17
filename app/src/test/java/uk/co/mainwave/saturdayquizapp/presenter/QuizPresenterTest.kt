@@ -1,4 +1,4 @@
-package uk.co.mainwave.saturdayquizapp
+package uk.co.mainwave.saturdayquizapp.presenter
 
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -13,6 +13,8 @@ import uk.co.mainwave.saturdayquizapp.model.ColourSet
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
+import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
+import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
 
 class QuizPresenterTest {
