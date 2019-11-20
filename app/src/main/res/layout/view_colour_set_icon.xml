@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/colourSetIconView"
+    android:layout_width="@dimen/colour_set_icon_size"
+    android:layout_height="@dimen/colour_set_icon_size"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentBottom="true"
+    android:layout_margin="@dimen/inner_margin"
+    tools:src="@drawable/ic_dark"
+    tools:tint="@color/dark_foreground"
+    />

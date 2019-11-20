@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import kotlinx.android.synthetic.main.activity_quiz.*
+import kotlinx.android.synthetic.main.view_colour_set_icon.*
 import kotlinx.android.synthetic.main.view_question.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.ext.android.inject
@@ -119,6 +120,8 @@ class QuizActivity : Activity(), QuizPresenter.View {
         answerView.setColour(colours.foregroundHighlight)
         quizDateView.setColour(colours.foregroundHighlight)
         whatLinksView.setColour(colours.foregroundDimmed)
+        colourSetIconView.setImageResource(colours.icon)
+        colourSetIconView.supportImageTintList = ColorStateList.valueOf(resources.getColor(colours.foreground, null))
     }
 
     override fun quit() {
