@@ -8,6 +8,8 @@ import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import kotlinx.android.synthetic.main.activity_quiz.*
@@ -120,8 +122,26 @@ class QuizActivity : Activity(), QuizPresenter.View {
         answerView.setColour(colours.foregroundHighlight)
         quizDateView.setColour(colours.foregroundHighlight)
         whatLinksView.setColour(colours.foregroundDimmed)
+    }
+
+    override fun showColoursTip(colours: ColourSet) {
         colourSetIconView.setImageResource(colours.icon)
         colourSetIconView.supportImageTintList = ColorStateList.valueOf(resources.getColor(colours.foreground, null))
+        colourSetIconView
+            .animate()
+            .alpha(1f)
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(100L)
+            .start()
+    }
+
+    override fun hideColoursTip() {
+        colourSetIconView
+            .animate()
+            .alpha(0f)
+            .setInterpolator(DecelerateInterpolator())
+            .setDuration(300L)
+            .start()
     }
 
     override fun quit() {

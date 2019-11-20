@@ -196,6 +196,7 @@ class QuizPresenterTest {
             mockPreferencesRepository.colourSet
             mockPreferencesRepository.colourSet = ColourSet.MEDIUM
             mockView.setColours(ColourSet.MEDIUM)
+            mockView.showColoursTip(ColourSet.MEDIUM)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -216,6 +217,7 @@ class QuizPresenterTest {
             mockPreferencesRepository.colourSet
             mockPreferencesRepository.colourSet = ColourSet.DARK
             mockView.setColours(ColourSet.DARK)
+            mockView.showColoursTip(ColourSet.DARK)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -259,6 +261,7 @@ class QuizPresenterTest {
             mockPreferencesRepository.colourSet
             mockPreferencesRepository.colourSet = ColourSet.MEDIUM
             mockView.setColours(ColourSet.MEDIUM)
+            mockView.showColoursTip(ColourSet.MEDIUM)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -279,6 +282,7 @@ class QuizPresenterTest {
             mockPreferencesRepository.colourSet
             mockPreferencesRepository.colourSet = ColourSet.LIGHT
             mockView.setColours(ColourSet.LIGHT)
+            mockView.showColoursTip(ColourSet.LIGHT)
         }
         confirmVerified(
             mockPreferencesRepository,
