@@ -20,7 +20,11 @@ class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
                 .apply()
         }
 
+    val colourSetTipTimeoutMs: Long
+        get() = COLOUR_SET_TIP_TIMEOUT_MS
+
     companion object {
         private const val COLOUR_SET_KEY = "colourSet"
+        private const val COLOUR_SET_TIP_TIMEOUT_MS = 2000L
     }
 }

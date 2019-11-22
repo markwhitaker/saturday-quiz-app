@@ -1,5 +1,11 @@
 package uk.co.mainwave.saturdayquizapp.presenter
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import uk.co.mainwave.saturdayquizapp.model.ColourSet
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
@@ -17,6 +23,8 @@ class QuizPresenter(
 
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private var timerJob: Job? = null
 
     override fun onViewDisplayed() {
         view.setColours(prefsRepository.colourSet)
@@ -72,6 +80,15 @@ class QuizPresenter(
     private fun setColourSet(colourSet: ColourSet) {
         prefsRepository.colourSet = colourSet
         view.setColours(colourSet)
+        view.showColoursTip(colourSet)
+
+        timerJob?.cancel()
+        timerJob = uiScope.launch {
+            delay(prefsRepository.colourSetTipTimeoutMs)
+            if (isActive) {
+                view.hideColoursTip()
+            }
+        }
     }
 
     private fun buildScenes(quiz: Quiz) {
@@ -149,7 +166,9 @@ class QuizPresenter(
         fun showNumber(number: Int)
         fun showQuestion(question: String, isWhatLinks: Boolean)
         fun showAnswer(answer: String)
-        fun setColours(colours: ColourSet)
+        fun setColours(colourSet: ColourSet)
+        fun showColoursTip(colourSet: ColourSet)
+        fun hideColoursTip()
         fun quit()
     }
 }
