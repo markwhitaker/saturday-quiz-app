@@ -5,6 +5,7 @@
     android:id="@+id/colourSetIconView"
     android:layout_width="@dimen/colour_set_icon_size"
     android:layout_height="@dimen/colour_set_icon_size"
+    android:layout_margin="@dimen/inner_margin"
     android:layout_alignParentEnd="true"
     android:layout_alignParentBottom="true"
     >
