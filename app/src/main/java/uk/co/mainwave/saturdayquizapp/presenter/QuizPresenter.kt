@@ -166,8 +166,8 @@ class QuizPresenter(
         fun showNumber(number: Int)
         fun showQuestion(question: String, isWhatLinks: Boolean)
         fun showAnswer(answer: String)
-        fun setColours(colours: ColourSet)
-        fun showColoursTip(colours: ColourSet)
+        fun setColours(colourSet: ColourSet)
+        fun showColoursTip(colourSet: ColourSet)
         fun hideColoursTip()
         fun quit()
     }

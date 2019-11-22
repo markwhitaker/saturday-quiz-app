@@ -8,6 +8,7 @@ import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
@@ -115,23 +116,34 @@ class QuizActivity : Activity(), QuizPresenter.View {
         answerView.text = fromHtml(answer)
     }
 
-    override fun setColours(colours: ColourSet) {
-        titleView.setColour(colours.foreground)
-        questionView.setColour(colours.foreground)
-        numberView.setColour(colours.foreground)
-        answerView.setColour(colours.foregroundHighlight)
-        quizDateView.setColour(colours.foregroundHighlight)
-        whatLinksView.setColour(colours.foregroundDimmed)
+    override fun setColours(colourSet: ColourSet) {
+        titleView.setColour(colourSet.foreground)
+        questionView.setColour(colourSet.foreground)
+        numberView.setColour(colourSet.foreground)
+        answerView.setColour(colourSet.foregroundHighlight)
+        quizDateView.setColour(colourSet.foregroundHighlight)
+        whatLinksView.setColour(colourSet.foregroundDimmed)
     }
 
-    override fun showColoursTip(colours: ColourSet) {
-        colourSetIconView.setImageResource(colours.icon)
-        colourSetIconView.supportImageTintList = ColorStateList.valueOf(resources.getColor(colours.foreground, null))
+    override fun showColoursTip(colourSet: ColourSet) {
+        val tintList = ColorStateList.valueOf(resources.getColor(colourSet.foreground, null))
+        colourSetIconDots.apply {
+            setImageResource(colourSet.dotsDrawable)
+            colourSetIconDots.supportImageTintList = tintList
+        }
+        colourSetIconDial.apply {
+            supportImageTintList = tintList
+            animate()
+                .rotation(colourSet.dialRotation)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .setDuration(TIP_DIAL_ROTATE_DURATION_MS)
+                .start()
+        }
         colourSetIconView
             .animate()
             .alpha(1f)
             .setInterpolator(AccelerateInterpolator())
-            .setDuration(100L)
+            .setDuration(TIP_FADE_IN_DURATION_MS)
             .start()
     }
 
@@ -140,7 +152,7 @@ class QuizActivity : Activity(), QuizPresenter.View {
             .animate()
             .alpha(0f)
             .setInterpolator(DecelerateInterpolator())
-            .setDuration(300L)
+            .setDuration(TIP_FADE_OUT_DURATION_MS)
             .start()
     }
 
@@ -169,5 +181,11 @@ class QuizActivity : Activity(), QuizPresenter.View {
 
     private fun View.hide() {
         visibility = View.GONE
+    }
+
+    companion object {
+        const val TIP_FADE_IN_DURATION_MS = 50L
+        const val TIP_FADE_OUT_DURATION_MS = 300L
+        const val TIP_DIAL_ROTATE_DURATION_MS = 200L
     }
 }
