@@ -6,15 +6,15 @@ package uk.co.mainwave.saturdayquizapp.mvp
 interface MvpView
 
 /**
- * Base interface for an MVP presenter, specifying [T] as the [MvpView] type.
+ * Base interface for an MVP presenter, specifying [V] as the [MvpView] type.
  */
-abstract class MvpPresenter<T : MvpView> {
-    protected lateinit var view: T
+abstract class MvpPresenter<V : MvpView> {
+    protected lateinit var view: V
 
     /**
      * Attach the [view] to the presenter once the view is constructed
      */
-    fun onViewCreated(view: T) {
+    fun onViewCreated(view: V) {
         this.view = view
     }
 

@@ -19,4 +19,8 @@
         layout="@layout/view_loading"
         />
 
+    <include
+        layout="@layout/view_colour_set_icon"
+        />
+
 </RelativeLayout>
