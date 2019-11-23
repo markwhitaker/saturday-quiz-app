@@ -1,11 +1,11 @@
 package uk.co.mainwave.saturdayquizapp.presenter
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
@@ -23,7 +23,6 @@ class QuizPresenter(
 
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
-    private val uiScope = CoroutineScope(Dispatchers.Main)
     private var timerJob: Job? = null
 
     override fun onViewDisplayed() {
@@ -83,10 +82,12 @@ class QuizPresenter(
         view.showThemeTip(theme)
 
         timerJob?.cancel()
-        timerJob = uiScope.launch {
+        timerJob = launch {
             delay(prefsRepository.themeTipTimeoutMs)
             if (isActive) {
-                view.hideThemeTip()
+                withContext(Dispatchers.Main) {
+                    view.hideThemeTip()
+                }
             }
         }
     }
