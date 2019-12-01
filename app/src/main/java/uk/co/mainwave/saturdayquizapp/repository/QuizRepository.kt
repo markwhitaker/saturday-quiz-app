@@ -17,6 +17,7 @@ class QuizRepository(
         retrofit
             .create(SaturdayQuizApi::class.java)
             .getLatestQuiz()
+//            .getKnownGoodQuiz()
             .enqueue(this)
     }
 
