@@ -6,7 +6,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import uk.co.mainwave.saturdayquizapp.model.ColourSet
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.mvp.MvpPresenter
@@ -27,7 +27,7 @@ class QuizPresenter(
     private var timerJob: Job? = null
 
     override fun onViewDisplayed() {
-        view.setColours(prefsRepository.colourSet)
+        view.setTheme(prefsRepository.theme)
         view.showLoading()
 
         scenes.clear()
@@ -62,31 +62,31 @@ class QuizPresenter(
     }
 
     fun onUp() {
-        when (prefsRepository.colourSet) {
-            ColourSet.LIGHT -> return
-            ColourSet.MEDIUM -> setColourSet(ColourSet.LIGHT)
-            ColourSet.DARK -> setColourSet(ColourSet.MEDIUM)
+        when (prefsRepository.theme) {
+            Theme.LIGHT -> return
+            Theme.MEDIUM -> setTheme(Theme.LIGHT)
+            Theme.DARK -> setTheme(Theme.MEDIUM)
         }
     }
 
     fun onDown() {
-        when (prefsRepository.colourSet) {
-            ColourSet.LIGHT -> setColourSet(ColourSet.MEDIUM)
-            ColourSet.MEDIUM -> setColourSet(ColourSet.DARK)
-            ColourSet.DARK -> return
+        when (prefsRepository.theme) {
+            Theme.LIGHT -> setTheme(Theme.MEDIUM)
+            Theme.MEDIUM -> setTheme(Theme.DARK)
+            Theme.DARK -> return
         }
     }
 
-    private fun setColourSet(colourSet: ColourSet) {
-        prefsRepository.colourSet = colourSet
-        view.setColours(colourSet)
-        view.showColoursTip(colourSet)
+    private fun setTheme(theme: Theme) {
+        prefsRepository.theme = theme
+        view.setTheme(theme)
+        view.showThemeTip(theme)
 
         timerJob?.cancel()
         timerJob = uiScope.launch {
-            delay(prefsRepository.colourSetTipTimeoutMs)
+            delay(prefsRepository.themeTipTimeoutMs)
             if (isActive) {
-                view.hideColoursTip()
+                view.hideThemeTip()
             }
         }
     }
@@ -166,9 +166,9 @@ class QuizPresenter(
         fun showNumber(number: Int)
         fun showQuestion(question: String, isWhatLinks: Boolean)
         fun showAnswer(answer: String)
-        fun setColours(colourSet: ColourSet)
-        fun showColoursTip(colourSet: ColourSet)
-        fun hideColoursTip()
+        fun setTheme(theme: Theme)
+        fun showThemeTip(theme: Theme)
+        fun hideThemeTip()
         fun quit()
     }
 }

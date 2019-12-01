@@ -9,7 +9,7 @@ import io.mockk.verifyAll
 import io.mockk.verifyOrder
 import org.junit.Before
 import org.junit.Test
-import uk.co.mainwave.saturdayquizapp.model.ColourSet
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
@@ -37,14 +37,14 @@ class QuizPresenterTest {
     fun `GIVEN presenter initialised WHEN onViewDisplayed() THEN loading view shown and quiz loaded`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.LIGHT
+            mockPreferencesRepository.theme
+        } returns Theme.LIGHT
         // When
         presenter.onViewDisplayed()
         // Then
         verifyAll {
-            mockPreferencesRepository.colourSet
-            mockView.setColours(ColourSet.LIGHT)
+            mockPreferencesRepository.theme
+            mockView.setTheme(Theme.LIGHT)
             mockView.showLoading()
             mockRepository.loadQuiz(presenter)
         }
@@ -184,19 +184,19 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN colour set is light WHEN down is pressed THEN colour set is set to medium`() {
+    fun `GIVEN theme is light WHEN down is pressed THEN theme is set to medium`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.LIGHT
+            mockPreferencesRepository.theme
+        } returns Theme.LIGHT
         // When
         presenter.onDown()
         // Then
         verifyAll {
-            mockPreferencesRepository.colourSet
-            mockPreferencesRepository.colourSet = ColourSet.MEDIUM
-            mockView.setColours(ColourSet.MEDIUM)
-            mockView.showColoursTip(ColourSet.MEDIUM)
+            mockPreferencesRepository.theme
+            mockPreferencesRepository.theme = Theme.MEDIUM
+            mockView.setTheme(Theme.MEDIUM)
+            mockView.showThemeTip(Theme.MEDIUM)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -205,19 +205,19 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN colour set is medium WHEN down is pressed THEN colour set is set to dark`() {
+    fun `GIVEN theme is medium WHEN down is pressed THEN theme is set to dark`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.MEDIUM
+            mockPreferencesRepository.theme
+        } returns Theme.MEDIUM
         // When
         presenter.onDown()
         // Then
         verifyAll {
-            mockPreferencesRepository.colourSet
-            mockPreferencesRepository.colourSet = ColourSet.DARK
-            mockView.setColours(ColourSet.DARK)
-            mockView.showColoursTip(ColourSet.DARK)
+            mockPreferencesRepository.theme
+            mockPreferencesRepository.theme = Theme.DARK
+            mockView.setTheme(Theme.DARK)
+            mockView.showThemeTip(Theme.DARK)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -226,20 +226,20 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN colour set is dark WHEN down is pressed THEN nothing happens`() {
+    fun `GIVEN theme is dark WHEN down is pressed THEN nothing happens`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.DARK
+            mockPreferencesRepository.theme
+        } returns Theme.DARK
         // When
         presenter.onDown()
         // Then
         verify {
-            mockPreferencesRepository.colourSet
+            mockPreferencesRepository.theme
         }
         verify(exactly = 0) {
-            mockPreferencesRepository.colourSet = any() as ColourSet
-            mockView.setColours(any())
+            mockPreferencesRepository.theme = any() as Theme
+            mockView.setTheme(any())
         }
 
         confirmVerified(
@@ -249,19 +249,19 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN colour set is dark WHEN up is pressed THEN colour set is set to medium`() {
+    fun `GIVEN theme is dark WHEN up is pressed THEN theme is set to medium`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.DARK
+            mockPreferencesRepository.theme
+        } returns Theme.DARK
         // When
         presenter.onUp()
         // Then
         verifyAll {
-            mockPreferencesRepository.colourSet
-            mockPreferencesRepository.colourSet = ColourSet.MEDIUM
-            mockView.setColours(ColourSet.MEDIUM)
-            mockView.showColoursTip(ColourSet.MEDIUM)
+            mockPreferencesRepository.theme
+            mockPreferencesRepository.theme = Theme.MEDIUM
+            mockView.setTheme(Theme.MEDIUM)
+            mockView.showThemeTip(Theme.MEDIUM)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -270,19 +270,19 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN colour set is medium WHEN up is pressed THEN colour set is set to light`() {
+    fun `GIVEN theme is medium WHEN up is pressed THEN theme is set to light`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.MEDIUM
+            mockPreferencesRepository.theme
+        } returns Theme.MEDIUM
         // When
         presenter.onUp()
         // Then
         verifyAll {
-            mockPreferencesRepository.colourSet
-            mockPreferencesRepository.colourSet = ColourSet.LIGHT
-            mockView.setColours(ColourSet.LIGHT)
-            mockView.showColoursTip(ColourSet.LIGHT)
+            mockPreferencesRepository.theme
+            mockPreferencesRepository.theme = Theme.LIGHT
+            mockView.setTheme(Theme.LIGHT)
+            mockView.showThemeTip(Theme.LIGHT)
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -291,20 +291,20 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN colour set is light WHEN up is pressed THEN nothing happens`() {
+    fun `GIVEN theme is light WHEN up is pressed THEN nothing happens`() {
         // Given
         every {
-            mockPreferencesRepository.colourSet
-        } returns ColourSet.LIGHT
+            mockPreferencesRepository.theme
+        } returns Theme.LIGHT
         // When
         presenter.onUp()
         // Then
         verify {
-            mockPreferencesRepository.colourSet
+            mockPreferencesRepository.theme
         }
         verify(exactly = 0) {
-            mockPreferencesRepository.colourSet = any() as ColourSet
-            mockView.setColours(any())
+            mockPreferencesRepository.theme = any() as Theme
+            mockView.setTheme(any())
         }
 
         confirmVerified(

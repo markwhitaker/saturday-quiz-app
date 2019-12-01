@@ -20,7 +20,7 @@
         />
 
     <include
-        layout="@layout/view_colour_set_icon"
+        layout="@layout/view_theme_tip"
         />
 
 </RelativeLayout>

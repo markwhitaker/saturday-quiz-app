@@ -14,12 +14,12 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import kotlinx.android.synthetic.main.activity_quiz.*
-import kotlinx.android.synthetic.main.view_colour_set_icon.*
+import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_question.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.ext.android.inject
 import uk.co.mainwave.saturdayquizapp.R
-import uk.co.mainwave.saturdayquizapp.model.ColourSet
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.presenter.QuizPresenter
 import java.text.DateFormat
 import java.util.Date
@@ -116,30 +116,30 @@ class QuizActivity : Activity(), QuizPresenter.View {
         answerView.text = fromHtml(answer)
     }
 
-    override fun setColours(colourSet: ColourSet) {
-        titleView.setColour(colourSet.foreground)
-        questionView.setColour(colourSet.foreground)
-        numberView.setColour(colourSet.foreground)
-        answerView.setColour(colourSet.foregroundHighlight)
-        quizDateView.setColour(colourSet.foregroundHighlight)
-        whatLinksView.setColour(colourSet.foregroundDimmed)
+    override fun setTheme(theme: Theme) {
+        titleView.setColour(theme.foreground)
+        questionView.setColour(theme.foreground)
+        numberView.setColour(theme.foreground)
+        answerView.setColour(theme.foregroundHighlight)
+        quizDateView.setColour(theme.foregroundHighlight)
+        whatLinksView.setColour(theme.foregroundDimmed)
     }
 
-    override fun showColoursTip(colourSet: ColourSet) {
-        val tintList = ColorStateList.valueOf(resources.getColor(colourSet.foreground, null))
-        colourSetIconDots.apply {
-            setImageResource(colourSet.dotsDrawable)
-            colourSetIconDots.supportImageTintList = tintList
+    override fun showThemeTip(theme: Theme) {
+        val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
+        themeTipDots.apply {
+            setImageResource(theme.dotsDrawable)
+            themeTipDots.supportImageTintList = tintList
         }
-        colourSetIconDial.apply {
+        themeTipDial.apply {
             supportImageTintList = tintList
             animate()
-                .rotation(colourSet.dialRotation)
+                .rotation(theme.dialRotation)
                 .setInterpolator(AccelerateDecelerateInterpolator())
                 .setDuration(TIP_DIAL_ROTATE_DURATION_MS)
                 .start()
         }
-        colourSetIconView
+        themeTipView
             .animate()
             .alpha(1f)
             .setInterpolator(AccelerateInterpolator())
@@ -147,8 +147,8 @@ class QuizActivity : Activity(), QuizPresenter.View {
             .start()
     }
 
-    override fun hideColoursTip() {
-        colourSetIconView
+    override fun hideThemeTip() {
+        themeTipView
             .animate()
             .alpha(0f)
             .setInterpolator(DecelerateInterpolator())

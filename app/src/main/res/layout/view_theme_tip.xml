@@ -2,26 +2,26 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/colourSetIconView"
-    android:layout_width="@dimen/colour_set_icon_size"
-    android:layout_height="@dimen/colour_set_icon_size"
+    android:id="@+id/themeTipView"
+    android:layout_width="@dimen/theme_tip_size"
+    android:layout_height="@dimen/theme_tip_size"
     android:layout_margin="@dimen/inner_margin"
     android:layout_alignParentEnd="true"
     android:layout_alignParentBottom="true"
     >
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/colourSetIconDots"
-        android:layout_width="@dimen/colour_set_icon_size"
-        android:layout_height="@dimen/colour_set_icon_size"
+        android:id="@+id/themeTipDots"
+        android:layout_width="@dimen/theme_tip_size"
+        android:layout_height="@dimen/theme_tip_size"
         tools:src="@drawable/ic_dots_light"
         tools:tint="@color/light_foreground"
         />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/colourSetIconDial"
-        android:layout_width="@dimen/colour_set_icon_size"
-        android:layout_height="@dimen/colour_set_icon_size"
+        android:id="@+id/themeTipDial"
+        android:layout_width="@dimen/theme_tip_size"
+        android:layout_height="@dimen/theme_tip_size"
         android:src="@drawable/ic_dial"
         tools:rotation="30"
         tools:tint="@color/light_foreground"

@@ -1,30 +1,30 @@
 package uk.co.mainwave.saturdayquizapp.repository
 
 import android.content.SharedPreferences
-import uk.co.mainwave.saturdayquizapp.model.ColourSet
+import uk.co.mainwave.saturdayquizapp.model.Theme
 
 class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
-    var colourSet: ColourSet
+    var theme: Theme
         get() {
-            val colourSetName = sharedPreferences.getString(COLOUR_SET_KEY, null)
-            return if (colourSetName != null) {
-                ColourSet.valueOf(colourSetName)
+            val themeName = sharedPreferences.getString(THEME_KEY, null)
+            return if (themeName != null) {
+                Theme.valueOf(themeName)
             } else {
-                ColourSet.default
+                Theme.default
             }
         }
         set(value) {
             sharedPreferences
                 .edit()
-                .putString(COLOUR_SET_KEY, value.name)
+                .putString(THEME_KEY, value.name)
                 .apply()
         }
 
-    val colourSetTipTimeoutMs: Long
-        get() = COLOUR_SET_TIP_TIMEOUT_MS
+    val themeTipTimeoutMs: Long
+        get() = THEME_TIP_TIMEOUT_MS
 
     companion object {
-        private const val COLOUR_SET_KEY = "colourSet"
-        private const val COLOUR_SET_TIP_TIMEOUT_MS = 2000L
+        private const val THEME_KEY = "theme"
+        private const val THEME_TIP_TIMEOUT_MS = 2000L
     }
 }

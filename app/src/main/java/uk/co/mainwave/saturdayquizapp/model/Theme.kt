@@ -4,7 +4,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import uk.co.mainwave.saturdayquizapp.R
 
-enum class ColourSet(
+enum class Theme(
     @ColorRes val foreground: Int,
     @ColorRes val foregroundHighlight: Int,
     @ColorRes val foregroundDimmed: Int,
