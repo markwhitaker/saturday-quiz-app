@@ -7,30 +7,40 @@ import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyAll
 import io.mockk.verifyOrder
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
-import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
 
+@ExperimentalCoroutinesApi
 class QuizPresenterTest {
     // Mocks
     private val mockView = mockk<QuizPresenter.View>(relaxUnitFun = true)
     private val mockRepository = mockk<QuizRepository>(relaxUnitFun = true)
     private val mockPreferencesRepository = mockk<PreferencesRepository>(relaxUnitFun = true)
 
+    private val uiDispatcher = TestCoroutineDispatcher()
+
     private val presenter = QuizPresenter(
         mockRepository,
-        mockPreferencesRepository
+        mockPreferencesRepository,
+        uiDispatcher
     )
 
     @Before
     fun setUp() {
         presenter.onViewCreated(mockView)
+        every {
+            mockPreferencesRepository.themeTipTimeoutMs
+        } returns 0
     }
 
     @Test
@@ -184,7 +194,7 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN theme is light WHEN down is pressed THEN theme is set to medium`() {
+    fun `GIVEN theme is light WHEN down is pressed THEN theme is set to medium`() = runBlockingTest {
         // Given
         every {
             mockPreferencesRepository.theme
@@ -197,6 +207,8 @@ class QuizPresenterTest {
             mockPreferencesRepository.theme = Theme.MEDIUM
             mockView.setTheme(Theme.MEDIUM)
             mockView.showThemeTip(Theme.MEDIUM)
+            mockPreferencesRepository.themeTipTimeoutMs
+            mockView.hideThemeTip()
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -205,7 +217,7 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN theme is medium WHEN down is pressed THEN theme is set to dark`() {
+    fun `GIVEN theme is medium WHEN down is pressed THEN theme is set to dark`() = runBlockingTest {
         // Given
         every {
             mockPreferencesRepository.theme
@@ -218,6 +230,8 @@ class QuizPresenterTest {
             mockPreferencesRepository.theme = Theme.DARK
             mockView.setTheme(Theme.DARK)
             mockView.showThemeTip(Theme.DARK)
+            mockPreferencesRepository.themeTipTimeoutMs
+            mockView.hideThemeTip()
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -226,7 +240,7 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN theme is dark WHEN down is pressed THEN nothing happens`() {
+    fun `GIVEN theme is dark WHEN down is pressed THEN nothing happens`() = runBlockingTest {
         // Given
         every {
             mockPreferencesRepository.theme
@@ -249,7 +263,7 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN theme is dark WHEN up is pressed THEN theme is set to medium`() {
+    fun `GIVEN theme is dark WHEN up is pressed THEN theme is set to medium`() = runBlockingTest {
         // Given
         every {
             mockPreferencesRepository.theme
@@ -262,6 +276,8 @@ class QuizPresenterTest {
             mockPreferencesRepository.theme = Theme.MEDIUM
             mockView.setTheme(Theme.MEDIUM)
             mockView.showThemeTip(Theme.MEDIUM)
+            mockPreferencesRepository.themeTipTimeoutMs
+            mockView.hideThemeTip()
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -270,7 +286,7 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN theme is medium WHEN up is pressed THEN theme is set to light`() {
+    fun `GIVEN theme is medium WHEN up is pressed THEN theme is set to light`() = runBlockingTest {
         // Given
         every {
             mockPreferencesRepository.theme
@@ -283,6 +299,8 @@ class QuizPresenterTest {
             mockPreferencesRepository.theme = Theme.LIGHT
             mockView.setTheme(Theme.LIGHT)
             mockView.showThemeTip(Theme.LIGHT)
+            mockPreferencesRepository.themeTipTimeoutMs
+            mockView.hideThemeTip()
         }
         confirmVerified(
             mockPreferencesRepository,
@@ -291,7 +309,7 @@ class QuizPresenterTest {
     }
 
     @Test
-    fun `GIVEN theme is light WHEN up is pressed THEN nothing happens`() {
+    fun `GIVEN theme is light WHEN up is pressed THEN nothing happens`() = runBlockingTest {
         // Given
         every {
             mockPreferencesRepository.theme

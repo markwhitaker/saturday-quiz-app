@@ -1,23 +1,24 @@
 package uk.co.mainwave.saturdayquizapp.presenter
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.mvp.MvpPresenter
 import uk.co.mainwave.saturdayquizapp.mvp.MvpView
 import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
+import kotlin.coroutines.CoroutineContext
 
 class QuizPresenter(
     private val repository: QuizRepository,
-    private val prefsRepository: PreferencesRepository
+    private val prefsRepository: PreferencesRepository,
+    private val uiDispatcher: CoroutineContext
 ) : MvpPresenter<QuizPresenter.View>(),
     QuizRepository.Listener {
 
@@ -85,7 +86,7 @@ class QuizPresenter(
         timerJob = launch {
             delay(prefsRepository.themeTipTimeoutMs)
             if (isActive) {
-                withContext(Dispatchers.Main) {
+                withContext(uiDispatcher) {
                     view.hideThemeTip()
                 }
             }
