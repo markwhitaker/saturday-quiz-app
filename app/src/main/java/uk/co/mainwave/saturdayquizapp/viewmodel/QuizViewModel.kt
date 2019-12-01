@@ -18,8 +18,6 @@ import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
 
 
-// TODO: use LiveData for quiz repository request
-
 class QuizViewModel(
     private val repository: QuizRepository,
     private val prefsRepository: PreferencesRepository
