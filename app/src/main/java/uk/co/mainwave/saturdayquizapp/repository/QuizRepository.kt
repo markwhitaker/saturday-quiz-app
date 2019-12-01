@@ -16,8 +16,8 @@ class QuizRepository(
         this.listener = listener
         retrofit
             .create(SaturdayQuizApi::class.java)
-            .getLatestQuiz()
-//            .getKnownGoodQuiz()
+//            .getLatestQuiz()
+            .getKnownGoodQuiz()
             .enqueue(this)
     }
 
