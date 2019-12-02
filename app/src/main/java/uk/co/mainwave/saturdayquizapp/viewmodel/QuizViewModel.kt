@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -19,7 +18,7 @@ import java.util.Date
 
 
 class QuizViewModel(
-    private val repository: QuizRepository,
+    private val quizRepository: QuizRepository,
     private val prefsRepository: PreferencesRepository
 ) : ViewModel(), QuizRepository.Listener {
     private val data = Data()
@@ -44,7 +43,7 @@ class QuizViewModel(
 
         scenes.clear()
         sceneIndex = 0
-        repository.loadQuiz(this)
+        quizRepository.loadQuiz(this)
     }
 
     override fun onQuizLoaded(quiz: Quiz) {

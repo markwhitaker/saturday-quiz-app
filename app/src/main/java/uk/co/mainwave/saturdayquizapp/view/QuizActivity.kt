@@ -15,8 +15,8 @@ import androidx.annotation.ColorRes
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_quiz.*
-import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_question.*
+import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
@@ -74,7 +74,7 @@ class QuizActivity : FragmentActivity() {
         val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
         themeTipDots.apply {
             setImageResource(theme.dotsDrawable)
-            themeTipDots.supportImageTintList = tintList
+            supportImageTintList = tintList
         }
         themeTipDial.apply {
             supportImageTintList = tintList
