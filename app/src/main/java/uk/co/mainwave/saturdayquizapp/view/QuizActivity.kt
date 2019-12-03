@@ -1,6 +1,5 @@
 package uk.co.mainwave.saturdayquizapp.view
 
-import android.app.Activity
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -13,21 +12,22 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_quiz.*
-import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_question.*
+import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_title.*
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.Theme
-import uk.co.mainwave.saturdayquizapp.presenter.QuizPresenter
+import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
-import java.util.Date
 import java.util.Locale
 
-class QuizActivity : Activity(), QuizPresenter.View {
+class QuizActivity : FragmentActivity() {
 
-    private val presenter: QuizPresenter by inject()
+    private val viewModel: QuizViewModel by viewModel()
     private lateinit var whatLinksPrefix: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,93 +35,33 @@ class QuizActivity : Activity(), QuizPresenter.View {
 
         setContentView(R.layout.activity_quiz)
         whatLinksPrefix = getString(R.string.what_links_prefix)
-        presenter.onViewCreated(this)
+
+        connectViewModel()
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.onViewDisplayed()
-    }
-
-    override fun onDestroy() {
-        presenter.onViewDestroyed()
-        super.onDestroy()
+        viewModel.start()
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_RIGHT,
             KeyEvent.KEYCODE_DPAD_CENTER ->
-                presenter.onNext()
+                viewModel.onNext()
             KeyEvent.KEYCODE_DPAD_LEFT ->
-                presenter.onPrevious()
+                viewModel.onPrevious()
             KeyEvent.KEYCODE_DPAD_UP ->
-                presenter.onUp()
+                viewModel.onUp()
             KeyEvent.KEYCODE_DPAD_DOWN ->
-                presenter.onDown()
+                viewModel.onDown()
             else ->
                 return super.onKeyUp(keyCode, event)
         }
         return true
     }
 
-    override fun showLoading() {
-        loadingView.show()
-    }
-
-    override fun hideLoading() {
-        loadingView.hide()
-    }
-
-    override fun showQuestionsTitle(date: Date?) {
-        if (date != null) {
-            quizDateView.text = DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
-            quizDateView.show()
-        } else {
-            quizDateView.hide()
-        }
-        titleView.setText(R.string.title_questions)
-        titleLayout.show()
-    }
-
-    override fun showAnswersTitle() {
-        quizDateView.hide()
-        titleView.setText(R.string.title_answers)
-        titleLayout.show()
-    }
-
-    override fun showEndTitle() {
-        quizDateView.hide()
-        titleView.setText(R.string.title_end)
-        titleLayout.show()
-    }
-
-    override fun hideTitle() {
-        titleLayout.hide()
-    }
-
-    override fun showNumber(number: Int) {
-        numberView.text = getString(R.string.question_number_format, number)
-    }
-
-    override fun showQuestion(
-        question: String,
-        isWhatLinks: Boolean
-    ) {
-        whatLinksView.visibility = if (isWhatLinks) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
-
-        questionView.text = fromHtml(question)
-    }
-
-    override fun showAnswer(answer: String) {
-        answerView.text = fromHtml(answer)
-    }
-
-    override fun setTheme(theme: Theme) {
+    private fun setTheme(theme: Theme) {
         titleView.setColour(theme.foreground)
         questionView.setColour(theme.foreground)
         numberView.setColour(theme.foreground)
@@ -130,11 +70,11 @@ class QuizActivity : Activity(), QuizPresenter.View {
         whatLinksView.setColour(theme.foregroundDimmed)
     }
 
-    override fun showThemeTip(theme: Theme) {
+    private fun showThemeTip(theme: Theme) {
         val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
         themeTipDots.apply {
             setImageResource(theme.dotsDrawable)
-            themeTipDots.supportImageTintList = tintList
+            supportImageTintList = tintList
         }
         themeTipDial.apply {
             supportImageTintList = tintList
@@ -152,7 +92,7 @@ class QuizActivity : Activity(), QuizPresenter.View {
             .start()
     }
 
-    override fun hideThemeTip() {
+    private fun hideThemeTip() {
         themeTipView
             .animate()
             .alpha(0f)
@@ -161,8 +101,71 @@ class QuizActivity : Activity(), QuizPresenter.View {
             .start()
     }
 
-    override fun quit() {
-        finish()
+    private fun connectViewModel() {
+        val activity = this
+        viewModel.apply {
+            showLoading.observe(activity) { show ->
+                if (show) {
+                    loadingView.show()
+                } else {
+                    loadingView.hide()
+                }
+            }
+
+            quizDate.observe(activity) { date ->
+                if (date != null) {
+                    quizDateView.text =
+                        DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
+                    quizDateView.show()
+                } else {
+                    quizDateView.hide()
+                }
+            }
+
+            titleResId.observe(activity) { titleResId ->
+                titleView.setText(titleResId)
+                titleLayout.show()
+            }
+
+            questionNumber.observe(activity) { number ->
+                numberView.text = getString(R.string.question_number_format, number)
+            }
+
+            questionText.observe(activity) { questionText ->
+                questionView.text = fromHtml(questionText)
+                titleLayout.hide()
+            }
+
+            answerText.observe(activity) { answerText ->
+                answerView.text = answerText
+            }
+
+            isWhatLinks.observe(activity) { isWhatLinks ->
+                whatLinksView.visibility = if (isWhatLinks) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
+            }
+
+            theme.observe(activity) { theme ->
+                setTheme(theme)
+            }
+
+            themeTip.observe(activity) { theme ->
+                if (theme != null) {
+                    showThemeTip(theme)
+                } else {
+                    hideThemeTip()
+                }
+            }
+
+            quit.observe(activity) { quit ->
+                if (quit) {
+                    finish()
+                }
+            }
+        }
     }
 
     private fun TextView.setColour(@ColorRes colorResId: Int) {

@@ -1,48 +1,59 @@
-package uk.co.mainwave.saturdayquizapp.presenter
+package uk.co.mainwave.saturdayquizapp.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.model.Theme
-import uk.co.mainwave.saturdayquizapp.mvp.MvpPresenter
-import uk.co.mainwave.saturdayquizapp.mvp.MvpView
 import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
-import kotlin.coroutines.CoroutineContext
 
-class QuizPresenter(
-    private val repository: QuizRepository,
-    private val prefsRepository: PreferencesRepository,
-    private val uiDispatcher: CoroutineContext
-) : MvpPresenter<QuizPresenter.View>(),
-    QuizRepository.Listener {
 
+class QuizViewModel(
+    private val quizRepository: QuizRepository,
+    private val prefsRepository: PreferencesRepository
+) : ViewModel(), QuizRepository.Listener {
+    private val data = Data()
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
     private var timerJob: Job? = null
 
-    override fun onViewDisplayed() {
-        view.setTheme(prefsRepository.theme)
-        view.showLoading()
+    val showLoading: LiveData<Boolean> = data.showLoading
+    val quizDate: LiveData<Date?> = data.quizDate
+    val titleResId: LiveData<Int> = data.titleResId
+    val questionNumber: LiveData<Int> = data.questionNumber
+    val questionText: LiveData<String> = data.questionText
+    val answerText: LiveData<String> = data.answerText
+    val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
+    val theme: LiveData<Theme> = data.theme
+    val quit: LiveData<Boolean> = data.quit
+    val themeTip: LiveData<Theme?> = data.themeTip
+
+    fun start() {
+        data.theme.value = prefsRepository.theme
+        data.showLoading.value = true
 
         scenes.clear()
         sceneIndex = 0
-        repository.loadQuiz(this)
+        quizRepository.loadQuiz(this)
     }
 
     override fun onQuizLoaded(quiz: Quiz) {
         buildScenes(quiz)
-        view.hideLoading()
+        data.showLoading.value = false
         showScene()
     }
 
     override fun onQuizLoadFailed() {
-        view.quit()
+        data.quit.value = true
     }
 
     fun onNext() {
@@ -50,7 +61,7 @@ class QuizPresenter(
             sceneIndex++
             showScene()
         } else {
-            view.quit()
+            data.quit.value = true
         }
     }
 
@@ -79,16 +90,14 @@ class QuizPresenter(
 
     private fun setTheme(theme: Theme) {
         prefsRepository.theme = theme
-        view.setTheme(theme)
-        view.showThemeTip(theme)
+        data.theme.value = theme
+        data.themeTip.value = theme
 
         timerJob?.cancel()
-        timerJob = launch {
+        timerJob = viewModelScope.launch {
             delay(prefsRepository.themeTipTimeoutMs)
             if (isActive) {
-                withContext(uiDispatcher) {
-                    view.hideThemeTip()
-                }
+                data.themeTip.value = null
             }
         }
     }
@@ -127,25 +136,27 @@ class QuizPresenter(
     private fun showScene() {
         when (val scene = scenes[sceneIndex]) {
             is Scene.QuestionsTitleScene -> {
-                view.showQuestionsTitle(scene.date)
+                data.titleResId.value = R.string.title_questions
+                data.quizDate.value = scene.date
             }
             is Scene.AnswersTitleScene -> {
-                view.showAnswersTitle()
+                data.titleResId.value = R.string.title_answers
+                data.quizDate.value = null
             }
             is Scene.QuestionScene -> {
-                view.hideTitle()
-                view.showNumber(scene.question.number)
-                view.showQuestion(scene.question.question, scene.question.isWhatLinks())
-                view.showAnswer("")
+                data.questionNumber.value = scene.question.number
+                data.questionText.value = scene.question.question
+                data.answerText.value = ""
+                data.isWhatLinks.value = scene.question.isWhatLinks
             }
             is Scene.QuestionAnswerScene -> {
-                view.hideTitle()
-                view.showNumber(scene.question.number)
-                view.showQuestion(scene.question.question, scene.question.isWhatLinks())
-                view.showAnswer(scene.question.answer)
+                data.questionNumber.value = scene.question.number
+                data.questionText.value = scene.question.question
+                data.answerText.value = scene.question.answer
+                data.isWhatLinks.value = scene.question.isWhatLinks
             }
             is Scene.EndTitleScene -> {
-                view.showEndTitle()
+                data.titleResId.value = R.string.title_end
             }
         }
     }
@@ -158,19 +169,16 @@ class QuizPresenter(
         object EndTitleScene : Scene()
     }
 
-    interface View : MvpView {
-        fun showLoading()
-        fun hideLoading()
-        fun showQuestionsTitle(date: Date?)
-        fun showAnswersTitle()
-        fun showEndTitle()
-        fun hideTitle()
-        fun showNumber(number: Int)
-        fun showQuestion(question: String, isWhatLinks: Boolean)
-        fun showAnswer(answer: String)
-        fun setTheme(theme: Theme)
-        fun showThemeTip(theme: Theme)
-        fun hideThemeTip()
-        fun quit()
+    private class Data {
+        val showLoading = MutableLiveData<Boolean>()
+        val quizDate = MutableLiveData<Date?>()
+        val titleResId = MutableLiveData<Int>()
+        val questionNumber = MutableLiveData<Int>()
+        val questionText = MutableLiveData<String>()
+        val answerText = MutableLiveData<String>()
+        val isWhatLinks = MutableLiveData<Boolean>()
+        val theme = MutableLiveData<Theme>()
+        val themeTip = MutableLiveData<Theme?>()
+        val quit = MutableLiveData<Boolean>()
     }
 }

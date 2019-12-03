@@ -6,5 +6,6 @@ data class Question(
     val question: String,
     val answer: String
 ) {
-    fun isWhatLinks() = type == QuestionType.WHAT_LINKS
+    val isWhatLinks
+        get() = type == QuestionType.WHAT_LINKS
 }
