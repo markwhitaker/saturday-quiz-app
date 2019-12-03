@@ -146,8 +146,8 @@ class QuizViewModel(
             is Scene.QuestionScene -> {
                 data.questionNumber.value = scene.question.number
                 data.questionText.value = scene.question.question
+                data.answerText.value = ""
                 data.isWhatLinks.value = scene.question.isWhatLinks
-                data.answerText.value = null
             }
             is Scene.QuestionAnswerScene -> {
                 data.questionNumber.value = scene.question.number
@@ -170,15 +170,15 @@ class QuizViewModel(
     }
 
     private class Data {
-        val showLoading = MutableLiveData<Boolean>(false)
+        val showLoading = MutableLiveData<Boolean>()
         val quizDate = MutableLiveData<Date?>()
         val titleResId = MutableLiveData<Int>()
         val questionNumber = MutableLiveData<Int>()
         val questionText = MutableLiveData<String>()
         val answerText = MutableLiveData<String>()
-        val isWhatLinks = MutableLiveData<Boolean>(false)
+        val isWhatLinks = MutableLiveData<Boolean>()
         val theme = MutableLiveData<Theme>()
         val themeTip = MutableLiveData<Theme?>()
-        val quit = MutableLiveData<Boolean>(false)
+        val quit = MutableLiveData<Boolean>()
     }
 }
