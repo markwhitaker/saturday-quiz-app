@@ -74,10 +74,10 @@ class QuizActivity : FragmentActivity() {
         val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
         themeTipDots.apply {
             setImageResource(theme.dotsDrawable)
-            supportImageTintList = tintList
+            imageTintList = tintList
         }
         themeTipDial.apply {
-            supportImageTintList = tintList
+            imageTintList = tintList
             animate()
                 .rotation(theme.dialRotation)
                 .setInterpolator(AccelerateDecelerateInterpolator())
