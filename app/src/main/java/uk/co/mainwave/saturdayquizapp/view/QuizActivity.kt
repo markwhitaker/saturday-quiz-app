@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
+import uk.co.mainwave.saturdayquizapp.tools.toPrettyString
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
 import java.util.Locale
@@ -98,12 +99,12 @@ class QuizActivity : FragmentActivity() {
                     scoreLayout.visibility = View.VISIBLE
                     when (score) {
                         QuestionScore.NONE -> {
-                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_dimmed, null))
+                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_very_dimmed, null))
                             scoreRingView.imageTintList = tintList
                             scoreTickView.visibility = View.INVISIBLE
                         }
                         QuestionScore.HALF -> {
-                            val ringTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_dimmed, null))
+                            val ringTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_very_dimmed, null))
                             scoreRingView.imageTintList = ringTintList
                             val tickTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_highlight, null))
                             scoreTickView.apply {
@@ -119,6 +120,17 @@ class QuizActivity : FragmentActivity() {
                                 imageTintList = tintList
                             }
                         }
+                    }
+                }
+            }
+
+            totalScore.observe(activity) { score ->
+                if (score == null) {
+                    totalScoreView.visibility = View.INVISIBLE
+                } else {
+                    totalScoreView.apply {
+                        text = getString(R.string.total_score_format, score.toPrettyString())
+                        visibility = View.VISIBLE
                     }
                 }
             }

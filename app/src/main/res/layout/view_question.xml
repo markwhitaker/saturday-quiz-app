@@ -16,8 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/numberView"
         android:text="@string/what_links_prefix"
-        tools:textColor="@color/foreground_dimmed"
-        tools:drawableTint="@color/foreground_dimmed"
+        android:drawableTint="@color/what_links_text"
         />
 
     <!-- Question number -->
@@ -28,7 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/whatLinksView"
         tools:text="1."
-        tools:textColor="@color/foreground"
         />
 
     <!-- Question -->
@@ -40,7 +38,6 @@
         android:layout_toEndOf="@id/numberView"
         android:layout_below="@id/whatLinksView"
         tools:text="In what novel is Constance unhappily married to Sir Clifford?"
-        tools:textColor="@color/foreground"
         />
 
     <!-- Answer -->
@@ -53,7 +50,6 @@
         android:layout_below="@id/questionView"
         android:layout_marginTop="@dimen/inner_margin"
         tools:text="Lady Chatterley’s Lover"
-        tools:textColor="@color/foreground_highlight"
         />
 
     <FrameLayout
@@ -69,21 +65,22 @@
             android:layout_height="50dp"
             android:src="@drawable/ic_score_ring_outer"
             android:background="@android:color/transparent"
-            tools:tint="@color/foreground_highlight"
+            tools:tint="@color/foreground_very_dimmed"
             />
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_score_ring_inner"
+            android:tint="@color/background"
             android:background="@android:color/transparent"
             />
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/scoreTickView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/score_tick"
+            android:layout_height="@dimen/score_tick"
             android:src="@drawable/ic_score_tick"
-            tools:tint="@color/foreground_highlight"
             android:background="@android:color/transparent"
+            tools:tint="@color/foreground_highlight"
             />
     </FrameLayout>
 

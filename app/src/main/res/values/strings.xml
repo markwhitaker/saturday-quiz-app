@@ -5,4 +5,5 @@
     <string name="title_answers">Answers</string>
     <string name="title_end">End</string>
     <string name="question_number_format">%1$d.</string>
+    <string name="total_score_format">Total score: %1$s</string>
 </resources>

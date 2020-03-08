@@ -26,6 +26,7 @@ class QuizViewModel(
     val questionText: LiveData<String> = data.questionText
     val answerText: LiveData<String> = data.answerText
     val questionScore: LiveData<QuestionScore?> = data.questionScore
+    val totalScore: LiveData<Float?> = data.totalScore
     val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
     val quit: LiveData<Boolean> = data.quit
 
@@ -38,7 +39,7 @@ class QuizViewModel(
     }
 
     override fun onQuizLoaded(quiz: Quiz) {
-        scoresRepository.setDate(quiz.date ?: Date())
+        scoresRepository.initialise(quiz)
         buildScenes(quiz)
         data.showLoading.value = false
         showScene()
@@ -117,11 +118,13 @@ class QuizViewModel(
                 data.titleResId.value = R.string.title_questions
                 data.quizDate.value = scene.date
                 data.questionScore.value = null
+                data.totalScore.value = null
             }
             is Scene.AnswersTitleScene -> {
                 data.titleResId.value = R.string.title_answers
                 data.quizDate.value = null
                 data.questionScore.value = null
+                data.totalScore.value = null
             }
             is Scene.QuestionScene -> {
                 data.questionNumber.value = scene.question.number
@@ -129,6 +132,7 @@ class QuizViewModel(
                 data.answerText.value = ""
                 data.isWhatLinks.value = scene.question.isWhatLinks
                 data.questionScore.value = null
+                data.totalScore.value = null
             }
             is Scene.QuestionAnswerScene -> {
                 data.questionNumber.value = scene.question.number
@@ -136,10 +140,12 @@ class QuizViewModel(
                 data.answerText.value = scene.question.answer
                 data.isWhatLinks.value = scene.question.isWhatLinks
                 data.questionScore.value = scoresRepository.getScore(scene.question.number)
+                data.totalScore.value = null
             }
             is Scene.EndTitleScene -> {
                 data.titleResId.value = R.string.title_end
                 data.questionScore.value = null
+                data.totalScore.value = scoresRepository.totalScore
             }
         }
     }
@@ -160,6 +166,7 @@ class QuizViewModel(
         val questionText = MutableLiveData<String>()
         val answerText = MutableLiveData<String>()
         val questionScore = MutableLiveData<QuestionScore?>()
+        val totalScore = MutableLiveData<Float?>()
         val isWhatLinks = MutableLiveData<Boolean>()
         val quit = MutableLiveData<Boolean>()
     }

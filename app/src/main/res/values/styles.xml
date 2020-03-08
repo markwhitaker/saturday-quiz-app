@@ -16,26 +16,37 @@
     <style name="QuestionText">
         <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textSize">@dimen/question_text</item>
+        <item name="android:color">@color/question_text</item>
     </style>
 
     <style name="QuestionNumberText">
         <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textSize">@dimen/question_text</item>
+        <item name="android:textColor">@color/question_text</item>
     </style>
 
     <style name="AnswerText">
         <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textSize">@dimen/answer_text</item>
+        <item name="android:textColor">@color/answer_text</item>
     </style>
 
     <style name="TitleText">
         <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textSize">@dimen/title_text</item>
+        <item name="android:textColor">@color/title_text</item>
     </style>
 
     <style name="QuizDateText">
         <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textSize">@dimen/date_text</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/date_text</item>
+    </style>
+
+    <style name="QuizScoreText">
+        <item name="android:fontFamily">@font/font_light</item>
+        <item name="android:textSize">@dimen/score_text</item>
+        <item name="android:textColor">@color/score_text</item>
     </style>
 </resources>
