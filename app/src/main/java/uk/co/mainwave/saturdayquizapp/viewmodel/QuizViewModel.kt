@@ -3,31 +3,21 @@ package uk.co.mainwave.saturdayquizapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Quiz
-import uk.co.mainwave.saturdayquizapp.model.Theme
-import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import uk.co.mainwave.saturdayquizapp.repository.ScoresRepository
 import java.util.Date
 
-
 class QuizViewModel(
     private val quizRepository: QuizRepository,
-    private val prefsRepository: PreferencesRepository,
     private val scoresRepository: ScoresRepository
 ) : ViewModel(), QuizRepository.Listener {
     private val data = Data()
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
-    private var timerJob: Job? = null
 
     val showLoading: LiveData<Boolean> = data.showLoading
     val quizDate: LiveData<Date?> = data.quizDate
@@ -37,12 +27,9 @@ class QuizViewModel(
     val answerText: LiveData<String> = data.answerText
     val questionScore: LiveData<QuestionScore?> = data.questionScore
     val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
-    val theme: LiveData<Theme> = data.theme
     val quit: LiveData<Boolean> = data.quit
-    val themeTip: LiveData<Theme?> = data.themeTip
 
     fun start() {
-        data.theme.value = prefsRepository.theme
         data.showLoading.value = true
 
         scenes.clear()
@@ -77,22 +64,6 @@ class QuizViewModel(
         }
     }
 
-    fun onUp() {
-        when (prefsRepository.theme) {
-            Theme.LIGHT -> return
-            Theme.MEDIUM -> setTheme(Theme.LIGHT)
-            Theme.DARK -> setTheme(Theme.MEDIUM)
-        }
-    }
-
-    fun onDown() {
-        when (prefsRepository.theme) {
-            Theme.LIGHT -> setTheme(Theme.MEDIUM)
-            Theme.MEDIUM -> setTheme(Theme.DARK)
-            Theme.DARK -> return
-        }
-    }
-
     fun toggleScore() {
         val scene = scenes[sceneIndex]
         if (scene !is Scene.QuestionAnswerScene) {
@@ -107,20 +78,6 @@ class QuizViewModel(
         }
         scoresRepository.setScore(questionNumber, score)
         data.questionScore.value = score
-    }
-
-    private fun setTheme(theme: Theme) {
-        prefsRepository.theme = theme
-        data.theme.value = theme
-        data.themeTip.value = theme
-
-        timerJob?.cancel()
-        timerJob = viewModelScope.launch {
-            delay(prefsRepository.themeTipTimeoutMs)
-            if (isActive) {
-                data.themeTip.value = null
-            }
-        }
     }
 
     private fun buildScenes(quiz: Quiz) {
@@ -204,8 +161,6 @@ class QuizViewModel(
         val answerText = MutableLiveData<String>()
         val questionScore = MutableLiveData<QuestionScore?>()
         val isWhatLinks = MutableLiveData<Boolean>()
-        val theme = MutableLiveData<Theme>()
-        val themeTip = MutableLiveData<Theme?>()
         val quit = MutableLiveData<Boolean>()
     }
 }
