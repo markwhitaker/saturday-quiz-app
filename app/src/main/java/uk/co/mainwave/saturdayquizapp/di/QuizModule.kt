@@ -2,12 +2,12 @@ package uk.co.mainwave.saturdayquizapp.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
+import uk.co.mainwave.saturdayquizapp.repository.ScoresRepository
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 
 val quizModule = module {
     factory { QuizRepository(get()) }
-    factory { PreferencesRepository(get()) }
+    factory { ScoresRepository(get()) }
     viewModel { QuizViewModel(get(), get()) }
 }

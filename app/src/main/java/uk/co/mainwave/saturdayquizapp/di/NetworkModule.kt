@@ -1,6 +1,7 @@
 package uk.co.mainwave.saturdayquizapp.di
 
 import android.util.Log
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Logger
@@ -26,6 +27,7 @@ private fun provideOkHttp(): OkHttpClient {
 
     return OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
+        .addNetworkInterceptor(StethoInterceptor())
         .callTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .build()

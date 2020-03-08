@@ -19,8 +19,4 @@
         layout="@layout/view_loading"
         />
 
-    <include
-        layout="@layout/view_theme_tip"
-        />
-
 </RelativeLayout>

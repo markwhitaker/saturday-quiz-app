@@ -26,4 +26,14 @@
         tools:text="@string/title_questions"
         />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/totalScoreView"
+        style="@style/QuizScoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/titleView"
+        tools:text="Total score: 15"
+        />
+
 </RelativeLayout>
