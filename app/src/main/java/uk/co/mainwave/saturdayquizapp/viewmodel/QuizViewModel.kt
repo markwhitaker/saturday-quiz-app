@@ -34,6 +34,7 @@ class QuizViewModel(
     val questionNumber: LiveData<Int> = data.questionNumber
     val questionText: LiveData<String> = data.questionText
     val answerText: LiveData<String> = data.answerText
+    val questionScore: LiveData<Float?> = data.questionScore
     val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
     val theme: LiveData<Theme> = data.theme
     val quit: LiveData<Boolean> = data.quit
@@ -104,6 +105,7 @@ class QuizViewModel(
             else -> 0f
         }
         scoresRepository.setScore(questionNumber, score)
+        data.questionScore.value = score
     }
 
     private fun setTheme(theme: Theme) {
@@ -156,25 +158,30 @@ class QuizViewModel(
             is Scene.QuestionsTitleScene -> {
                 data.titleResId.value = R.string.title_questions
                 data.quizDate.value = scene.date
+                data.questionScore.value = null
             }
             is Scene.AnswersTitleScene -> {
                 data.titleResId.value = R.string.title_answers
                 data.quizDate.value = null
+                data.questionScore.value = null
             }
             is Scene.QuestionScene -> {
                 data.questionNumber.value = scene.question.number
                 data.questionText.value = scene.question.question
                 data.answerText.value = ""
                 data.isWhatLinks.value = scene.question.isWhatLinks
+                data.questionScore.value = null
             }
             is Scene.QuestionAnswerScene -> {
                 data.questionNumber.value = scene.question.number
                 data.questionText.value = scene.question.question
                 data.answerText.value = scene.question.answer
                 data.isWhatLinks.value = scene.question.isWhatLinks
+                data.questionScore.value = scoresRepository.getScore(scene.question.number)
             }
             is Scene.EndTitleScene -> {
                 data.titleResId.value = R.string.title_end
+                data.questionScore.value = null
             }
         }
     }
@@ -194,6 +201,7 @@ class QuizViewModel(
         val questionNumber = MutableLiveData<Int>()
         val questionText = MutableLiveData<String>()
         val answerText = MutableLiveData<String>()
+        val questionScore = MutableLiveData<Float?>()
         val isWhatLinks = MutableLiveData<Boolean>()
         val theme = MutableLiveData<Theme>()
         val themeTip = MutableLiveData<Theme?>()

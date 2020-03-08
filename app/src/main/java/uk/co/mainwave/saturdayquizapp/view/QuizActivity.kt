@@ -141,6 +141,15 @@ class QuizActivity : FragmentActivity() {
                 answerView.text = answerText
             }
 
+            questionScore.observe(activity) { score ->
+                if (score == null) {
+                    scoreView.visibility = View.INVISIBLE
+                } else {
+                    scoreView.visibility = View.VISIBLE
+                    scoreView.text = score.toString()
+                }
+            }
+
             isWhatLinks.observe(activity) { isWhatLinks ->
                 whatLinksView.visibility = if (isWhatLinks) {
                     View.VISIBLE
