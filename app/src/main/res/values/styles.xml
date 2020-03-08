@@ -48,5 +48,6 @@
         <item name="android:fontFamily">@font/font_light</item>
         <item name="android:textSize">@dimen/score_text</item>
         <item name="android:textColor">@color/score_text</item>
+        <item name="android:layout_marginTop">@dimen/inner_margin</item>
     </style>
 </resources>
