@@ -3,7 +3,9 @@ package uk.co.mainwave.saturdayquizapp.repository
 import android.content.SharedPreferences
 import uk.co.mainwave.saturdayquizapp.model.Theme
 
-class PreferencesRepository(private val sharedPreferences: SharedPreferences) {
+class PreferencesRepository(
+    private val sharedPreferences: SharedPreferences
+) {
     var theme: Theme
         get() {
             val themeName = sharedPreferences.getString(THEME_KEY, null)

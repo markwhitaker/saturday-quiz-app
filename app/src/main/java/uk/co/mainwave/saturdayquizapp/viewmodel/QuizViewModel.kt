@@ -14,12 +14,14 @@ import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
+import uk.co.mainwave.saturdayquizapp.repository.ScoresRepository
 import java.util.Date
 
 
 class QuizViewModel(
     private val quizRepository: QuizRepository,
-    private val prefsRepository: PreferencesRepository
+    private val prefsRepository: PreferencesRepository,
+    private val scoresRepository: ScoresRepository
 ) : ViewModel(), QuizRepository.Listener {
     private val data = Data()
     private val scenes = mutableListOf<Scene>()
@@ -47,6 +49,7 @@ class QuizViewModel(
     }
 
     override fun onQuizLoaded(quiz: Quiz) {
+        scoresRepository.setDate(quiz.date ?: Date())
         buildScenes(quiz)
         data.showLoading.value = false
         showScene()
@@ -86,6 +89,21 @@ class QuizViewModel(
             Theme.MEDIUM -> setTheme(Theme.DARK)
             Theme.DARK -> return
         }
+    }
+
+    fun toggleScore() {
+        val scene = scenes[sceneIndex]
+        if (scene !is Scene.QuestionAnswerScene) {
+            return
+        }
+
+        val questionNumber = scene.question.number
+        val score = when (scoresRepository.getScore(questionNumber)) {
+            0f -> 1f
+            1f -> 0.5f
+            else -> 0f
+        }
+        scoresRepository.setScore(questionNumber, score)
     }
 
     private fun setTheme(theme: Theme) {
