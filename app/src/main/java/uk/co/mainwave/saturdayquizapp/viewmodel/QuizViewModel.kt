@@ -10,6 +10,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.Question
+import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.repository.PreferencesRepository
@@ -34,7 +35,7 @@ class QuizViewModel(
     val questionNumber: LiveData<Int> = data.questionNumber
     val questionText: LiveData<String> = data.questionText
     val answerText: LiveData<String> = data.answerText
-    val questionScore: LiveData<Float?> = data.questionScore
+    val questionScore: LiveData<QuestionScore?> = data.questionScore
     val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
     val theme: LiveData<Theme> = data.theme
     val quit: LiveData<Boolean> = data.quit
@@ -100,9 +101,9 @@ class QuizViewModel(
 
         val questionNumber = scene.question.number
         val score = when (scoresRepository.getScore(questionNumber)) {
-            0f -> 1f
-            1f -> 0.5f
-            else -> 0f
+            QuestionScore.NONE -> QuestionScore.FULL
+            QuestionScore.FULL -> QuestionScore.HALF
+            QuestionScore.HALF -> QuestionScore.NONE
         }
         scoresRepository.setScore(questionNumber, score)
         data.questionScore.value = score
@@ -201,7 +202,7 @@ class QuizViewModel(
         val questionNumber = MutableLiveData<Int>()
         val questionText = MutableLiveData<String>()
         val answerText = MutableLiveData<String>()
-        val questionScore = MutableLiveData<Float?>()
+        val questionScore = MutableLiveData<QuestionScore?>()
         val isWhatLinks = MutableLiveData<Boolean>()
         val theme = MutableLiveData<Theme>()
         val themeTip = MutableLiveData<Theme?>()

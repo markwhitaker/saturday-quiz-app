@@ -56,15 +56,35 @@
         tools:textColor="@color/light_foreground_highlight"
         />
 
-    <!-- Score -->
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/scoreView"
+    <FrameLayout
+        android:id="@+id/scoreLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/QuestionText"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        tools:text="0"
-        />
+        >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/scoreRingView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_score_ring_outer"
+            android:background="@android:color/transparent"
+            tools:tint="@color/light_foreground_highlight"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_score_ring_inner"
+            android:background="@android:color/transparent"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/scoreTickView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_score_tick"
+            tools:tint="@color/light_foreground_highlight"
+            android:background="@android:color/transparent"
+            />
+    </FrameLayout>
 
 </RelativeLayout>

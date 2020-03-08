@@ -5,6 +5,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 import uk.co.mainwave.saturdayquizapp.di.PREFS_NAME_SCORES
+import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -24,13 +25,14 @@ class ScoresRepository : KoinComponent {
             .apply()
     }
 
-    fun getScore(questionNumber: Int): Float =
+    fun getScore(questionNumber: Int): QuestionScore = QuestionScore.valueOf(
         sharedPreferences.getFloat("$KEY_QUESTION_PREFIX$questionNumber", 0f)
+    )
 
-    fun setScore(questionNumber: Int, score: Float) =
+    fun setScore(questionNumber: Int, score: QuestionScore) =
         sharedPreferences
             .edit()
-            .putFloat("$KEY_QUESTION_PREFIX$questionNumber", score)
+            .putFloat("$KEY_QUESTION_PREFIX$questionNumber", score.value)
             .apply()
 
     companion object {

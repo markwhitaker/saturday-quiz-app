@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
+import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
@@ -143,10 +144,33 @@ class QuizActivity : FragmentActivity() {
 
             questionScore.observe(activity) { score ->
                 if (score == null) {
-                    scoreView.visibility = View.INVISIBLE
+                    scoreLayout.visibility = View.INVISIBLE
                 } else {
-                    scoreView.visibility = View.VISIBLE
-                    scoreView.text = score.toString()
+                    scoreLayout.visibility = View.VISIBLE
+                    when (score) {
+                        QuestionScore.NONE -> {
+                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_dimmed, null))
+                            scoreRingView.imageTintList = tintList
+                            scoreTickView.visibility = View.INVISIBLE
+                        }
+                        QuestionScore.HALF -> {
+                            val ringTintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_dimmed, null))
+                            scoreRingView.imageTintList = ringTintList
+                            val tickTintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_highlight, null))
+                            scoreTickView.apply {
+                                visibility = View.VISIBLE
+                                imageTintList = tickTintList
+                            }
+                        }
+                        QuestionScore.FULL -> {
+                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_highlight, null))
+                            scoreRingView.imageTintList = tintList
+                            scoreTickView.apply {
+                                visibility = View.VISIBLE
+                                imageTintList = tintList
+                            }
+                        }
+                    }
                 }
             }
 
