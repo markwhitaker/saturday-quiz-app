@@ -3,21 +3,22 @@ package uk.co.mainwave.saturdayquizapp.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verifyAll
 import io.mockk.verifyOrder
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.Question
+import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import uk.co.mainwave.saturdayquizapp.repository.ScoresRepository
 import java.util.Date
 
-@ExperimentalCoroutinesApi
 class QuizViewModelTest {
     @Rule
     @JvmField
@@ -30,6 +31,12 @@ class QuizViewModelTest {
         mockQuizRepository,
         mockScoresRepository
     )
+
+    @Before
+    fun setup() {
+        every { mockScoresRepository.getScore(any()) }.returns(QuestionScore.NONE)
+        every { mockScoresRepository.totalScore }.returns(0f)
+    }
 
     @Test
     fun `GIVEN viewModel initialised WHEN onQuizLoaded() THEN loading UI is hidden, first scene is shown`() {
