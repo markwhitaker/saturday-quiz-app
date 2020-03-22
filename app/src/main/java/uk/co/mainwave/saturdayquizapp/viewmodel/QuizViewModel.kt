@@ -23,8 +23,8 @@ class QuizViewModel(
     val quizDate: LiveData<Date?> = data.quizDate
     val titleResId: LiveData<Int> = data.titleResId
     val questionNumber: LiveData<Int> = data.questionNumber
-    val questionText: LiveData<String> = data.questionText
-    val answerText: LiveData<String> = data.answerText
+    val questionHtml: LiveData<String> = data.questionHtml
+    val answerHtml: LiveData<String> = data.answerHtml
     val questionScore: LiveData<QuestionScore?> = data.questionScore
     val totalScore: LiveData<Float?> = data.totalScore
     val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
@@ -128,16 +128,16 @@ class QuizViewModel(
             }
             is Scene.QuestionScene -> {
                 data.questionNumber.value = scene.question.number
-                data.questionText.value = scene.question.question
-                data.answerText.value = ""
+                data.questionHtml.value = scene.question.questionHtml
+                data.answerHtml.value = ""
                 data.isWhatLinks.value = scene.question.isWhatLinks
                 data.questionScore.value = null
                 data.totalScore.value = null
             }
             is Scene.QuestionAnswerScene -> {
                 data.questionNumber.value = scene.question.number
-                data.questionText.value = scene.question.question
-                data.answerText.value = scene.question.answer
+                data.questionHtml.value = scene.question.questionHtml
+                data.answerHtml.value = scene.question.answerHtml
                 data.isWhatLinks.value = scene.question.isWhatLinks
                 data.questionScore.value = scoresRepository.getScore(scene.question.number)
                 data.totalScore.value = null
@@ -163,8 +163,8 @@ class QuizViewModel(
         val quizDate = MutableLiveData<Date?>()
         val titleResId = MutableLiveData<Int>()
         val questionNumber = MutableLiveData<Int>()
-        val questionText = MutableLiveData<String>()
-        val answerText = MutableLiveData<String>()
+        val questionHtml = MutableLiveData<String>()
+        val answerHtml = MutableLiveData<String>()
         val questionScore = MutableLiveData<QuestionScore?>()
         val totalScore = MutableLiveData<Float?>()
         val isWhatLinks = MutableLiveData<Boolean>()

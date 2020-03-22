@@ -83,13 +83,13 @@ class QuizActivity : FragmentActivity() {
                 numberView.text = getString(R.string.question_number_format, number)
             }
 
-            questionText.observe(activity) { questionText ->
-                questionView.text = fromHtml(questionText)
+            questionHtml.observe(activity) { questionHtml ->
+                questionView.text = fromHtml(questionHtml)
                 titleLayout.hide()
             }
 
-            answerText.observe(activity) { answerText ->
-                answerView.text = answerText
+            answerHtml.observe(activity) { answerHtml ->
+                answerView.text = fromHtml(answerHtml)
             }
 
             questionScore.observe(activity) { score ->

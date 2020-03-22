@@ -96,8 +96,8 @@ class QuizViewModelTest {
             titleResId.observeForever(mockTitleResIdObserver)
             quizDate.observeForever(mockQuizDateObserver)
             questionNumber.observeForever(mockQuestionNumberObserver)
-            questionText.observeForever(mockQuestionTextObserver)
-            answerText.observeForever(mockAnswerTextObserver)
+            questionHtml.observeForever(mockQuestionTextObserver)
+            answerHtml.observeForever(mockAnswerTextObserver)
             isWhatLinks.observeForever(mockIsWhatLinksObserver)
             quit.observeForever(mockQuitObserver)
         }
@@ -114,12 +114,12 @@ class QuizViewModelTest {
             mockQuizDateObserver.onChanged(TEST_DATE)
             // onNext() 1
             mockQuestionNumberObserver.onChanged(1)
-            mockQuestionTextObserver.onChanged("question1")
+            mockQuestionTextObserver.onChanged("question1Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(false)
             // onNext() 2
             mockQuestionNumberObserver.onChanged(2)
-            mockQuestionTextObserver.onChanged("question2")
+            mockQuestionTextObserver.onChanged("question2Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(true)
             // onNext() 3
@@ -127,23 +127,23 @@ class QuizViewModelTest {
             mockQuizDateObserver.onChanged(null)
             // onNext() 4
             mockQuestionNumberObserver.onChanged(1)
-            mockQuestionTextObserver.onChanged("question1")
+            mockQuestionTextObserver.onChanged("question1Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(false)
             // onNext() 5
             mockQuestionNumberObserver.onChanged(1)
-            mockQuestionTextObserver.onChanged("question1")
-            mockAnswerTextObserver.onChanged("answer1")
+            mockQuestionTextObserver.onChanged("question1Html")
+            mockAnswerTextObserver.onChanged("answer1Html")
             mockIsWhatLinksObserver.onChanged(false)
             // onNext() 6
             mockQuestionNumberObserver.onChanged(2)
-            mockQuestionTextObserver.onChanged("question2")
+            mockQuestionTextObserver.onChanged("question2Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(true)
             // onNext() 7
             mockQuestionNumberObserver.onChanged(2)
-            mockQuestionTextObserver.onChanged("question2")
-            mockAnswerTextObserver.onChanged("answer2")
+            mockQuestionTextObserver.onChanged("question2Html")
+            mockAnswerTextObserver.onChanged("answer2Html")
             mockIsWhatLinksObserver.onChanged(true)
             // onNext() 8
             mockTitleResIdObserver.onChanged(R.string.title_end)
@@ -182,8 +182,8 @@ class QuizViewModelTest {
             titleResId.observeForever(mockTitleResIdObserver)
             quizDate.observeForever(mockQuizDateObserver)
             questionNumber.observeForever(mockQuestionNumberObserver)
-            questionText.observeForever(mockQuestionTextObserver)
-            answerText.observeForever(mockAnswerTextObserver)
+            questionHtml.observeForever(mockQuestionTextObserver)
+            answerHtml.observeForever(mockAnswerTextObserver)
             isWhatLinks.observeForever(mockIsWhatLinksObserver)
             quit.observeForever(mockQuitObserver)
         }
@@ -195,22 +195,22 @@ class QuizViewModelTest {
         verifyOrder {
             // onPrevious() 1
             mockQuestionNumberObserver.onChanged(2)
-            mockQuestionTextObserver.onChanged("question2")
-            mockAnswerTextObserver.onChanged("answer2")
+            mockQuestionTextObserver.onChanged("question2Html")
+            mockAnswerTextObserver.onChanged("answer2Html")
             mockIsWhatLinksObserver.onChanged(true)
             // onPrevious() 2
             mockQuestionNumberObserver.onChanged(2)
-            mockQuestionTextObserver.onChanged("question2")
+            mockQuestionTextObserver.onChanged("question2Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(true)
             // onPrevious() 3
             mockQuestionNumberObserver.onChanged(1)
-            mockQuestionTextObserver.onChanged("question1")
-            mockAnswerTextObserver.onChanged("answer1")
+            mockQuestionTextObserver.onChanged("question1Html")
+            mockAnswerTextObserver.onChanged("answer1Html")
             mockIsWhatLinksObserver.onChanged(false)
             // onPrevious() 4
             mockQuestionNumberObserver.onChanged(1)
-            mockQuestionTextObserver.onChanged("question1")
+            mockQuestionTextObserver.onChanged("question1Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(false)
             // onPrevious() 5
@@ -218,12 +218,12 @@ class QuizViewModelTest {
             mockQuizDateObserver.onChanged(null)
             // onPrevious() 6
             mockQuestionNumberObserver.onChanged(2)
-            mockQuestionTextObserver.onChanged("question2")
+            mockQuestionTextObserver.onChanged("question2Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(true)
             // onPrevious() 7
             mockQuestionNumberObserver.onChanged(1)
-            mockQuestionTextObserver.onChanged("question1")
+            mockQuestionTextObserver.onChanged("question1Html")
             mockAnswerTextObserver.onChanged("")
             mockIsWhatLinksObserver.onChanged(false)
             // onPrevious() 8
@@ -244,13 +244,17 @@ class QuizViewModelTest {
                     1,
                     QuestionType.NORMAL,
                     "question1",
-                    "answer1"
+                    "question1Html",
+                    "answer1",
+                    "answer1Html"
                 ),
                 Question(
                     2,
                     QuestionType.WHAT_LINKS,
                     "question2",
-                    "answer2"
+                    "question2Html",
+                    "answer2",
+                    "answer2Html"
                 )
             )
         )
