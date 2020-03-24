@@ -41,7 +41,8 @@ class QuizActivity : FragmentActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
-            KeyEvent.KEYCODE_DPAD_CENTER ->
+            KeyEvent.KEYCODE_DPAD_CENTER,
+            KeyEvent.KEYCODE_SPACE ->
                 viewModel.toggleScore()
             KeyEvent.KEYCODE_DPAD_RIGHT ->
                 viewModel.onNext()
