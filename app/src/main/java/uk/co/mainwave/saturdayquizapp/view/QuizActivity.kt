@@ -6,13 +6,9 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
-import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.ColorRes
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_quiz.*
@@ -24,6 +20,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Theme
+import uk.co.mainwave.saturdayquizapp.tools.hide
+import uk.co.mainwave.saturdayquizapp.tools.remove
+import uk.co.mainwave.saturdayquizapp.tools.setColour
+import uk.co.mainwave.saturdayquizapp.tools.show
+import uk.co.mainwave.saturdayquizapp.tools.showIf
 import uk.co.mainwave.saturdayquizapp.tools.toPrettyString
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
@@ -155,9 +156,9 @@ class QuizActivity : FragmentActivity() {
                     scoreLayout.hide()
                 } else {
                     scoreLayout.show()
-                    scoreDimmedRingView.show(score != QuestionScore.FULL)
-                    scoreHighlightRingView.show(score == QuestionScore.FULL)
-                    scoreTickView.show(score != QuestionScore.NONE)
+                    scoreDimmedRingView.showIf(score != QuestionScore.FULL)
+                    scoreHighlightRingView.showIf(score == QuestionScore.FULL)
+                    scoreTickView.showIf(score != QuestionScore.NONE)
                 }
             }
 
@@ -173,7 +174,7 @@ class QuizActivity : FragmentActivity() {
             }
 
             isWhatLinks.observe(activity) { isWhatLinks ->
-                whatLinksView.show(isWhatLinks)
+                whatLinksView.showIf(isWhatLinks)
             }
 
             theme.observe(activity) { theme ->
@@ -196,17 +197,6 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
-    private fun TextView.setColour(@ColorRes colorResId: Int) {
-        val colour = resources.getColor(colorResId, null)
-        setTextColor(colour)
-        compoundDrawableTintList = ColorStateList.valueOf(colour)
-    }
-
-    private fun ImageView.setColour(@ColorRes colorResId: Int) {
-        val tintList = ColorStateList.valueOf(resources.getColor(colorResId, null))
-        imageTintList = tintList
-    }
-
     private fun fromHtml(text: String): Spanned {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
@@ -214,26 +204,6 @@ class QuizActivity : FragmentActivity() {
             @Suppress("DEPRECATION")
             Html.fromHtml(text)
         }
-    }
-
-    private fun View.show() {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.show(show: Boolean) {
-        if (show) {
-            show()
-        } else {
-            hide()
-        }
-    }
-
-    private fun View.hide() {
-        visibility = View.INVISIBLE
-    }
-
-    private fun View.remove() {
-        visibility = View.GONE
     }
 
     companion object {
