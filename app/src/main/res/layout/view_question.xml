@@ -52,36 +52,6 @@
         tools:text="Lady Chatterley’s Lover"
         />
 
-    <FrameLayout
-        android:id="@+id/scoreLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        >
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/scoreRingView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_score_ring_outer"
-            android:background="@android:color/transparent"
-            tools:tint="@color/medium_foreground_very_dimmed"
-            />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_score_ring_inner"
-            android:tint="@color/background"
-            android:background="@android:color/transparent"
-            />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/scoreTickView"
-            android:layout_width="@dimen/score_tick"
-            android:layout_height="@dimen/score_tick"
-            android:src="@drawable/ic_score_tick"
-            android:background="@android:color/transparent"
-            tools:tint="@color/medium_foreground_highlight"
-            />
-    </FrameLayout>
+    <include layout="@layout/view_score"/>
 
 </RelativeLayout>
