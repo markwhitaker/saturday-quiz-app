@@ -3,21 +3,28 @@ package uk.co.mainwave.saturdayquizapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Quiz
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
-import uk.co.mainwave.saturdayquizapp.repository.ScoresRepository
+import uk.co.mainwave.saturdayquizapp.repository.PrefsRepository
 import java.util.Date
 
 class QuizViewModel(
     private val quizRepository: QuizRepository,
-    private val scoresRepository: ScoresRepository
+    private val prefsRepository: PrefsRepository
 ) : ViewModel(), QuizRepository.Listener {
     private val data = Data()
     private val scenes = mutableListOf<Scene>()
     private var sceneIndex = 0
+    private var timerJob: Job? = null
 
     val showLoading: LiveData<Boolean> = data.showLoading
     val quizDate: LiveData<Date?> = data.quizDate
@@ -28,9 +35,12 @@ class QuizViewModel(
     val questionScore: LiveData<QuestionScore?> = data.questionScore
     val totalScore: LiveData<Float?> = data.totalScore
     val isWhatLinks: LiveData<Boolean> = data.isWhatLinks
+    val theme: LiveData<Theme> = data.theme
+    val themeTip: LiveData<Theme?> = data.themeTip
     val quit: LiveData<Boolean> = data.quit
 
     fun start() {
+        data.theme.value = prefsRepository.theme
         data.showLoading.value = true
 
         scenes.clear()
@@ -39,7 +49,7 @@ class QuizViewModel(
     }
 
     override fun onQuizLoaded(quiz: Quiz) {
-        scoresRepository.initialise(quiz)
+        prefsRepository.initialiseScores(quiz)
         buildScenes(quiz)
         data.showLoading.value = false
         showScene()
@@ -65,6 +75,22 @@ class QuizViewModel(
         }
     }
 
+    fun onUp() {
+        when (prefsRepository.theme) {
+            Theme.LIGHT -> return
+            Theme.MEDIUM -> setTheme(Theme.LIGHT)
+            Theme.DARK -> setTheme(Theme.MEDIUM)
+        }
+    }
+
+    fun onDown() {
+        when (prefsRepository.theme) {
+            Theme.LIGHT -> setTheme(Theme.MEDIUM)
+            Theme.MEDIUM -> setTheme(Theme.DARK)
+            Theme.DARK -> return
+        }
+    }
+
     fun toggleScore() {
         val scene = scenes[sceneIndex]
         if (scene !is Scene.QuestionAnswerScene) {
@@ -72,13 +98,27 @@ class QuizViewModel(
         }
 
         val questionNumber = scene.question.number
-        val score = when (scoresRepository.getScore(questionNumber)) {
+        val score = when (prefsRepository.getScore(questionNumber)) {
             QuestionScore.NONE -> QuestionScore.FULL
             QuestionScore.FULL -> QuestionScore.HALF
             QuestionScore.HALF -> QuestionScore.NONE
         }
-        scoresRepository.setScore(questionNumber, score)
+        prefsRepository.setScore(questionNumber, score)
         data.questionScore.value = score
+    }
+
+    private fun setTheme(theme: Theme) {
+        prefsRepository.theme = theme
+        data.theme.value = theme
+        data.themeTip.value = theme
+
+        timerJob?.cancel()
+        timerJob = viewModelScope.launch {
+            delay(prefsRepository.themeTipTimeoutMs)
+            if (isActive) {
+                data.themeTip.value = null
+            }
+        }
     }
 
     private fun buildScenes(quiz: Quiz) {
@@ -139,13 +179,13 @@ class QuizViewModel(
                 data.questionHtml.value = scene.question.questionHtml
                 data.answerHtml.value = scene.question.answerHtml
                 data.isWhatLinks.value = scene.question.isWhatLinks
-                data.questionScore.value = scoresRepository.getScore(scene.question.number)
+                data.questionScore.value = prefsRepository.getScore(scene.question.number)
                 data.totalScore.value = null
             }
             is Scene.EndTitleScene -> {
                 data.titleResId.value = R.string.title_end
                 data.questionScore.value = null
-                data.totalScore.value = scoresRepository.totalScore
+                data.totalScore.value = prefsRepository.totalScore
             }
         }
     }
@@ -168,6 +208,8 @@ class QuizViewModel(
         val questionScore = MutableLiveData<QuestionScore?>()
         val totalScore = MutableLiveData<Float?>()
         val isWhatLinks = MutableLiveData<Boolean>()
+        val theme = MutableLiveData<Theme>()
+        val themeTip = MutableLiveData<Theme?>()
         val quit = MutableLiveData<Boolean>()
     }
 }

@@ -7,14 +7,23 @@ import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.view_question.*
+import kotlinx.android.synthetic.main.view_score.*
+import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.tools.toPrettyString
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
@@ -48,10 +57,58 @@ class QuizActivity : FragmentActivity() {
                 viewModel.onNext()
             KeyEvent.KEYCODE_DPAD_LEFT ->
                 viewModel.onPrevious()
+            KeyEvent.KEYCODE_DPAD_UP ->
+                viewModel.onUp()
+            KeyEvent.KEYCODE_DPAD_DOWN ->
+                viewModel.onDown()
             else ->
                 return super.onKeyUp(keyCode, event)
         }
         return true
+    }
+
+    private fun setTheme(theme: Theme) {
+        titleView.setColour(theme.foreground)
+        questionView.setColour(theme.foreground)
+        numberView.setColour(theme.foreground)
+        answerView.setColour(theme.foregroundHighlight)
+        quizDateView.setColour(theme.foregroundHighlight)
+        whatLinksView.setColour(theme.foregroundDimmed)
+        scoreDimmedRingView.setColour(theme.foregroundVeryDimmed)
+        scoreHighlightRingView.setColour(theme.foregroundHighlight)
+        scoreTickView.setColour(theme.foregroundHighlight)
+        totalScoreView.setColour(theme.foregroundHighlight)
+    }
+
+    private fun showThemeTip(theme: Theme) {
+        val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
+        themeTipDots.apply {
+            setImageResource(theme.dotsDrawable)
+            imageTintList = tintList
+        }
+        themeTipDial.apply {
+            imageTintList = tintList
+            animate()
+                .rotation(theme.dialRotation)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .setDuration(TIP_DIAL_ROTATE_DURATION_MS)
+                .start()
+        }
+        themeTipView
+            .animate()
+            .alpha(1f)
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(TIP_FADE_IN_DURATION_MS)
+            .start()
+    }
+
+    private fun hideThemeTip() {
+        themeTipView
+            .animate()
+            .alpha(0f)
+            .setInterpolator(DecelerateInterpolator())
+            .setDuration(TIP_FADE_OUT_DURATION_MS)
+            .start()
     }
 
     private fun connectViewModel() {
@@ -61,7 +118,7 @@ class QuizActivity : FragmentActivity() {
                 if (show) {
                     loadingView.show()
                 } else {
-                    loadingView.hide()
+                    loadingView.remove()
                 }
             }
 
@@ -71,7 +128,7 @@ class QuizActivity : FragmentActivity() {
                         DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
                     quizDateView.show()
                 } else {
-                    quizDateView.hide()
+                    quizDateView.remove()
                 }
             }
 
@@ -86,7 +143,7 @@ class QuizActivity : FragmentActivity() {
 
             questionHtml.observe(activity) { questionHtml ->
                 questionView.text = fromHtml(questionHtml)
-                titleLayout.hide()
+                titleLayout.remove()
             }
 
             answerHtml.observe(activity) { answerHtml ->
@@ -95,52 +152,39 @@ class QuizActivity : FragmentActivity() {
 
             questionScore.observe(activity) { score ->
                 if (score == null) {
-                    scoreLayout.visibility = View.INVISIBLE
+                    scoreLayout.hide()
                 } else {
-                    scoreLayout.visibility = View.VISIBLE
-                    when (score) {
-                        QuestionScore.NONE -> {
-                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_very_dimmed, null))
-                            scoreRingView.imageTintList = tintList
-                            scoreTickView.visibility = View.INVISIBLE
-                        }
-                        QuestionScore.HALF -> {
-                            val ringTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_very_dimmed, null))
-                            scoreRingView.imageTintList = ringTintList
-                            val tickTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_highlight, null))
-                            scoreTickView.apply {
-                                visibility = View.VISIBLE
-                                imageTintList = tickTintList
-                            }
-                        }
-                        QuestionScore.FULL -> {
-                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_highlight, null))
-                            scoreRingView.imageTintList = tintList
-                            scoreTickView.apply {
-                                visibility = View.VISIBLE
-                                imageTintList = tintList
-                            }
-                        }
-                    }
+                    scoreLayout.show()
+                    scoreDimmedRingView.show(score != QuestionScore.FULL)
+                    scoreHighlightRingView.show(score == QuestionScore.FULL)
+                    scoreTickView.show(score != QuestionScore.NONE)
                 }
             }
 
             totalScore.observe(activity) { score ->
                 if (score == null) {
-                    totalScoreView.visibility = View.INVISIBLE
+                    totalScoreView.hide()
                 } else {
                     totalScoreView.apply {
                         text = getString(R.string.total_score_format, score.toPrettyString())
-                        visibility = View.VISIBLE
+                        show()
                     }
                 }
             }
 
             isWhatLinks.observe(activity) { isWhatLinks ->
-                whatLinksView.visibility = if (isWhatLinks) {
-                    View.VISIBLE
+                whatLinksView.show(isWhatLinks)
+            }
+
+            theme.observe(activity) { theme ->
+                setTheme(theme)
+            }
+
+            themeTip.observe(activity) { theme ->
+                if (theme != null) {
+                    showThemeTip(theme)
                 } else {
-                    View.INVISIBLE
+                    hideThemeTip()
                 }
             }
 
@@ -150,6 +194,17 @@ class QuizActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    private fun TextView.setColour(@ColorRes colorResId: Int) {
+        val colour = resources.getColor(colorResId, null)
+        setTextColor(colour)
+        compoundDrawableTintList = ColorStateList.valueOf(colour)
+    }
+
+    private fun ImageView.setColour(@ColorRes colorResId: Int) {
+        val tintList = ColorStateList.valueOf(resources.getColor(colorResId, null))
+        imageTintList = tintList
     }
 
     private fun fromHtml(text: String): Spanned {
@@ -165,7 +220,25 @@ class QuizActivity : FragmentActivity() {
         visibility = View.VISIBLE
     }
 
+    private fun View.show(show: Boolean) {
+        if (show) {
+            show()
+        } else {
+            hide()
+        }
+    }
+
     private fun View.hide() {
+        visibility = View.INVISIBLE
+    }
+
+    private fun View.remove() {
         visibility = View.GONE
+    }
+
+    companion object {
+        const val TIP_FADE_IN_DURATION_MS = 50L
+        const val TIP_FADE_OUT_DURATION_MS = 300L
+        const val TIP_DIAL_ROTATE_DURATION_MS = 200L
     }
 }

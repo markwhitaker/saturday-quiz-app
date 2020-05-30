@@ -1,16 +1,26 @@
 <resources>
     <color name="background">#000000</color>
 
-    <color name="foreground">#888888</color>
-    <color name="foreground_highlight">#aa9900</color>
-    <color name="foreground_dimmed">#444444</color>
-    <color name="foreground_very_dimmed">#222222</color>
+    <color name="dark_foreground">#555555</color>
+    <color name="dark_foreground_highlight">#776600</color>
+    <color name="dark_foreground_dimmed">#222222</color>
+    <color name="dark_foreground_very_dimmed">#111111</color>
 
-    <color name="what_links_text">@color/foreground_dimmed</color>
-    <color name="question_text">@color/foreground</color>
-    <color name="title_text">@color/foreground</color>
-    <color name="date_text">@color/foreground_highlight</color>
-    <color name="answer_text">@color/foreground_highlight</color>
-    <color name="score_text">@color/foreground_highlight</color>
-    <color name="loading_spinner">@color/foreground_dimmed</color>
+    <color name="medium_foreground">#888888</color>
+    <color name="medium_foreground_highlight">#aa9900</color>
+    <color name="medium_foreground_dimmed">#444444</color>
+    <color name="medium_foreground_very_dimmed">#222222</color>
+
+    <color name="light_foreground">#dddddd</color>
+    <color name="light_foreground_highlight">#ffdd00</color>
+    <color name="light_foreground_dimmed">#666666</color>
+    <color name="light_foreground_very_dimmed">#444444</color>
+
+    <color name="what_links_text">@color/medium_foreground_dimmed</color>
+    <color name="question_text">@color/medium_foreground</color>
+    <color name="title_text">@color/medium_foreground</color>
+    <color name="date_text">@color/medium_foreground_highlight</color>
+    <color name="answer_text">@color/medium_foreground_highlight</color>
+    <color name="score_text">@color/medium_foreground_highlight</color>
+    <color name="loading_spinner">@color/medium_foreground_dimmed</color>
 </resources>

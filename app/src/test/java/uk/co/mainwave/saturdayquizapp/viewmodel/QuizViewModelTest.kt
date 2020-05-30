@@ -16,7 +16,7 @@ import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.QuestionType
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
-import uk.co.mainwave.saturdayquizapp.repository.ScoresRepository
+import uk.co.mainwave.saturdayquizapp.repository.PrefsRepository
 import java.util.Date
 
 class QuizViewModelTest {
@@ -25,7 +25,7 @@ class QuizViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     private val mockQuizRepository = mockk<QuizRepository>(relaxUnitFun = true)
-    private val mockScoresRepository = mockk<ScoresRepository>(relaxUnitFun = true)
+    private val mockScoresRepository = mockk<PrefsRepository>(relaxUnitFun = true)
 
     private val viewModel = QuizViewModel(
         mockQuizRepository,
