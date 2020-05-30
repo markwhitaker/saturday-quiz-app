@@ -9,7 +9,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import uk.co.mainwave.saturdayquizapp.R
-import uk.co.mainwave.saturdayquizapp.model.Question
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.model.Theme
@@ -188,14 +187,6 @@ class QuizViewModel(
                 data.totalScore.value = prefsRepository.totalScore
             }
         }
-    }
-
-    private sealed class Scene {
-        class QuestionsTitleScene(val date: Date?) : Scene()
-        object AnswersTitleScene : Scene()
-        class QuestionScene(val question: Question) : Scene()
-        class QuestionAnswerScene(val question: Question) : Scene()
-        object EndTitleScene : Scene()
     }
 
     private class Data {
