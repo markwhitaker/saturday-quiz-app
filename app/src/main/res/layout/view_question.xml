@@ -65,7 +65,7 @@
             android:layout_height="50dp"
             android:src="@drawable/ic_score_ring_outer"
             android:background="@android:color/transparent"
-            tools:tint="@color/foreground_very_dimmed"
+            tools:tint="@color/medium_foreground_very_dimmed"
             />
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="50dp"
@@ -80,7 +80,7 @@
             android:layout_height="@dimen/score_tick"
             android:src="@drawable/ic_score_tick"
             android:background="@android:color/transparent"
-            tools:tint="@color/foreground_highlight"
+            tools:tint="@color/medium_foreground_highlight"
             />
     </FrameLayout>
 

@@ -7,14 +7,21 @@ import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.view_question.*
+import kotlinx.android.synthetic.main.view_theme_tip.*
 import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
+import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.tools.toPrettyString
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
@@ -48,10 +55,54 @@ class QuizActivity : FragmentActivity() {
                 viewModel.onNext()
             KeyEvent.KEYCODE_DPAD_LEFT ->
                 viewModel.onPrevious()
+            KeyEvent.KEYCODE_DPAD_UP ->
+                viewModel.onUp()
+            KeyEvent.KEYCODE_DPAD_DOWN ->
+                viewModel.onDown()
             else ->
                 return super.onKeyUp(keyCode, event)
         }
         return true
+    }
+
+    private fun setTheme(theme: Theme) {
+        titleView.setColour(theme.foreground)
+        questionView.setColour(theme.foreground)
+        numberView.setColour(theme.foreground)
+        answerView.setColour(theme.foregroundHighlight)
+        quizDateView.setColour(theme.foregroundHighlight)
+        whatLinksView.setColour(theme.foregroundDimmed)
+    }
+
+    private fun showThemeTip(theme: Theme) {
+        val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
+        themeTipDots.apply {
+            setImageResource(theme.dotsDrawable)
+            imageTintList = tintList
+        }
+        themeTipDial.apply {
+            imageTintList = tintList
+            animate()
+                .rotation(theme.dialRotation)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .setDuration(TIP_DIAL_ROTATE_DURATION_MS)
+                .start()
+        }
+        themeTipView
+            .animate()
+            .alpha(1f)
+            .setInterpolator(AccelerateInterpolator())
+            .setDuration(TIP_FADE_IN_DURATION_MS)
+            .start()
+    }
+
+    private fun hideThemeTip() {
+        themeTipView
+            .animate()
+            .alpha(0f)
+            .setInterpolator(DecelerateInterpolator())
+            .setDuration(TIP_FADE_OUT_DURATION_MS)
+            .start()
     }
 
     private fun connectViewModel() {
@@ -100,21 +151,21 @@ class QuizActivity : FragmentActivity() {
                     scoreLayout.visibility = View.VISIBLE
                     when (score) {
                         QuestionScore.NONE -> {
-                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_very_dimmed, null))
+                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_very_dimmed, null))
                             scoreRingView.imageTintList = tintList
                             scoreTickView.visibility = View.INVISIBLE
                         }
                         QuestionScore.HALF -> {
-                            val ringTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_very_dimmed, null))
+                            val ringTintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_very_dimmed, null))
                             scoreRingView.imageTintList = ringTintList
-                            val tickTintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_highlight, null))
+                            val tickTintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_highlight, null))
                             scoreTickView.apply {
                                 visibility = View.VISIBLE
                                 imageTintList = tickTintList
                             }
                         }
                         QuestionScore.FULL -> {
-                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.foreground_highlight, null))
+                            val tintList = ColorStateList.valueOf(resources.getColor(R.color.medium_foreground_highlight, null))
                             scoreRingView.imageTintList = tintList
                             scoreTickView.apply {
                                 visibility = View.VISIBLE
@@ -144,12 +195,30 @@ class QuizActivity : FragmentActivity() {
                 }
             }
 
+            theme.observe(activity) { theme ->
+                setTheme(theme)
+            }
+
+            themeTip.observe(activity) { theme ->
+                if (theme != null) {
+                    showThemeTip(theme)
+                } else {
+                    hideThemeTip()
+                }
+            }
+
             quit.observe(activity) { quit ->
                 if (quit) {
                     finish()
                 }
             }
         }
+    }
+
+    private fun TextView.setColour(@ColorRes colorResId: Int) {
+        val colour = resources.getColor(colorResId, null)
+        setTextColor(colour)
+        compoundDrawableTintList = ColorStateList.valueOf(colour)
     }
 
     private fun fromHtml(text: String): Spanned {
@@ -167,5 +236,11 @@ class QuizActivity : FragmentActivity() {
 
     private fun View.hide() {
         visibility = View.GONE
+    }
+
+    companion object {
+        const val TIP_FADE_IN_DURATION_MS = 50L
+        const val TIP_FADE_OUT_DURATION_MS = 300L
+        const val TIP_DIAL_ROTATE_DURATION_MS = 200L
     }
 }
