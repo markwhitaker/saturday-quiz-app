@@ -28,13 +28,17 @@ fun View.showIf(condition: Boolean) {
     }
 }
 
-fun TextView.setColour(@ColorRes colorResId: Int) {
+fun View.setColour(@ColorRes colorResId: Int) {
     val colour = resources.getColor(colorResId, null)
-    setTextColor(colour)
-    compoundDrawableTintList = ColorStateList.valueOf(colour)
-}
+    val tintList = ColorStateList.valueOf(colour)
 
-fun ImageView.setColour(@ColorRes colorResId: Int) {
-    val tintList = ColorStateList.valueOf(resources.getColor(colorResId, null))
-    imageTintList = tintList
+    when (this) {
+        is TextView -> {
+            setTextColor(colour)
+            compoundDrawableTintList = tintList
+        }
+        is ImageView -> {
+            imageTintList = tintList
+        }
+    }
 }
