@@ -10,7 +10,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.observe
 import kotlinx.android.synthetic.main.activity_quiz.*
 import kotlinx.android.synthetic.main.view_question.*
 import kotlinx.android.synthetic.main.view_score.*
@@ -115,15 +114,15 @@ class QuizActivity : FragmentActivity() {
     private fun connectViewModel() {
         val activity = this
         viewModel.apply {
-            showLoading.observe(activity) { show ->
+            showLoading.observe(activity, { show ->
                 if (show) {
                     loadingView.show()
                 } else {
                     loadingView.remove()
                 }
-            }
+            })
 
-            quizDate.observe(activity) { date ->
+            quizDate.observe(activity, { date ->
                 if (date != null) {
                     quizDateView.text =
                         DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
@@ -131,27 +130,27 @@ class QuizActivity : FragmentActivity() {
                 } else {
                     quizDateView.remove()
                 }
-            }
+            })
 
-            titleResId.observe(activity) { titleResId ->
+            titleResId.observe(activity, { titleResId ->
                 titleView.setText(titleResId)
                 titleLayout.show()
-            }
+            })
 
-            questionNumber.observe(activity) { number ->
+            questionNumber.observe(activity, { number ->
                 numberView.text = getString(R.string.question_number_format, number)
-            }
+            })
 
-            questionHtml.observe(activity) { questionHtml ->
+            questionHtml.observe(activity, { questionHtml ->
                 questionView.text = fromHtml(questionHtml)
                 titleLayout.remove()
-            }
+            })
 
-            answerHtml.observe(activity) { answerHtml ->
+            answerHtml.observe(activity, { answerHtml ->
                 answerView.text = fromHtml(answerHtml)
-            }
+            })
 
-            questionScore.observe(activity) { score ->
+            questionScore.observe(activity, { score ->
                 if (score == null) {
                     scoreLayout.hide()
                 } else {
@@ -160,9 +159,9 @@ class QuizActivity : FragmentActivity() {
                     scoreHighlightRingView.showIf(score == QuestionScore.FULL)
                     scoreTickView.showIf(score != QuestionScore.NONE)
                 }
-            }
+            })
 
-            totalScore.observe(activity) { score ->
+            totalScore.observe(activity, { score ->
                 if (score == null) {
                     totalScoreView.hide()
                 } else {
@@ -171,29 +170,29 @@ class QuizActivity : FragmentActivity() {
                         show()
                     }
                 }
-            }
+            })
 
-            isWhatLinks.observe(activity) { isWhatLinks ->
+            isWhatLinks.observe(activity, { isWhatLinks ->
                 whatLinksView.showIf(isWhatLinks)
-            }
+            })
 
-            theme.observe(activity) { theme ->
+            theme.observe(activity, { theme ->
                 setTheme(theme)
-            }
+            })
 
-            themeTip.observe(activity) { theme ->
+            themeTip.observe(activity, { theme ->
                 if (theme != null) {
                     showThemeTip(theme)
                 } else {
                     hideThemeTip()
                 }
-            }
+            })
 
-            quit.observe(activity) { quit ->
+            quit.observe(activity, { quit ->
                 if (quit) {
                     finish()
                 }
-            }
+            })
         }
     }
 

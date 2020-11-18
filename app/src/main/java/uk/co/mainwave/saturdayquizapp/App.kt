@@ -8,6 +8,7 @@ import uk.co.mainwave.saturdayquizapp.di.appModule
 import uk.co.mainwave.saturdayquizapp.di.networkModule
 import uk.co.mainwave.saturdayquizapp.di.quizModule
 
+@Suppress("unused")
 class App : Application() {
 
     override fun onCreate() {

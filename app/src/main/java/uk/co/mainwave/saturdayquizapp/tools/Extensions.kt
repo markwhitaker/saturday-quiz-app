@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.core.widget.TextViewCompat
 
 fun Float.toPrettyString(): String = toInt().toString() + if (this % 1f == 0.5f) "½" else ""
 
@@ -35,7 +36,7 @@ fun View.setColour(@ColorRes colorResId: Int) {
     when (this) {
         is TextView -> {
             setTextColor(colour)
-            compoundDrawableTintList = tintList
+            TextViewCompat.setCompoundDrawableTintList(this, tintList)
         }
         is ImageView -> {
             imageTintList = tintList
