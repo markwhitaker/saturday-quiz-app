@@ -6,5 +6,5 @@ data class Quiz(
     val id: String,
     val date: Date?,
     val title: String?,
-    val questions: List<Question>
+    val questions: List<QuestionModel>
 )

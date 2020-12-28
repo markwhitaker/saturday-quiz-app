@@ -96,7 +96,7 @@ class QuizViewModel(
             return
         }
 
-        val questionNumber = scene.question.number
+        val questionNumber = scene.questionModel.number
         val score = when (prefsRepository.getScore(questionNumber)) {
             QuestionScore.NONE -> QuestionScore.FULL
             QuestionScore.FULL -> QuestionScore.HALF
@@ -166,19 +166,19 @@ class QuizViewModel(
                 data.totalScore.value = null
             }
             is Scene.QuestionScene -> {
-                data.questionNumber.value = scene.question.number
-                data.questionHtml.value = scene.question.questionHtml
+                data.questionNumber.value = scene.questionModel.number
+                data.questionHtml.value = scene.questionModel.question
                 data.answerHtml.value = ""
-                data.isWhatLinks.value = scene.question.isWhatLinks
+                data.isWhatLinks.value = scene.questionModel.isWhatLinks
                 data.questionScore.value = null
                 data.totalScore.value = null
             }
             is Scene.QuestionAnswerScene -> {
-                data.questionNumber.value = scene.question.number
-                data.questionHtml.value = scene.question.questionHtml
-                data.answerHtml.value = scene.question.answerHtml
-                data.isWhatLinks.value = scene.question.isWhatLinks
-                data.questionScore.value = prefsRepository.getScore(scene.question.number)
+                data.questionNumber.value = scene.questionModel.number
+                data.questionHtml.value = scene.questionModel.question
+                data.answerHtml.value = scene.questionModel.answer
+                data.isWhatLinks.value = scene.questionModel.isWhatLinks
+                data.questionScore.value = prefsRepository.getScore(scene.questionModel.number)
                 data.totalScore.value = null
             }
             is Scene.EndTitleScene -> {
