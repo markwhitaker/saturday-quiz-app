@@ -51,6 +51,8 @@
         tools:text="Lady Chatterley’s Lover"
         />
 
-    <include layout="@layout/view_score"/>
+    <include
+        android:id="@+id/scoreLayout"
+        layout="@layout/view_score"/>
 
 </RelativeLayout>

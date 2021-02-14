@@ -10,13 +10,14 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.FragmentActivity
-import kotlinx.android.synthetic.main.activity_quiz.*
-import kotlinx.android.synthetic.main.view_question.*
-import kotlinx.android.synthetic.main.view_score.*
-import kotlinx.android.synthetic.main.view_theme_tip.*
-import kotlinx.android.synthetic.main.view_title.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
+import uk.co.mainwave.saturdayquizapp.databinding.ActivityQuizBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewLoadingBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewQuestionBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewScoreBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewThemeTipBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewTitleBinding
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Theme
 import uk.co.mainwave.saturdayquizapp.tools.hide
@@ -34,10 +35,24 @@ class QuizActivity : FragmentActivity() {
     private val viewModel: QuizViewModel by viewModel()
     private lateinit var whatLinksPrefix: String
 
+    private lateinit var quizActivity: ActivityQuizBinding
+    private lateinit var loadingView: ViewLoadingBinding
+    private lateinit var questionLayout: ViewQuestionBinding
+    private lateinit var scoreLayout: ViewScoreBinding
+    private lateinit var themeTipLayout: ViewThemeTipBinding
+    private lateinit var titleLayout: ViewTitleBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_quiz)
+        quizActivity = ActivityQuizBinding.inflate(layoutInflater)
+        loadingView = quizActivity.loadingView
+        questionLayout = quizActivity.questionLayout
+        scoreLayout = questionLayout.scoreLayout
+        themeTipLayout = quizActivity.themeTipLayout
+        titleLayout = quizActivity.titleLayout
+
+        setContentView(quizActivity.root)
         whatLinksPrefix = getString(R.string.what_links_prefix)
 
         connectViewModel()
@@ -68,25 +83,25 @@ class QuizActivity : FragmentActivity() {
     }
 
     private fun setTheme(theme: Theme) {
-        titleView.setColour(theme.foreground)
-        questionView.setColour(theme.foreground)
-        numberView.setColour(theme.foreground)
-        answerView.setColour(theme.foregroundHighlight)
-        quizDateView.setColour(theme.foregroundHighlight)
-        whatLinksView.setColour(theme.foregroundDimmed)
-        scoreDimmedRingView.setColour(theme.foregroundVeryDimmed)
-        scoreHighlightRingView.setColour(theme.foregroundHighlight)
-        scoreTickView.setColour(theme.foregroundHighlight)
-        totalScoreView.setColour(theme.foregroundHighlight)
+        titleLayout.titleView.setColour(theme.foreground)
+        titleLayout.totalScoreView.setColour(theme.foregroundHighlight)
+        titleLayout.quizDateView.setColour(theme.foregroundHighlight)
+        questionLayout.questionView.setColour(theme.foreground)
+        questionLayout.numberView.setColour(theme.foreground)
+        questionLayout.answerView.setColour(theme.foregroundHighlight)
+        questionLayout.whatLinksView.setColour(theme.foregroundDimmed)
+        scoreLayout.scoreDimmedRingView.setColour(theme.foregroundVeryDimmed)
+        scoreLayout.scoreHighlightRingView.setColour(theme.foregroundHighlight)
+        scoreLayout.scoreTickView.setColour(theme.foregroundHighlight)
     }
 
     private fun showThemeTip(theme: Theme) {
         val tintList = ColorStateList.valueOf(resources.getColor(theme.foreground, null))
-        themeTipDots.apply {
+        themeTipLayout.themeTipDots.apply {
             setImageResource(theme.dotsDrawable)
             imageTintList = tintList
         }
-        themeTipDial.apply {
+        themeTipLayout.themeTipDial.apply {
             imageTintList = tintList
             animate()
                 .rotation(theme.dialRotation)
@@ -94,7 +109,7 @@ class QuizActivity : FragmentActivity() {
                 .setDuration(TIP_DIAL_ROTATE_DURATION_MS)
                 .start()
         }
-        themeTipView
+        themeTipLayout.themeTipView
             .animate()
             .alpha(1f)
             .setInterpolator(AccelerateInterpolator())
@@ -103,7 +118,7 @@ class QuizActivity : FragmentActivity() {
     }
 
     private fun hideThemeTip() {
-        themeTipView
+        themeTipLayout.themeTipView
             .animate()
             .alpha(0f)
             .setInterpolator(DecelerateInterpolator())
@@ -116,56 +131,56 @@ class QuizActivity : FragmentActivity() {
         viewModel.apply {
             showLoading.observe(activity, { show ->
                 if (show) {
-                    loadingView.show()
+                    loadingView.root.show()
                 } else {
-                    loadingView.remove()
+                    loadingView.root.remove()
                 }
             })
 
             quizDate.observe(activity, { date ->
                 if (date != null) {
-                    quizDateView.text =
+                    titleLayout.quizDateView.text =
                         DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
-                    quizDateView.show()
+                    titleLayout.quizDateView.show()
                 } else {
-                    quizDateView.remove()
+                    titleLayout.quizDateView.remove()
                 }
             })
 
             titleResId.observe(activity, { titleResId ->
-                titleView.setText(titleResId)
-                titleLayout.show()
+                titleLayout.titleView.setText(titleResId)
+                titleLayout.root.show()
             })
 
             questionNumber.observe(activity, { number ->
-                numberView.text = getString(R.string.question_number_format, number)
+                questionLayout.numberView.text = getString(R.string.question_number_format, number)
             })
 
             questionHtml.observe(activity, { questionHtml ->
-                questionView.text = fromHtml(questionHtml)
-                titleLayout.remove()
+                questionLayout.questionView.text = fromHtml(questionHtml)
+                titleLayout.root.remove()
             })
 
             answerHtml.observe(activity, { answerHtml ->
-                answerView.text = fromHtml(answerHtml)
+                questionLayout.answerView.text = fromHtml(answerHtml)
             })
 
             questionScore.observe(activity, { score ->
                 if (score == null) {
-                    scoreLayout.hide()
+                    scoreLayout.root.hide()
                 } else {
-                    scoreLayout.show()
-                    scoreDimmedRingView.showIf(score != QuestionScore.FULL)
-                    scoreHighlightRingView.showIf(score == QuestionScore.FULL)
-                    scoreTickView.showIf(score != QuestionScore.NONE)
+                    scoreLayout.root.show()
+                    scoreLayout.scoreDimmedRingView.showIf(score != QuestionScore.FULL)
+                    scoreLayout.scoreHighlightRingView.showIf(score == QuestionScore.FULL)
+                    scoreLayout.scoreTickView.showIf(score != QuestionScore.NONE)
                 }
             })
 
             totalScore.observe(activity, { score ->
                 if (score == null) {
-                    totalScoreView.hide()
+                    titleLayout.totalScoreView.hide()
                 } else {
-                    totalScoreView.apply {
+                    titleLayout.totalScoreView.apply {
                         text = getString(R.string.total_score_format, score.toPrettyString())
                         show()
                     }
@@ -173,7 +188,7 @@ class QuizActivity : FragmentActivity() {
             })
 
             isWhatLinks.observe(activity, { isWhatLinks ->
-                whatLinksView.showIf(isWhatLinks)
+                questionLayout.whatLinksView.showIf(isWhatLinks)
             })
 
             theme.observe(activity, { theme ->

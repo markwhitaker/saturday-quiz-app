@@ -1,17 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 buildscript {
     ext.junit_version = '4.13.1'
     ext.koin_version = '2.0.1'
     ext.ktlint_version = '0.36.0'
-    ext.kotlin_coroutines_version = '1.3.7'
-    ext.lifecycle_version = '2.2.0'
+    ext.kotlin_coroutines_version = '1.3.8'
+    ext.lifecycle_version = '2.3.0'
     ext.lifecycle_test_version = '2.1.0'
     ext.lottie_version = '3.4.0'
-    ext.mockk_version = '1.9.3'
+    ext.mockk_version = '1.10.2'
     ext.okhttp_version = '4.4.0'
     ext.retrofit_version = '2.7.2'
     ext.stetho_version = '1.5.1'
@@ -43,6 +42,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 configurations {
@@ -60,7 +63,6 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_version"
 
     // Architecture components
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_test_version"
