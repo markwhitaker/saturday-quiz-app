@@ -12,7 +12,7 @@ buildscript {
     ext.lottie_version = '3.4.0'
     ext.mockk_version = '1.10.6'
     ext.okhttp_version = '4.4.0'
-    ext.retrofit_version = '2.7.2'
+    ext.retrofit_version = '2.9.0'
     ext.stetho_version = '1.5.1'
 }
 
