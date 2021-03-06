@@ -63,6 +63,11 @@ class QuizActivity : FragmentActivity() {
         viewModel.start()
     }
 
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
+
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_CENTER,
