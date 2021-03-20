@@ -35,6 +35,9 @@ class PrefsRepository(
     val themeTipTimeoutMs: Long
         get() = THEME_TIP_TIMEOUT_MS
 
+    val hasScores: Boolean
+        get() = scores.any { s -> s != QuestionScore.NONE }
+
     fun initialiseScores(quiz: Quiz) {
         val dateString = DATE_FORMAT.format(quiz.date ?: Date())
         sharedPreferences.getString(KEY_DATE, null)?.let { storedDateString ->

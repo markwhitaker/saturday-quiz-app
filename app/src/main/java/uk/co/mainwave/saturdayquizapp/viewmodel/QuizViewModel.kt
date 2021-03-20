@@ -12,8 +12,8 @@ import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
 import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.model.Theme
-import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import uk.co.mainwave.saturdayquizapp.repository.PrefsRepository
+import uk.co.mainwave.saturdayquizapp.repository.QuizRepository
 import java.util.Date
 
 class QuizViewModel(
@@ -121,18 +121,20 @@ class QuizViewModel(
     }
 
     private fun buildScenes(quiz: Quiz) {
-        // First just show the questions
         scenes.add(
             Scene.QuestionsTitleScene(
                 quiz.date
             )
         )
-        quiz.questions.forEach { question ->
-            scenes.add(
-                Scene.QuestionScene(
-                    question
+        // First just show the questions if we haven't stored scores for this quiz
+        if (!prefsRepository.hasScores) {
+            quiz.questions.forEach { question ->
+                scenes.add(
+                    Scene.QuestionScene(
+                        question
+                    )
                 )
-            )
+            }
         }
         // Then show each question again, then its answer
         scenes.add(Scene.AnswersTitleScene)
