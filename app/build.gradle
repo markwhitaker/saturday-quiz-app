@@ -21,11 +21,11 @@ android {
     // https://blog.jetbrains.com/kotlin/2021/02/the-jvm-backend-is-in-beta-let-s-make-it-stable-together/
     kotlinOptions.useIR = true
 
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "uk.co.mainwave.saturdayquizapp"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
     }
