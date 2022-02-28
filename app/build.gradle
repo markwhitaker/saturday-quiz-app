@@ -9,7 +9,7 @@ buildscript {
     ext.kotlin_coroutines_version = '1.6.0-native-mt'
     ext.lifecycle_version = '2.4.1'
     ext.lifecycle_test_version = '2.1.0'
-    ext.lottie_version = '4.2.2'
+    ext.lottie_version = '5.0.2'
     ext.mockk_version = '1.12.3'
     ext.okhttp_version = '4.9.3'
     ext.retrofit_version = '2.9.0'
