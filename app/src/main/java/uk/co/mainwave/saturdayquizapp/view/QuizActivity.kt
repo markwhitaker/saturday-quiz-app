@@ -96,8 +96,8 @@ class QuizActivity : FragmentActivity() {
         questionLayout.answerView.setColour(theme.foregroundHighlight)
         questionLayout.whatLinksView.setColour(theme.foregroundDimmed)
         scoreLayout.scoreDimmedRingView.setColour(theme.foregroundVeryDimmed)
-        scoreLayout.scoreHighlightRingView.setColour(theme.foregroundHighlight)
-        scoreLayout.scoreTickView.setColour(theme.foregroundHighlight)
+        scoreLayout.scoreHighlightDiscView.setColour(theme.foregroundHighlight)
+        scoreLayout.scoreTickViewHighlight.setColour(theme.foregroundHighlight)
     }
 
     private fun showThemeTip(theme: Theme) {
@@ -134,15 +134,15 @@ class QuizActivity : FragmentActivity() {
     private fun connectViewModel() {
         val activity = this
         viewModel.apply {
-            showLoading.observe(activity, { show ->
+            showLoading.observe(activity) { show ->
                 if (show) {
                     loadingView.root.show()
                 } else {
                     loadingView.root.remove()
                 }
-            })
+            }
 
-            quizDate.observe(activity, { date ->
+            quizDate.observe(activity) { date ->
                 if (date != null) {
                     titleLayout.quizDateView.text =
                         DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
@@ -150,38 +150,39 @@ class QuizActivity : FragmentActivity() {
                 } else {
                     titleLayout.quizDateView.remove()
                 }
-            })
+            }
 
-            titleResId.observe(activity, { titleResId ->
+            titleResId.observe(activity) { titleResId ->
                 titleLayout.titleView.setText(titleResId)
                 titleLayout.root.show()
-            })
+            }
 
-            questionNumber.observe(activity, { number ->
+            questionNumber.observe(activity) { number ->
                 questionLayout.numberView.text = getString(R.string.question_number_format, number)
-            })
+            }
 
-            questionHtml.observe(activity, { questionHtml ->
+            questionHtml.observe(activity) { questionHtml ->
                 questionLayout.questionView.text = fromHtml(questionHtml)
                 titleLayout.root.remove()
-            })
+            }
 
-            answerHtml.observe(activity, { answerHtml ->
+            answerHtml.observe(activity) { answerHtml ->
                 questionLayout.answerView.text = fromHtml(answerHtml)
-            })
+            }
 
-            questionScore.observe(activity, { score ->
+            questionScore.observe(activity) { score ->
                 if (score == null) {
                     scoreLayout.root.hide()
                 } else {
                     scoreLayout.root.show()
+                    scoreLayout.scoreHighlightDiscView.showIf(score == QuestionScore.FULL)
+                    scoreLayout.scoreTickViewDark.showIf(score == QuestionScore.FULL)
+                    scoreLayout.scoreTickViewHighlight.showIf(score == QuestionScore.HALF)
                     scoreLayout.scoreDimmedRingView.showIf(score != QuestionScore.FULL)
-                    scoreLayout.scoreHighlightRingView.showIf(score == QuestionScore.FULL)
-                    scoreLayout.scoreTickView.showIf(score != QuestionScore.NONE)
                 }
-            })
+            }
 
-            totalScore.observe(activity, { score ->
+            totalScore.observe(activity) { score ->
                 if (score == null) {
                     titleLayout.totalScoreView.hide()
                 } else {
@@ -190,29 +191,29 @@ class QuizActivity : FragmentActivity() {
                         show()
                     }
                 }
-            })
+            }
 
-            isWhatLinks.observe(activity, { isWhatLinks ->
+            isWhatLinks.observe(activity) { isWhatLinks ->
                 questionLayout.whatLinksView.showIf(isWhatLinks)
-            })
+            }
 
-            theme.observe(activity, { theme ->
+            theme.observe(activity) { theme ->
                 setTheme(theme)
-            })
+            }
 
-            themeTip.observe(activity, { theme ->
+            themeTip.observe(activity) { theme ->
                 if (theme != null) {
                     showThemeTip(theme)
                 } else {
                     hideThemeTip()
                 }
-            })
+            }
 
-            quit.observe(activity, { quit ->
+            quit.observe(activity) { quit ->
                 if (quit) {
                     finish()
                 }
-            })
+            }
         }
     }
 
