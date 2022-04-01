@@ -28,6 +28,7 @@ import uk.co.mainwave.saturdayquizapp.tools.showIf
 import uk.co.mainwave.saturdayquizapp.tools.toPrettyString
 import uk.co.mainwave.saturdayquizapp.viewmodel.QuizViewModel
 import java.text.DateFormat
+import java.util.Date
 import java.util.Locale
 
 class QuizActivity : FragmentActivity() {
@@ -134,86 +135,83 @@ class QuizActivity : FragmentActivity() {
     private fun connectViewModel() {
         val activity = this
         viewModel.apply {
-            showLoading.observe(activity) { show ->
-                if (show) {
-                    loadingView.root.show()
-                } else {
-                    loadingView.root.remove()
-                }
-            }
+            showLoading.observe(activity) { handleShowLoading(it) }
+            quizDate.observe(activity) { handleQuizDate(it) }
+            titleResId.observe(activity) { handleTitleResId(it) }
+            questionNumber.observe(activity) { handleQuestionNumber(it) }
+            questionHtml.observe(activity) { handleQuestionHtml(it) }
+            answerHtml.observe(activity) {handleAnswerHtml(it) }
+            questionScore.observe(activity) { handleQuestionScore(it) }
+            totalScore.observe(activity) { handleTotalScore(it) }
+            isWhatLinks.observe(activity) { handleIsWhatLinks(it) }
+            theme.observe(activity) { setTheme(it) }
+            themeTip.observe(activity) { handleThemeTip(it) }
+            quit.observe(activity) { handleQuit(it) }
+        }
+    }
 
-            quizDate.observe(activity) { date ->
-                if (date != null) {
-                    titleLayout.quizDateView.text =
-                        DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
-                    titleLayout.quizDateView.show()
-                } else {
-                    titleLayout.quizDateView.remove()
-                }
-            }
+    private fun handleShowLoading(show: Boolean) = if (show) {
+        loadingView.root.show()
+    } else {
+        loadingView.root.remove()
+    }
 
-            titleResId.observe(activity) { titleResId ->
-                titleLayout.titleView.setText(titleResId)
-                titleLayout.root.show()
-            }
+    private fun handleQuizDate(date: Date?) = if (date != null) {
+        titleLayout.quizDateView.text = DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(date)
+        titleLayout.quizDateView.show()
+    } else {
+        titleLayout.quizDateView.remove()
+    }
 
-            questionNumber.observe(activity) { number ->
-                questionLayout.numberView.text = getString(R.string.question_number_format, number)
-            }
+    private fun handleTitleResId(titleResId: Int) = titleLayout.apply {
+        titleView.setText(titleResId)
+        root.show()
+    }
 
-            questionHtml.observe(activity) { questionHtml ->
-                questionLayout.questionView.text = fromHtml(questionHtml)
-                titleLayout.root.remove()
-            }
+    private fun handleQuestionNumber(number: Int) {
+        questionLayout.numberView.text = getString(R.string.question_number_format, number)
+    }
 
-            answerHtml.observe(activity) { answerHtml ->
-                questionLayout.answerView.text = fromHtml(answerHtml)
-            }
+    private fun handleQuestionHtml(questionHtml: String) {
+        questionLayout.questionView.text = fromHtml(questionHtml)
+        titleLayout.root.remove()
+    }
 
-            questionScore.observe(activity) { score ->
-                if (score == null) {
-                    scoreLayout.root.hide()
-                } else {
-                    scoreLayout.root.show()
-                    scoreLayout.scoreHighlightDiscView.showIf(score == QuestionScore.FULL)
-                    scoreLayout.scoreTickViewDark.showIf(score == QuestionScore.FULL)
-                    scoreLayout.scoreTickViewHighlight.showIf(score == QuestionScore.HALF)
-                    scoreLayout.scoreDimmedRingView.showIf(score != QuestionScore.FULL)
-                }
-            }
+    private fun handleAnswerHtml(answerHtml: String) {
+        questionLayout.answerView.text = fromHtml(answerHtml)
+    }
 
-            totalScore.observe(activity) { score ->
-                if (score == null) {
-                    titleLayout.totalScoreView.hide()
-                } else {
-                    titleLayout.totalScoreView.apply {
-                        text = getString(R.string.total_score_format, score.toPrettyString())
-                        show()
-                    }
-                }
-            }
+    private fun handleQuestionScore(score: QuestionScore?) = if (score == null) {
+        scoreLayout.root.hide()
+    } else {
+        scoreLayout.root.show()
+        scoreLayout.scoreHighlightDiscView.showIf(score == QuestionScore.FULL)
+        scoreLayout.scoreTickViewDark.showIf(score == QuestionScore.FULL)
+        scoreLayout.scoreTickViewHighlight.showIf(score == QuestionScore.HALF)
+        scoreLayout.scoreDimmedRingView.showIf(score != QuestionScore.FULL)
+    }
 
-            isWhatLinks.observe(activity) { isWhatLinks ->
-                questionLayout.whatLinksView.showIf(isWhatLinks)
-            }
+    private fun handleTotalScore(score: Float?) = if (score == null) {
+        titleLayout.totalScoreView.hide()
+    } else {
+        titleLayout.totalScoreView.run {
+            text = getString(R.string.total_score_format, score.toPrettyString())
+            show()
+        }
+    }
 
-            theme.observe(activity) { theme ->
-                setTheme(theme)
-            }
+    private fun handleIsWhatLinks(isWhatLinks: Boolean) =
+        questionLayout.whatLinksView.showIf(isWhatLinks)
 
-            themeTip.observe(activity) { theme ->
-                if (theme != null) {
-                    showThemeTip(theme)
-                } else {
-                    hideThemeTip()
-                }
-            }
+    private fun handleThemeTip(theme: Theme?) = if (theme != null) {
+        showThemeTip(theme)
+    } else {
+        hideThemeTip()
+    }
 
-            quit.observe(activity) { quit ->
-                if (quit) {
-                    finish()
-                }
-            }
+    private fun handleQuit(quit: Boolean) {
+        if (quit) {
+            finish()
         }
     }
 
