@@ -49,6 +49,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'uk.co.mainwave.saturdayquizapp'
 }
 
 configurations {
