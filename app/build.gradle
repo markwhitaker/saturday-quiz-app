@@ -17,10 +17,6 @@ buildscript {
 }
 
 android {
-    // Enable the new JVM IR backend
-    // https://blog.jetbrains.com/kotlin/2021/02/the-jvm-backend-is-in-beta-let-s-make-it-stable-together/
-    kotlinOptions.useIR = true
-
     compileSdkVersion 32
     defaultConfig {
         applicationId "uk.co.mainwave.saturdayquizapp"
