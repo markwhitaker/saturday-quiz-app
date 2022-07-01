@@ -140,7 +140,7 @@ class QuizActivity : FragmentActivity() {
             titleResId.observe(activity) { handleTitleResId(it) }
             questionNumber.observe(activity) { handleQuestionNumber(it) }
             questionHtml.observe(activity) { handleQuestionHtml(it) }
-            answerHtml.observe(activity) {handleAnswerHtml(it) }
+            answerHtml.observe(activity) { handleAnswerHtml(it) }
             questionScore.observe(activity) { handleQuestionScore(it) }
             totalScore.observe(activity) { handleTotalScore(it) }
             isWhatLinks.observe(activity) { handleIsWhatLinks(it) }
