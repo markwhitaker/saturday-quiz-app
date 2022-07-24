@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 
 buildscript {
     ext.junit_version = '4.13.2'
-    ext.koin_version = '2.2.3'
-    ext.kotlin_coroutines_version = '1.6.3-native-mt'
+    ext.koin_version = '3.2.0'
+    ext.kotlin_coroutines_version = '1.6.4'
     ext.lifecycle_version = '2.5.0'
     ext.lifecycle_test_version = '2.1.0'
     ext.lottie_version = '5.2.0'
@@ -55,7 +55,6 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:$koin_version"
-    implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
 
     // Architecture components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
