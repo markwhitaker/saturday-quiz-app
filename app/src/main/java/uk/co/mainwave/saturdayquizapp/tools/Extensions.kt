@@ -41,5 +41,8 @@ fun View.setColour(@ColorRes colorResId: Int) {
         is ImageView -> {
             imageTintList = tintList
         }
+        else -> {
+            backgroundTintList = tintList
+        }
     }
 }
