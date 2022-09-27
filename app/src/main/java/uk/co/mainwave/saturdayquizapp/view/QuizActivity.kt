@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.*
 import androidx.fragment.app.FragmentActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
@@ -37,7 +35,7 @@ class QuizActivity : FragmentActivity() {
     private lateinit var whatLinksPrefix: String
 
     private lateinit var quizActivity: ActivityQuizBinding
-    private lateinit var loadingView: ViewLoadingBinding
+    private lateinit var loadingLayout: ViewLoadingBinding
     private lateinit var questionLayout: ViewQuestionBinding
     private lateinit var scoreLayout: ViewScoreBinding
     private lateinit var themeTipLayout: ViewThemeTipBinding
@@ -47,7 +45,7 @@ class QuizActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         quizActivity = ActivityQuizBinding.inflate(layoutInflater)
-        loadingView = quizActivity.loadingView
+        loadingLayout = quizActivity.loadingLayout
         questionLayout = quizActivity.questionLayout
         scoreLayout = questionLayout.scoreLayout
         themeTipLayout = quizActivity.themeTipLayout
@@ -99,6 +97,7 @@ class QuizActivity : FragmentActivity() {
         scoreLayout.scoreDimmedRingView.setColour(theme.foregroundVeryDimmed)
         scoreLayout.scoreHighlightDiscView.setColour(theme.foregroundHighlight)
         scoreLayout.scoreTickViewHighlight.setColour(theme.foregroundHighlight)
+        loadingLayout.loadingView.setColour(theme.foregroundHighlight)
     }
 
     private fun showThemeTip(theme: Theme) {
@@ -151,9 +150,13 @@ class QuizActivity : FragmentActivity() {
     }
 
     private fun handleShowLoading(show: Boolean) = if (show) {
-        loadingView.root.show()
+        AnimationUtils.loadAnimation(this, R.anim.ease_in_out_rotate).also { animation ->
+            loadingLayout.loadingView.startAnimation(animation)
+        }
+        loadingLayout.root.show()
     } else {
-        loadingView.root.remove()
+        loadingLayout.root.remove()
+        loadingLayout.loadingView.clearAnimation()
     }
 
     private fun handleQuizDate(date: Date?) = if (date != null) {
