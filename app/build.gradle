@@ -8,7 +8,7 @@ buildscript {
     ext.kotlin_coroutines_version = '1.6.4'
     ext.lifecycle_version = '2.6.1'
     ext.lifecycle_test_version = '2.2.0'
-    ext.mockk_version = '1.13.4'
+    ext.mockk_version = '1.13.5'
     ext.okhttp_version = '4.10.0'
     ext.retrofit_version = '2.9.0'
     ext.stetho_version = '1.6.0'
