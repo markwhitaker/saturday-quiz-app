@@ -6,7 +6,7 @@ buildscript {
     ext.junit_version = '4.13.2'
     ext.koin_version = '3.5.3'
     ext.kotlin_coroutines_version = '1.7.3'
-    ext.lifecycle_version = '2.6.2'
+    ext.lifecycle_version = '2.7.0'
     ext.lifecycle_test_version = '2.2.0'
     ext.mockk_version = '1.13.9'
     ext.okhttp_version = '4.12.0'
