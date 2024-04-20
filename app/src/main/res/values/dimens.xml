@@ -7,6 +7,7 @@
     <dimen name="loading_animation_size">100dp</dimen>
     <dimen name="score_icon">50dp</dimen>
     <dimen name="score_ring_thickness">2dp</dimen>
+    <dimen name="skip_to_answers_icon">40dp</dimen>
     <dimen name="theme_tip_size">50dp</dimen>
     <dimen name="loader_width">40dp</dimen>
     <dimen name="loader_height">20dp</dimen>

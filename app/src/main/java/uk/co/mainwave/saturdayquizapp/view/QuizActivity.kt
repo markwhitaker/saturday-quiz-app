@@ -1,12 +1,13 @@
 package uk.co.mainwave.saturdayquizapp.view
 
 import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.text.Spanned
 import android.view.KeyEvent
-import android.view.animation.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.FragmentActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
@@ -14,6 +15,7 @@ import uk.co.mainwave.saturdayquizapp.databinding.ActivityQuizBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewLoadingBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewQuestionBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewScoreBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewSkipToAnswersBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewThemeTipBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewTitleBinding
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
@@ -40,6 +42,7 @@ class QuizActivity : FragmentActivity() {
     private lateinit var scoreLayout: ViewScoreBinding
     private lateinit var themeTipLayout: ViewThemeTipBinding
     private lateinit var titleLayout: ViewTitleBinding
+    private lateinit var skipToAnswersLayout: ViewSkipToAnswersBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,7 @@ class QuizActivity : FragmentActivity() {
         scoreLayout = questionLayout.scoreLayout
         themeTipLayout = quizActivity.themeTipLayout
         titleLayout = quizActivity.titleLayout
+        skipToAnswersLayout = titleLayout.skipToAnswersLayout
 
         setContentView(quizActivity.root)
         whatLinksPrefix = getString(R.string.what_links_prefix)
@@ -98,6 +102,9 @@ class QuizActivity : FragmentActivity() {
         scoreLayout.scoreHighlightDiscView.setColour(theme.foregroundHighlight)
         scoreLayout.scoreTickViewHighlight.setColour(theme.foregroundHighlight)
         loadingLayout.loadingView.setColour(theme.foregroundHighlight)
+        skipToAnswersLayout.skipDimmedRingView.setColour(theme.foregroundDimmed)
+        skipToAnswersLayout.skipHighlightDiscView.setColour(theme.foregroundHighlight)
+        skipToAnswersLayout.skipIconViewHighlight.setColour(theme.foregroundHighlight)
     }
 
     private fun showThemeTip(theme: Theme) {
@@ -218,14 +225,7 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
-    private fun fromHtml(text: String): Spanned {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
-    }
+    private fun fromHtml(text: String) = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
 
     companion object {
         const val TIP_FADE_IN_DURATION_MS = 50L

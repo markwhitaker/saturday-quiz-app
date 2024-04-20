@@ -36,4 +36,8 @@
         tools:text="Total score: 15"
         />
 
+    <include
+        android:id="@+id/skipToAnswersLayout"
+        layout="@layout/view_skip_to_answers" />
+
 </RelativeLayout>

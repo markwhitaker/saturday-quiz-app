@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/skipToAnswersLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    >
+
+    <View
+        android:id="@+id/skipHighlightDiscView"
+        android:layout_width="@dimen/score_icon"
+        android:layout_height="@dimen/score_icon"
+        android:background="@drawable/disc"
+        android:backgroundTint="@color/medium_foreground_highlight"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/skipDimmedRingView"
+        android:layout_width="@dimen/score_icon"
+        android:layout_height="@dimen/score_icon"
+        android:src="@drawable/ic_score_ring"
+        tools:tint="@color/medium_foreground_very_dimmed"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/skipIconViewDark"
+        android:layout_width="@dimen/skip_to_answers_icon"
+        android:layout_height="@dimen/skip_to_answers_icon"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_fast_forward"
+        android:background="@android:color/transparent"
+        tools:tint="@color/background"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/skipIconViewHighlight"
+        android:layout_width="@dimen/skip_to_answers_icon"
+        android:layout_height="@dimen/skip_to_answers_icon"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_fast_forward"
+        android:background="@android:color/transparent"
+        tools:tint="@color/medium_foreground_highlight"
+        />
+
+</FrameLayout>
