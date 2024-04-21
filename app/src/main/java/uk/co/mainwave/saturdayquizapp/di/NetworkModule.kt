@@ -34,7 +34,7 @@ private fun provideOkHttp(): OkHttpClient {
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-    .baseUrl("https://fiendish-eaton.herokuapp.com/api/")
+    .baseUrl("https://eaton-bitrot.koyeb.app/api/")
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create())
     .build()
