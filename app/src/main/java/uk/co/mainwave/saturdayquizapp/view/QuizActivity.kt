@@ -1,12 +1,13 @@
 package uk.co.mainwave.saturdayquizapp.view
 
 import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.text.Spanned
 import android.view.KeyEvent
-import android.view.animation.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.FragmentActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
@@ -218,14 +219,7 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
-    private fun fromHtml(text: String): Spanned {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
-    }
+    private fun fromHtml(text: String) = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
 
     companion object {
         const val TIP_FADE_IN_DURATION_MS = 50L

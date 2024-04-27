@@ -17,22 +17,22 @@ class QuizRepository(
         retrofit
             .create(SaturdayQuizApi::class.java)
             .getLatestQuiz()
-//            .getKnownGoodQuiz()
             .enqueue(this)
     }
 
     override fun onResponse(call: Call<Quiz>, response: Response<Quiz>) {
         val quiz = response.body()
-        if (response.isSuccessful && quiz != null) {
-            listener.onQuizLoaded(quiz)
-        } else {
-            listener.onQuizLoadFailed()
+        when {
+            response.isSuccessful && quiz != null -> {
+                listener.onQuizLoaded(quiz)
+            }
+            else -> {
+                listener.onQuizLoadFailed()
+            }
         }
     }
 
-    override fun onFailure(call: Call<Quiz>, t: Throwable) {
-        listener.onQuizLoadFailed()
-    }
+    override fun onFailure(call: Call<Quiz>, t: Throwable) = listener.onQuizLoadFailed()
 
     interface Listener {
         fun onQuizLoaded(quiz: Quiz)

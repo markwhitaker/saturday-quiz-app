@@ -5,8 +5,8 @@ import java.util.Date
 
 sealed class Scene {
     class QuestionsTitleScene(val date: Date?) : Scene()
-    object AnswersTitleScene : Scene()
+    data object AnswersTitleScene : Scene()
     class QuestionScene(val questionModel: QuestionModel) : Scene()
     class QuestionAnswerScene(val questionModel: QuestionModel) : Scene()
-    object EndTitleScene : Scene()
+    data object EndTitleScene : Scene()
 }

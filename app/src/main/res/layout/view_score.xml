@@ -14,28 +14,31 @@
         android:background="@drawable/disc"
         android:backgroundTint="@color/medium_foreground_highlight"
         />
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/scoreDimmedRingView"
         android:layout_width="@dimen/score_icon"
         android:layout_height="@dimen/score_icon"
         android:src="@drawable/ic_score_ring"
         tools:tint="@color/medium_foreground_very_dimmed"
+        tools:ignore="ContentDescription"
         />
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/scoreTickViewHighlight"
         android:layout_width="@dimen/score_icon"
         android:layout_height="@dimen/score_icon"
         android:src="@drawable/ic_score_tick"
         android:background="@android:color/transparent"
         tools:tint="@color/medium_foreground_highlight"
+        tools:ignore="ContentDescription"
         />
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/scoreTickViewDark"
         android:layout_width="@dimen/score_icon"
         android:layout_height="@dimen/score_icon"
         android:src="@drawable/ic_score_tick"
         android:background="@android:color/transparent"
         tools:tint="@color/background"
+        tools:ignore="ContentDescription"
         />
 
 </FrameLayout>

@@ -9,22 +9,24 @@
     android:layout_alignParentBottom="true"
     >
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/themeTipDots"
         android:layout_width="@dimen/theme_tip_size"
         android:layout_height="@dimen/theme_tip_size"
         tools:src="@drawable/ic_dots_light"
         tools:tint="@color/medium_foreground"
+        tools:ignore="ContentDescription"
         />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/themeTipDial"
         android:layout_width="@dimen/theme_tip_size"
         android:layout_height="@dimen/theme_tip_size"
         android:src="@drawable/ic_dial"
+        android:background="@android:color/transparent"
         tools:rotation="30"
         tools:tint="@color/medium_foreground"
-        android:background="@android:color/transparent"
+        tools:ignore="ContentDescription"
         />
 
 </FrameLayout>

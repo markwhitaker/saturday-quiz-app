@@ -4,7 +4,6 @@ import android.util.Log
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Logger
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,11 +17,7 @@ val networkModule = module {
 }
 
 private fun provideOkHttp(): OkHttpClient {
-    val loggingInterceptor = HttpLoggingInterceptor(object : Logger {
-        override fun log(message: String) {
-            Log.i("HTTP_LOG", message)
-        }
-    })
+    val loggingInterceptor = HttpLoggingInterceptor { Log.i("HTTP_LOG", it) }
     loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
     return OkHttpClient.Builder()

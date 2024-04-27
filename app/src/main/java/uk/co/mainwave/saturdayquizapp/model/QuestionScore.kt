@@ -6,8 +6,4 @@ enum class QuestionScore(
     NONE(0f),
     HALF(0.5f),
     FULL(1f);
-
-    companion object {
-        fun valueOf(value: Float): QuestionScore = values().single { score -> score.value == value }
-    }
 }

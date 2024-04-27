@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,18 +9,17 @@
     >
 
     <!-- WHAT LINKS... -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/whatLinksView"
         style="@style/WhatLinksText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/numberView"
         android:text="@string/what_links_prefix"
-        android:drawableTint="@color/what_links_text"
-        />
+        app:drawableTint="@color/what_links_text" />
 
     <!-- Question number -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/numberView"
         style="@style/QuestionNumberText"
         android:layout_width="@dimen/number_width"
@@ -29,7 +29,7 @@
         />
 
     <!-- Question -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/questionView"
         style="@style/QuestionText"
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         />
 
     <!-- Answer -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/answerView"
         style="@style/AnswerText"
         android:layout_width="match_parent"
