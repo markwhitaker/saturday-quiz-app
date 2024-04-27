@@ -1,19 +1,21 @@
 package uk.co.mainwave.saturdayquizapp.view
 
 import android.content.res.ColorStateList
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.KeyEvent
-import android.view.animation.*
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.FragmentActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.mainwave.saturdayquizapp.R
 import uk.co.mainwave.saturdayquizapp.databinding.ActivityQuizBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewLoadingBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewQuestionBinding
-import uk.co.mainwave.saturdayquizapp.databinding.ViewScoreBinding
+import uk.co.mainwave.saturdayquizapp.databinding.ViewScoreButtonBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewThemeTipBinding
 import uk.co.mainwave.saturdayquizapp.databinding.ViewTitleBinding
 import uk.co.mainwave.saturdayquizapp.model.QuestionScore
@@ -37,7 +39,7 @@ class QuizActivity : FragmentActivity() {
     private lateinit var quizActivity: ActivityQuizBinding
     private lateinit var loadingLayout: ViewLoadingBinding
     private lateinit var questionLayout: ViewQuestionBinding
-    private lateinit var scoreLayout: ViewScoreBinding
+    private lateinit var scoreLayout: ViewScoreButtonBinding
     private lateinit var themeTipLayout: ViewThemeTipBinding
     private lateinit var titleLayout: ViewTitleBinding
 
@@ -47,7 +49,7 @@ class QuizActivity : FragmentActivity() {
         quizActivity = ActivityQuizBinding.inflate(layoutInflater)
         loadingLayout = quizActivity.loadingLayout
         questionLayout = quizActivity.questionLayout
-        scoreLayout = questionLayout.scoreLayout
+        scoreLayout = ViewScoreButtonBinding.inflate(layoutInflater, quizActivity.root, true)
         themeTipLayout = quizActivity.themeTipLayout
         titleLayout = quizActivity.titleLayout
 
@@ -218,14 +220,7 @@ class QuizActivity : FragmentActivity() {
         }
     }
 
-    private fun fromHtml(text: String): Spanned {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
-    }
+    private fun fromHtml(text: String): Spanned = Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
 
     companion object {
         const val TIP_FADE_IN_DURATION_MS = 50L

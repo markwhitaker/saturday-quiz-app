@@ -51,8 +51,10 @@
         tools:text="Lady Chatterley’s Lover"
         />
 
-    <include
+    <uk.co.mainwave.saturdayquizapp.view.ScoreButton
         android:id="@+id/scoreLayout"
-        layout="@layout/view_score"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
 </RelativeLayout>
