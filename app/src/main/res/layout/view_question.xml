@@ -9,17 +9,18 @@
     >
 
     <!-- WHAT LINKS... -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/whatLinksView"
         style="@style/WhatLinksText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/numberView"
         android:text="@string/what_links_prefix"
-        app:drawableTint="@color/what_links_text" />
+        app:drawableTint="@color/what_links_text"
+        />
 
     <!-- Question number -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/numberView"
         style="@style/QuestionNumberText"
         android:layout_width="@dimen/number_width"
@@ -29,7 +30,7 @@
         />
 
     <!-- Question -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/questionView"
         style="@style/QuestionText"
         android:layout_width="match_parent"
@@ -40,7 +41,7 @@
         />
 
     <!-- Answer -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/answerView"
         style="@style/AnswerText"
         android:layout_width="match_parent"

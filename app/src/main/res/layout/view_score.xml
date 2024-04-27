@@ -14,7 +14,7 @@
         android:background="@drawable/disc"
         android:backgroundTint="@color/medium_foreground_highlight"
         />
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/scoreDimmedRingView"
         android:layout_width="@dimen/score_icon"
         android:layout_height="@dimen/score_icon"
@@ -22,7 +22,7 @@
         tools:tint="@color/medium_foreground_very_dimmed"
         tools:ignore="ContentDescription"
         />
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/scoreTickViewHighlight"
         android:layout_width="@dimen/score_icon"
         android:layout_height="@dimen/score_icon"
@@ -31,7 +31,7 @@
         tools:tint="@color/medium_foreground_highlight"
         tools:ignore="ContentDescription"
         />
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/scoreTickViewDark"
         android:layout_width="@dimen/score_icon"
         android:layout_height="@dimen/score_icon"
