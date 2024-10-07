@@ -1,6 +1,6 @@
 package uk.co.mainwave.saturdayquizapp.di
 
-import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import uk.co.mainwave.saturdayquizapp.repository.PrefsRepository
