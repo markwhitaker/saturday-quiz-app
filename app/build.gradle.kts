@@ -12,7 +12,7 @@ val lifecycleVersion = "2.9.0"
 val lifecycleTestVersion = "2.2.0"
 val mockkVersion = "1.14.2"
 val okhttpVersion = "4.12.0"
-val retrofitVersion = "2.11.0"
+val retrofitVersion = "3.0.0"
 val stethoVersion = "1.6.0"
 
 android {
