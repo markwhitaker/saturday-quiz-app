@@ -7,7 +7,7 @@ plugins {
 val junitVersion = "4.13.2"
 val koinVersion = "4.1.0"
 val kotlinCoroutinesVersion = "1.10.2"
-val kotlinVersion = "2.1.21"
+val kotlinVersion = "2.2.0"
 val lifecycleVersion = "2.9.1"
 val lifecycleTestVersion = "2.2.0"
 val mockkVersion = "1.14.4"
