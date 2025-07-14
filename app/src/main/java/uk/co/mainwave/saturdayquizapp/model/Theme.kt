@@ -5,11 +5,11 @@ import androidx.annotation.DrawableRes
 import uk.co.mainwave.saturdayquizapp.R
 
 enum class Theme(
-    @ColorRes val foreground: Int,
-    @ColorRes val foregroundHighlight: Int,
-    @ColorRes val foregroundDimmed: Int,
-    @ColorRes val foregroundVeryDimmed: Int,
-    @DrawableRes val dotsDrawable: Int,
+    @param:ColorRes val foreground: Int,
+    @param:ColorRes val foregroundHighlight: Int,
+    @param:ColorRes val foregroundDimmed: Int,
+    @param:ColorRes val foregroundVeryDimmed: Int,
+    @param:DrawableRes val dotsDrawable: Int,
     val dialRotation: Float
 ) {
     LIGHT(
