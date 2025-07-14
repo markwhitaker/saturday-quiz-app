@@ -51,22 +51,34 @@ android {
 }
 
 dependencies {
+    // Import BOMs for version management
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion"))
+    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:$kotlinCoroutinesVersion"))
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:$okhttpVersion"))
+    implementation(platform("com.squareup.retrofit2:retrofit-bom:$retrofitVersion"))
+    implementation(platform("io.insert-koin:koin-bom:$koinVersion"))
+
+    // Dependencies managed by BOMs (no version numbers needed)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    implementation("com.squareup.retrofit2:retrofit")
+    implementation("com.squareup.retrofit2:converter-gson")
+    implementation("io.insert-koin:koin-android")
+
+    // Dependencies not managed by BOMs (explicit versions)
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("androidx.leanback:leanback:1.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("com.facebook.stetho:stetho-okhttp3:$stethoVersion")
     implementation("com.facebook.stetho:stetho:$stethoVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
-    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion")
+    implementation("com.facebook.stetho:stetho-okhttp3:$stethoVersion")
+
+    // Test dependencies
     testImplementation("androidx.arch.core:core-testing:$lifecycleTestVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("junit:junit:$junitVersion")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 }
