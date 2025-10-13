@@ -11,7 +11,7 @@ val kotlinVersion = "2.2.20"
 val lifecycleVersion = "2.9.4"
 val lifecycleTestVersion = "2.2.0"
 val mockkVersion = "1.14.6"
-val okhttpVersion = "5.1.0"
+val okhttpVersion = "5.2.1"
 val retrofitVersion = "3.0.0"
 val stethoVersion = "1.6.0"
 
