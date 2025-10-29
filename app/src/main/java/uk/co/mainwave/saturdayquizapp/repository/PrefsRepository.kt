@@ -6,6 +6,7 @@ import uk.co.mainwave.saturdayquizapp.model.Quiz
 import uk.co.mainwave.saturdayquizapp.model.Theme
 import java.text.SimpleDateFormat
 import java.util.Date
+import androidx.core.content.edit
 
 class PrefsRepository(
     private val sharedPreferences: SharedPreferences
@@ -20,10 +21,9 @@ class PrefsRepository(
         get() = sharedPreferences
             .getString(KEY_THEME, null)
             ?.let { Theme.valueOf(it) } ?: Theme.MEDIUM
-        set(value) = sharedPreferences
-            .edit()
-            .putString(KEY_THEME, value.name)
-            .apply()
+        set(value) = sharedPreferences.edit {
+            putString(KEY_THEME, value.name)
+        }
 
     val themeTipTimeoutMs: Long
         get() = THEME_TIP_TIMEOUT_MS
@@ -35,16 +35,14 @@ class PrefsRepository(
         val dateString = DATE_FORMAT.format(quiz.date ?: Date())
         sharedPreferences.getString(KEY_DATE, null)?.let {
             if (it != dateString) {
-                sharedPreferences
-                    .edit()
-                    .remove(KEY_SCORES)
-                    .apply()
+                sharedPreferences.edit {
+                    remove(KEY_SCORES)
+                }
             }
         }
-        sharedPreferences
-            .edit()
-            .putString(KEY_DATE, dateString)
-            .apply()
+        sharedPreferences.edit {
+            putString(KEY_DATE, dateString)
+        }
 
         scores = loadScores() ?: Array(quiz.questions.size) { QuestionScore.NONE }
     }
@@ -62,10 +60,9 @@ class PrefsRepository(
         ?.map { s -> QuestionScore.valueOf(s) }
         ?.toTypedArray()
 
-    private fun saveScores() = sharedPreferences
-        .edit()
-        .putString(KEY_SCORES, scores.joinToString(SCORE_SEPARATOR))
-        .apply()
+    private fun saveScores() = sharedPreferences.edit {
+        putString(KEY_SCORES, scores.joinToString(SCORE_SEPARATOR))
+    }
 
     companion object {
         private const val KEY_DATE = "date"
