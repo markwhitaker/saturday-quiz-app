@@ -5,7 +5,7 @@ plugins {
 }
 
 val junitVersion = "4.13.2"
-val koinVersion = "4.2.0"
+val koinVersion = "4.2.1"
 val kotlinCoroutinesVersion = "1.10.2"
 val kotlinVersion = "2.3.20"
 val lifecycleVersion = "2.10.0"
