@@ -29,7 +29,7 @@ private fun provideOkHttp(): OkHttpClient {
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-    .baseUrl("https://eaton-bitrot.koyeb.app/api/")
+    .baseUrl("https://quiz.bitrot.net/api/")
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create())
     .build()
