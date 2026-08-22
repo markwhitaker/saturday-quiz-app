@@ -1,27 +1,24 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
 }
 
 val junitVersion = "4.13.2"
 val koinVersion = "4.2.2"
 val kotlinCoroutinesVersion = "1.11.0"
-val kotlinVersion = "2.4.10"
 val lifecycleVersion = "2.11.0"
 val lifecycleTestVersion = "2.2.0"
 val mockkVersion = "1.14.11"
-val okhttpVersion = "5.4.0"
+val okhttpVersion = "5.5.0"
 val retrofitVersion = "3.0.0"
 val stethoVersion = "1.6.0"
 
 android {
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "uk.co.mainwave.saturdayquizapp"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
     }
@@ -29,12 +26,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-        }
     }
 
     buildTypes {
@@ -52,14 +43,12 @@ android {
 
 dependencies {
     // Import BOMs for version management
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlinVersion"))
     implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:$kotlinCoroutinesVersion"))
     implementation(platform("com.squareup.okhttp3:okhttp-bom:$okhttpVersion"))
     implementation(platform("com.squareup.retrofit2:retrofit-bom:$retrofitVersion"))
     implementation(platform("io.insert-koin:koin-bom:$koinVersion"))
 
     // Dependencies managed by BOMs (no version numbers needed)
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
