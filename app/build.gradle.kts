@@ -16,12 +16,12 @@ val retrofitVersion = "3.0.0"
 val stethoVersion = "1.6.0"
 
 android {
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "uk.co.mainwave.saturdayquizapp"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
     }
